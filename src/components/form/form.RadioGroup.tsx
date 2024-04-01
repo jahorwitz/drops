@@ -33,6 +33,7 @@ const DiabetesForm = () => {
                     Gestational
                 </label>
             </div>
+            <p className="hint-text">Select the type that best matches you diagnosis.</p>
         </Form>
     );
 };
