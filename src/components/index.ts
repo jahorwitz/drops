@@ -1,2 +1,2 @@
 export * from "./form";
-export * from "./formInput";
+export * from "./form.RadioGroup";
