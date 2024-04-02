@@ -6,48 +6,58 @@ export default {
   mode: "jit",
   purge: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
-    screens: { sm: "375px", md: "768px", lg: "1024px", xl: "1280px" },
+    screens: { sm: "390px" },
     extend: {
       colors: {
-        primary: "#3A3C46",
-        accent: "#F6C825",
-        green: "#4FA161",
-        blue: "#575AA4",
-        pink: "#94498C",
-        yellow: "#B6A362",
+        black: "#121212",
         white: "#FFFFFF",
-        red: "#ff0000",
-        formBackground: "#4d4f58",
-        formBorder: "#83848a",
-        grey: "#F0F0F0",
+        lightYellow: "#fff7cc",
+        yellow: "#ffea7a",
+        darkYellow: "#ffe871",
+        lightGray: "#f5f5f5",
+        lightBlue: "#c8e1fa",
+        blue: "#64affa",
+        lightPink: "#ffccd4",
+        pink: "#ff8093",
+        lightGreen: "#c9fbc9",
+        green: "#5cd65c",
+        lightPurple: "#f3d3fb",
+        purple: "#e286f9",
+        red: "#ff3636",
       },
+      backgroundImage: (theme) => ({
+        "gradient-welcome": `linear-gradient(to bottom, ${theme(
+          "colors.lightYellow",
+        )}, ${theme("colors.darkYellow")})`,
+      }),
       fontSize: {
-        "card-title": "28px",
-        "section-title": "32px",
+        "welcome-title": "44px",
+        "section-header": "32px",
+        "section-subtext": "20px",
+        "paragraph-lg": "16px",
+        "paragraph-sm": "14px",
+        "caption-text": "12px",
       },
       fontFamily: {
-        text: ["Inter", "Helvetica", "Arial", "sans"],
-        title: ["Esteban", "cursive"],
+        text: ["Rubik", "Arial", "sans"],
       },
       maxWidth: {
-        xlPageContent: "1200px",
-        lgPageContent: "944px",
-        mdPageContent: "728px",
-        smPageContent: "320px",
+        pageContent: "370px",
       },
     },
   },
-  plugins: [HeadlessTailwindPlugin({ prefix: "ui" }),
-  function ({ addUtilities }) {
-    addUtilities({
-      '.scrollbar-none': {
-        '-ms-overflow-style': 'none',
-        'scrollbar-width': 'none',
-        '&::-webkit-scrollbar': {
-          'display': 'none'
-        }
-      }
-    });
-  }
+  plugins: [
+    HeadlessTailwindPlugin({ prefix: "ui" }),
+    function ({ addUtilities }) {
+      addUtilities({
+        ".scrollbar-none": {
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        },
+      });
+    },
   ],
 };
