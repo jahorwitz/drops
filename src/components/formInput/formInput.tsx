@@ -22,7 +22,7 @@ export const FormInput = ({
 }: inputProps) => {
   return (
     <div className="flex flex-col gap-1 leading-5 text-base font-normal">
-      <label>{labelText}</label>
+      <label className="font-text">{labelText}</label>
       <input
         placeholder={placeholder}
         id={id}
@@ -30,7 +30,7 @@ export const FormInput = ({
         onChange={onChange}
         value={value}
         {...rest}
-        className={`rounded-lg border-black border-[1px] py-5 px-3 ${className}`}
+        className={`rounded-lg border-black border-[1px] py-5 px-3 font-text ${className}`}
       ></input>
     </div>
   );
