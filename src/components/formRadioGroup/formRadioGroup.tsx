@@ -30,10 +30,10 @@ export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)} className="space-y-3 text-black max-w-pageContent w-86 h-auto">
-            <p className="section-subtext">{title}</p>
+            <p className="section-subtext font-text">{title}</p>
             <div className="space-y-2">
                 {options.map((option, index) => (
-                    <label key={index} className="flex items-center space-x-2 border-2 border-lightGray rounded-lg p-3 text-paragraph-lg"  style={{
+                    <label key={index} className="font-text flex items-center space-x-2 border-2 border-lightGray rounded-lg p-3 text-paragraph-lg"  style={{
                         borderColor: selectedOption === option ? '#121212' : '#f5f5f5',
                     }}>
                         <input 
@@ -47,7 +47,7 @@ export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
                     </label>
                 ))}
             </div>
-            <p className="text-paragraph-lg text-lightGray-400">{description}</p>
+            <p className="text-paragraph-lg text-lightGray-400 font-text">{description}</p>
         </Form>
     );
 };
