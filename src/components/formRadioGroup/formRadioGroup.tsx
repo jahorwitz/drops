@@ -29,9 +29,8 @@ export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
             <div {...register('inputText', {required: true})}>
                 {options.map((option, index) => (
                     <label key={index}>
-                        <input type="radio" value={option}>
+                        <input type="radio" value={option}/>
                         {option}
-                        </input>
                     </label>
                 ))}
             </div>
