@@ -2,36 +2,35 @@ import { Form } from "../form";
 import { useForm } from 'react-hook-form';
 
 type FormData = {
-    diabetesType: string;
+    inputText: string;
 };
 
 
-type DiabetesFormProps = {
+type RadioGroupProps = {
     title: string;
     description: string;
     options: string[];
 }
 
-const DiabetesForm = ({title, description, options}: DiabetesFormProps) => {
+export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
     const {register, handleSubmit, formState: { errors }} = useForm<FormData>();
 
     const onSubmit = (data: FormData) => {
-        if (!errors.diabetesType) {
-        alert(`You selected ${data.diabetesType}`)
+        if (!errors.inputText) {
+        alert(`You selected ${data.inputText}`)
         } else {
-            alert( 'Please select a diabetes type');
+            alert( 'Please select an option');
         }
     };
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <p>{title}</p>
-            <div {...register('diabetesType', {required: true})}>
+            <div {...register('inputText', {required: true})}>
                 {options.map((option, index) => (
                     <label key={index}>
-                        <input type="radio" value={option}>
+                        <input type="radio" value={option}/>
                         {option}
-                        </input>
                     </label>
                 ))}
             </div>
@@ -39,6 +38,3 @@ const DiabetesForm = ({title, description, options}: DiabetesFormProps) => {
         </Form>
     );
 };
-
-export default DiabetesForm;
-
