@@ -1,5 +1,3 @@
-import delbtn from "../button/Del.svg"
-
 type buttonProps = {
     buttonText?: string;
     onClick?: ()=> void;
@@ -24,7 +22,7 @@ export const ButtonText = ({buttonText, onClick}:buttonProps) => {
         )
 }
 
-export const ButtonIcon = ({icon= `${delbtn}`, onClick}:buttonProps) => {
+export const ButtonIcon = ({icon, onClick}:buttonProps) => {
     return (
         <button className="w-8 h-8" onClick={onClick}>
             <img className="p-1" src = {icon}/>
