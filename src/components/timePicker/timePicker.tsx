@@ -1,9 +1,8 @@
-import { useForm } from 'react-hook-form';
+import {useForm } from "react-hook-form";
 
-type TimePickerProps  = {
+type TimePickerProps = {
   label?: string;
 }
-
 const TimePicker = ({ label }: TimePickerProps) => {
   const { register, formState: { errors } } = useForm();
   return (
@@ -35,8 +34,7 @@ const TimePicker = ({ label }: TimePickerProps) => {
           <option value="PM">PM</option>
         </select>
         </div>
-     
-        {errors.hour && <p className="text-red-600 ml-2">Please enter a valid hour (00-12)</p>}
+      {errors.hour && <p className="text-red-600 ml-2">Please enter a valid hour (00-12)</p>}
       {errors.minutes && <p className="text-red-600 ml-2">Please enter a valid minutes (00-59)</p>}
       {errors.period && <p className="text-red-600 ml-2">Please select a period (AM/PM)</p>}
     </div>
@@ -44,6 +42,7 @@ const TimePicker = ({ label }: TimePickerProps) => {
 };
 
 export default TimePicker;
+
 
 
 
