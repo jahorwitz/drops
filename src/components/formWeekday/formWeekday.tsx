@@ -52,10 +52,10 @@ const FormWeekday = ({ title, hintText }: WeekdaysProps) => {
               />
               <label
                 htmlFor={day}
-                className={`flex items-center h-10 w-10 rounded-full border-black/30 border flex justify-center items-center text-sm ${
+                className={`flex items-center justify-center h-10 w-10 rounded-full border text-sm ${
                   currentSelectedDays.includes(day)
                     ? "text-white bg-black border-black"
-                    : "text-black/60"
+                    : "text-black/60 border-black/30"
                 }`}
               >
                 {day}
