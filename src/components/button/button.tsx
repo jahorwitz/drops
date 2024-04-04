@@ -1,12 +1,15 @@
+import { MouseEventHandler, ReactNode } from "react";
+
 type buttonProps = {
+    
     buttonText?: string;
-    onClick?: ()=> void;
+    onClick?: MouseEventHandler;
     icon?:string;
   };
 
-export const ButtonPrimary = ({buttonText, onClick}:buttonProps) => {
+export const ButtonPrimary = ({buttonText="value", onClick}:buttonProps) => {
     return (
-        <button className="text-[#F5F5F5] bg-[#121212] px-10 rounded-lg grow-0 h-14  w-80 text-lg font-medium font-text" onClick={onClick}>{buttonText}</button>
+        <button className="text-lightGray bg-[#121212] px-10 rounded-lg grow-0 h-14  w-80 text-lg font-medium font-text" onClick={onClick}>{buttonText}</button>
     )
 }
 

@@ -1,4 +1,4 @@
-import {ButtonPrimary} from "./button"
+import {ButtonPrimary, ButtonSecondary, ButtonIcon, ButtonText} from "./button"
 
 export default {
   title: "Button",
@@ -7,7 +7,11 @@ export default {
 
 export const ButtonStory = () => {
   return (
-    <ButtonPrimary>
-    </ButtonPrimary>
+    <> 
+    <ButtonPrimary /> 
+    <ButtonSecondary /> 
+    <ButtonText /> 
+    <ButtonIcon /> 
+    </>
   );
 };
