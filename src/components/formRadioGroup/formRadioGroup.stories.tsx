@@ -1,4 +1,3 @@
-//import { Form } from "../form";
 import { RadioGroup } from '../formRadioGroup';
 
 export default {
@@ -6,4 +5,17 @@ export default {
   component: RadioGroup,
 };
 
-export const Default = () => <RadioGroup title="My Radio Group" description="Select an option" options={['Option 1', 'Option 2', 'Option 3']} />;
+type Option = {
+  value: string;
+  label: string;
+};
+
+export const Default = () => {
+  const options: Option[] = [
+    { value: 'Option 1', label: 'Option 1' },
+    { value: 'Option 2', label: 'Option 2' },
+    { value: 'Option 3', label: 'Option 3' },
+  ];
+
+  return <RadioGroup title="My Radio Group" description="Select an option" options={options} />;
+};
