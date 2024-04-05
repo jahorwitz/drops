@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 
 // Define modal context types
 
@@ -12,10 +12,3 @@ type ModalContextType = {
 export const ModalContext = createContext<ModalContextType | undefined>(
   undefined,
 );
-
-// useModal hook
-
-export const useModal = () => {
-  const context = useContext(ModalContext);
-  return context;
-};

@@ -10,7 +10,7 @@ type modalProps = {
 };
 
 export const Modal = ({ title, children }: modalProps) => {
-  let [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <Transition show={isOpen} appear={true}>
