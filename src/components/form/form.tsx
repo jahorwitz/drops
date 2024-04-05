@@ -1,16 +1,18 @@
 import { FormEventHandler, ReactNode } from "react";
+import { TextInput } from "./text-input";
 
-// Types for the props on the form
-type formProps = {
+type Props = {
   className?: string;
   children?: ReactNode;
   onSubmit?: FormEventHandler;
 };
 
-export const Form = ({ className, children, onSubmit, ...rest }: formProps) => {
+export const Form = ({ className, children, onSubmit, ...rest }: Props) => {
   return (
     <form className={className} onSubmit={onSubmit} {...rest}>
       {children}
     </form>
   );
 };
+
+Form.TextInput = TextInput;
