@@ -1,17 +1,17 @@
-import {ButtonPrimary, ButtonSecondary, ButtonIcon, ButtonText} from "./button"
+import { Button } from "./button";
 
 export default {
   title: "Button",
-  component: ButtonPrimary,
+  component: Button,
 };
 
 export const ButtonStory = () => {
   return (
     <> 
-    <ButtonPrimary /> 
-    <ButtonSecondary /> 
-    <ButtonText /> 
-    <ButtonIcon /> 
+   {Button({variant:"primary", buttonText:"Value", onClick: ()=> alert("I'm primary button")})}
+   {Button({variant:"secondary", buttonText:"Value", onClick: ()=> alert("I'm secondary button")})}
+   {Button({variant:"text", buttonText:"Value", onClick: ()=> alert("I'm text button")})}
+   {Button({variant:"icon", icon:"value", onClick: ()=> alert("I'm icon button")})}
     </>
   );
 };

@@ -1,36 +1,35 @@
-import { MouseEventHandler } from "react";
+import cx from "classnames";
+import { HTMLAttributes, MouseEventHandler } from "react";
 
-type buttonProps = {
-    
-    buttonText?: string;
-    onClick?: MouseEventHandler;
-    icon?:string;
-    className?:string;
-  };
+type Props = HTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "secondary" | "text" | "icon";
+  buttonText?: string;
+  icon?: string;
+  className?: string;
+};
 
-export const ButtonPrimary = ({buttonText="value", onClick, className}:buttonProps) => {
-    return (
-        <button className={`text-lightGray bg-[#121212] px-10 rounded-lg grow-0 h-14  w-80 text-lg font-medium font-text ${className}`} onClick={onClick}>{buttonText}</button>
-    )
-}
-
-export const ButtonSecondary = ({buttonText="text", onClick, className}:buttonProps) => {
-    return (
-        <button className= {`text-[#121212] bg-transparent px-10 border-[#121212] border rounded-lg grow-0 h-14 w-80 text-lg font-medium font-text ${className}`} onClick={onClick}>{buttonText}</button>
-    )
-}
-
-export const ButtonText = ({buttonText="value", onClick, className}:buttonProps) => {
-        return (
-            <button className = {`text-[#121212] opacity-60 grow-0 h-14 w-80 text-lg font-medium font-text ${className}`} onClick={onClick}>{buttonText}</button>
-        )
-}
-
-export const ButtonIcon = ({icon, onClick, className}:buttonProps) => {
-    return (
-        <button className={`w-8 h-8 ${className}`} onClick={onClick}>
-            <img className="p-1" src = {icon}/>
-        </button>
-    )
-}
-
+export const Button = ({
+  variant = "primary",
+  buttonText = "value",
+  icon,
+  className,
+  ...rest
+}: Props) => {
+  return (
+    <button 
+      {...rest}
+      className={cx(
+        `grow-0 h-14  w-80 text-lg font-medium font-text`, 
+        variant === "primary" && "text-lightGray bg-[#121212] px-10 rounded-lg",
+        variant === "secondary" && `text-[#121212] bg-transparent px-10 border-[#121212] border rounded-lg`, // Styles for Secondary button
+        variant === "text" && `text-[#121212] opacity-60`, 
+        variant === "icon" && `w-8 h-8 `,
+        className, 
+      )}
+    >
+        {icon ? (
+            <img className="p-1" src={icon}/>
+        ) : ( buttonText )}
+    </button>
+  );
+};
