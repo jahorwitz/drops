@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { HTMLAttributes, MouseEventHandler } from "react";
+import { HTMLAttributes } from "react";
 
 type Props = HTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "text" | "icon";
