@@ -12,10 +12,12 @@ interface MyFormValues {
   anEnumField: "one" | "two" | "three";
 }
 
+
 interface WeekdayFormValues {
   exersiceDays: string[];
   taskDays: string[];
 }
+
 
 export const WithTextInputs = () => {
   const {
@@ -26,6 +28,7 @@ export const WithTextInputs = () => {
   const onSubmit = (data: MyFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
+
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
