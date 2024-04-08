@@ -12,6 +12,12 @@ interface MyFormValues {
   anEnumField: "one" | "two" | "three";
 }
 
+interface TimePickerValues {
+  hours: string;
+  minutes: string;
+  timePeriod: string;
+}
+
 export const WithTextInputs = () => {
   const {
     register,
@@ -62,4 +68,44 @@ export const WithTextInputs = () => {
       </button>
     </Form>
   );
+};
+
+export const WithTimePicker = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TimePickerValues>();
+
+  const onSubmit = (data: TimePickerValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+
+return (
+  <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <Form.TimePicker
+     labelText="Reminder 1"
+     hintText="Here is a hint"
+      feedback={errors.hours?.message || errors.minutes?.message || errors.timePeriod?.message}
+      {...register("hours", {
+        required: true,
+        pattern: /^(0?[0-9]|1[0-2])$/,
+        min: 0,
+        max: 12,
+        })}
+        {...register("minutes", {
+          required: true,
+          min: 0.0,
+          max: 59,
+          pattern: /^(0?[0-9]|[1-5][0-9]|60)$/,
+        })}
+        {...register("timePeriod", {
+         required: true,
+         pattern: /^(AM|PM)$/i, 
+          })}
+       
+      />
+  </Form>
+);
 };
