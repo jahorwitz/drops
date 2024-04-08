@@ -1,5 +1,6 @@
 import { FormEventHandler, ReactNode } from "react";
 import { TextInput } from "./text-input";
+import { Weekday } from "./weekday";
 
 type Props = {
   className?: string;
@@ -16,3 +17,4 @@ export const Form = ({ className, children, onSubmit, ...rest }: Props) => {
 };
 
 Form.TextInput = TextInput;
+Form.Weekday = Weekday;
