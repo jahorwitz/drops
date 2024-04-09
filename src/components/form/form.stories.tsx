@@ -63,3 +63,35 @@ export const WithTextInputs = () => {
     </Form>
   );
 };
+
+export const WithNumericInputs = ()=> {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<MyFormValues>();
+  const onSubmit = (data: MyFormValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.NumericInput
+        labelText="Meals per day"
+        hintText="3 is a recommended amount"
+        feedback={errors.anEnumField?.message}
+        {...register("anEnumField", {
+          required: "This field is required",
+          validate: (value) =>
+            ["3"].includes(value) ||
+            "This field must be a Numeric value ",
+        })}
+      />
+
+      {/* Replace with Submit button once button is finished */}
+      <button type="submit" className="bg-darkYellow p-4 rounded">
+        Submit
+      </button>
+    </Form>
+  );
+
+}
