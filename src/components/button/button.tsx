@@ -1,10 +1,12 @@
-import cx from "classnames";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { twMerge } from "tailwind-merge";
 import { HTMLAttributes } from "react";
 
 type Props = HTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "text" | "icon";
   buttonText?: string;
-  icon?: string;
+  icon?: IconDefinition;
   className?: string;
 };
 
@@ -16,20 +18,22 @@ export const Button = ({
   ...rest
 }: Props) => {
   return (
-    <button 
+    <button
       {...rest}
-      className={cx(
-        `grow-0 h-14  w-80 text-lg font-medium font-text`, 
-        variant === "primary" && "text-lightGray bg-[#121212] px-10 rounded-lg",
-        variant === "secondary" && `text-[#121212] bg-transparent px-10 border-[#121212] border rounded-lg`, // Styles for Secondary button
-        variant === "text" && `text-[#121212] opacity-60`, 
-        variant === "icon" && `w-8 h-8 `,
-        className, 
+      className={twMerge(
+        `text-lg font-medium font-text`,
+        variant === "primary" &&
+          "text-lightGray bg-black px-10 py-4 leading-5 rounded-lg hover:opacity-60",
+        variant === "secondary" &&
+          `text-black px-10 py-4 leading-5 border-black border rounded-lg hover:opacity-60`,
+        variant === "text" &&
+          `text-black opacity-60 py-4 leading-5 hover:opacity-90`,
+        variant === "icon" &&
+          `w-8 h-8 opacity-60 rounded-full hover:opacity-90`,
+        className,
       )}
     >
-        {icon ? (
-            <img className="p-1" src={icon}/>
-        ) : ( buttonText )}
+      {icon ? <FontAwesomeIcon icon={icon} /> : buttonText}
     </button>
   );
 };
