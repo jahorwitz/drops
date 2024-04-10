@@ -1,5 +1,7 @@
+import { capitalize } from "lodash";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { HTMLProps, forwardRef, useState } from "react";
+import { enumKeys, Weekday, shortenWeekday } from "../../utils";
 
 type Props = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
@@ -9,7 +11,7 @@ type Props = UseFormRegisterReturn<string> &
     className?: string;
   };
 
-export const Weekday = forwardRef<HTMLInputElement, Props>(
+export const WeekdaySelector = forwardRef<HTMLInputElement, Props>(
   ({ labelText, hintText, feedback, className, ...rest }: Props, ref) => {
     const [currentSelectedDays, setCurrentSelectedDays] = useState<string[]>(
       [],
@@ -17,9 +19,8 @@ export const Weekday = forwardRef<HTMLInputElement, Props>(
     const [uniqueId] = useState(
       () => `weekday-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
     );
-    const days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
 
-    const handleCheck = (day: string) => {
+    const handleCheck = (day: Weekday) => {
       if (currentSelectedDays.includes(day)) {
         setCurrentSelectedDays(currentSelectedDays.filter((d) => d != day));
       } else {
@@ -31,17 +32,17 @@ export const Weekday = forwardRef<HTMLInputElement, Props>(
       <div className={`max-w-pageContent mx-3 relative font-text ${className}`}>
         <label className="">{labelText}</label>
         <div className="flex justify-between mt-3">
-          {days.map((day) => (
-            <div key={day} className={`relative`}>
+          {enumKeys(Weekday).map((day) => (
+            <div key={Weekday[day]} className={`relative`}>
               <input
                 {...rest}
                 ref={ref}
-                id={`${uniqueId}-${day}`}
-                checked={currentSelectedDays.includes(day)}
+                id={`${uniqueId}-${Weekday[day]}`}
+                checked={currentSelectedDays.includes(Weekday[day])}
                 type="checkbox"
-                value={day}
+                value={Weekday[day]}
                 className="sr-only"
-                onChange={() => handleCheck(day)}
+                onChange={() => handleCheck(Weekday[day])}
               />
               <label
                 htmlFor={`${uniqueId}-${day}`}
@@ -51,7 +52,7 @@ export const Weekday = forwardRef<HTMLInputElement, Props>(
                     : "text-black/60 border-black/30"
                 }`}
               >
-                {day}
+                {capitalize(shortenWeekday(Weekday[day]))}
               </label>
             </div>
           ))}
@@ -66,4 +67,4 @@ export const Weekday = forwardRef<HTMLInputElement, Props>(
   },
 );
 
-Weekday.displayName = "Weekday";
+WeekdaySelector.displayName = "Weekday";
