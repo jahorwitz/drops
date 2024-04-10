@@ -1,0 +1,39 @@
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { twMerge } from "tailwind-merge";
+import { HTMLAttributes } from "react";
+
+type Props = HTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "secondary" | "text" | "icon";
+  buttonText?: string;
+  icon?: IconDefinition;
+  className?: string;
+};
+
+export const Button = ({
+  variant = "primary",
+  buttonText = "value",
+  icon,
+  className,
+  ...rest
+}: Props) => {
+  return (
+    <button
+      {...rest}
+      className={twMerge(
+        `text-lg font-medium font-text`,
+        variant === "primary" &&
+          "text-lightGray bg-black px-10 py-4 leading-5 rounded-lg hover:opacity-60",
+        variant === "secondary" &&
+          `text-black px-10 py-4 leading-5 border-black border rounded-lg hover:opacity-60`,
+        variant === "text" &&
+          `text-black opacity-60 py-4 leading-5 hover:opacity-90`,
+        variant === "icon" &&
+          `w-8 h-8 opacity-60 rounded-full hover:opacity-90`,
+        className,
+      )}
+    >
+      {icon ? <FontAwesomeIcon icon={icon} /> : buttonText}
+    </button>
+  );
+};
