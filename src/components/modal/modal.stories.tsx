@@ -1,5 +1,4 @@
 import { Modal } from "./modal";
-import { ButtonPrimary } from "../button/button";
 
 export default {
   title: "Modal",
@@ -8,8 +7,6 @@ export default {
 
 export const ModalStory = () => {
   return (
-    <Modal title="Add Glucose Measurement">
-      <ButtonPrimary buttonText="Add Measurement" />
-    </Modal>
+    <Modal title="Add Glucose Measurement" buttonText="Add Measurement"></Modal>
   );
 };

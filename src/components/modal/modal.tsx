@@ -1,15 +1,17 @@
 import { ReactNode, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import exitButton from "../../images/exit-modal-button-min.svg";
-import { ButtonIcon } from "../button/button";
+import { Button } from "../button/button";
+import { faX } from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 // Types for modal props
 type modalProps = {
   title?: string;
+  buttonText?: string;
   children?: ReactNode;
 };
 
-export const Modal = ({ title, children }: modalProps) => {
+export const Modal = ({ title, children, buttonText }: modalProps) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -35,18 +37,24 @@ export const Modal = ({ title, children }: modalProps) => {
           leaveFrom="translate-y-0"
           leaveTo="translate-y-full"
         ></Transition.Child>
-        <Dialog.Panel className="bg-white fixed left-0 bottom-0 w-full rounded-t-[20px] px-4 pt-5 pb-7">
+        <Dialog.Panel className="bg-white fixed flex flex-col  min-h-[578px] left-0 bottom-0 w-full rounded-t-[20px] px-4 pt-5 pb-7">
           <div className="flex justify-between z-10">
             <Dialog.Title className="font-text text-section-subtext font-medium pb-8">
               {title}
             </Dialog.Title>
-            <ButtonIcon
+            <Button
+              variant="icon"
               onClick={() => setIsOpen(false)}
-              icon={exitButton}
+              icon={faX as IconProp}
               className="outline-none"
             />
           </div>
-          <div className="flex justify-center w-full">{children}</div>
+          <div className="flex flex-col w-full">{children}</div>
+          <Button
+            variant="primary"
+            className="mt-auto"
+            buttonText={buttonText}
+          />
         </Dialog.Panel>
       </Dialog>
     </Transition>
