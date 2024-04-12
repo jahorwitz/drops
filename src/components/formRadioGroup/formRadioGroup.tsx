@@ -1,35 +1,19 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { Form } from '../form/form';
 
-// Generic Types: The FormData type now has a selectedOption field instead of inputText.
-type FormData = {
-    selectedOption: string;
-};
-
-// Generic Types: The options prop now accepts an array of objects, each with a value and label.
-type Option = {
-    value: string;
-    label: string;
-};
-
-type RadioGroupProps = {
-    title: string;
-    description: string;
-    options: Option[];
+type Props = {
+    title ?: string;
+    description ?: string;
+    options : {
+        value: string;
+        label: string;
+    }[];
 }
 
-export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
-    const { register, handleSubmit, formState: { errors }} = useForm<FormData>();
+export const RadioGroup = ({title, description, options}: Props) => {
+    const { register, formState: { errors }} = useForm<{ selectedOption: string }>();
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
-    // Error Handling: The onSubmit function now displays more specific error messages based on the errors object.
-    const onSubmit = (data: FormData) => {
-        if (errors.selectedOption) {
-            alert(errors.selectedOption.message);
-        } else {
-            alert(`You selected ${data.selectedOption}`);
-        }
-    };
 
     const handleOptionChange = (option: string) => {
         setSelectedOption(option);
@@ -38,7 +22,7 @@ export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
     const { onChange, ...rest } = register("selectedOption", { required: "Please select an option" });
 
     return (
-       <div onSubmit={handleSubmit(onSubmit)}>
+       <Form>
             <p className="section-subtext font-text">{title}</p>
             <div className="space-y-2">
                 {options.map((option, index) => (
@@ -63,6 +47,8 @@ export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
             </div>
             <p className="text-paragraph-lg text-lightGray-400 font-text">{description}</p>
             {errors.selectedOption && <p>{errors.selectedOption.message}</p>}
-       </div>
+       </Form>
     );
 };
+
+
