@@ -38,7 +38,7 @@ export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
     const { onChange, ...rest } = register("selectedOption", { required: "Please select an option" });
 
     return (
-       <div>
+       <div onSubmit={handleSubmit(onSubmit)}>
             <p className="section-subtext font-text">{title}</p>
             <div className="space-y-2">
                 {options.map((option, index) => (
