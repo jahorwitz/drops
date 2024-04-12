@@ -1,5 +1,5 @@
-import { Form } from "../form";
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 // Generic Types: The FormData type now has a selectedOption field instead of inputText.
 type FormData = {
@@ -12,7 +12,6 @@ type Option = {
     label: string;
 };
 
-
 type RadioGroupProps = {
     title: string;
     description: string;
@@ -20,14 +19,15 @@ type RadioGroupProps = {
 }
 
 export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
-    const { handleSubmit, formState: { errors }} = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors }} = useForm<FormData>();
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-    const onSubmit = () => {
-        if (!errors?.inputText && selectedOption !== null) {
-            alert(`You selected ${selectedOption}`);
+    // Error Handling: The onSubmit function now displays more specific error messages based on the errors object.
+    const onSubmit = (data: FormData) => {
+        if (errors.selectedOption) {
+            alert(errors.selectedOption.message);
         } else {
-            alert('Please select an option');
+            alert(`You selected ${data.selectedOption}`);
         }
     };
 
@@ -35,13 +35,15 @@ export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
         setSelectedOption(option);
     };
 
+    const { onChange, ...rest } = register("selectedOption", { required: "Please select an option" });
+
     return (
-        <Form onSubmit={handleSubmit(onSubmit)} className="space-y-3 text-black max-w-pageContent w-86 h-auto">
-            <p className="section-subtext">{title}</p>
+       <div>
+            <p className="section-subtext font-text">{title}</p>
             <div className="space-y-2">
                 {options.map((option, index) => (
                     <label key={index} className="font-text flex items-center space-x-2 border-2 border-lightGray rounded-lg p-3 text-paragraph-lg"  style={{
-                        borderColor: selectedOption === option ? '#121212' : '#f5f5f5',
+                        borderColor: selectedOption === option.value ? '#121212' : '#f5f5f5',
                     }}>
                         <input 
                             type="radio" 
@@ -60,6 +62,7 @@ export const RadioGroup = ({title, description, options}: RadioGroupProps) => {
                 ))}
             </div>
             <p className="text-paragraph-lg text-lightGray-400 font-text">{description}</p>
-        </Form>
+            {errors.selectedOption && <p>{errors.selectedOption.message}</p>}
+       </div>
     );
 };
