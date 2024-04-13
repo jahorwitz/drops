@@ -7,12 +7,12 @@ type Props = {
         value: string;
         label: string;
     }[];
-    register: UseFormRegisterReturn<string>;
     errors: React.ReactNode;
     selectedOption: string | null;
+    register: UseFormRegisterReturn;
 };
 
-export const RadioGroup = ({ title, description, options, register, errors, selectedOption }: Props) => {
+export const RadioGroup = ({ title, description, options, errors, selectedOption }: Props) => {
     return (
         <div>
             <p className="section-subtext font-text">{title}</p>
@@ -27,7 +27,6 @@ export const RadioGroup = ({ title, description, options, register, errors, sele
                             checked={selectedOption === option.value}
                             required
                             className={`appearance-none h-4 w-4 border-4 bold-border-black rounded-full checked:border-black focus:outline-none focus:ring 1 focus:ring-black ${selectedOption === option.value ? 'bg-white border-black' : 'bg-white border-lightGray'}`}
-                            {...register}
                         />
                         <span className="text-paragraph-lg text-black-400">{option.label}</span>
                     </label>

@@ -1,13 +1,14 @@
 import { RadioGroup } from '../formRadioGroup';
-
-export default {
-  title: 'RadioGroup',
-  component: RadioGroup,
-};
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type Option = {
   value: string;
   label: string;
+};
+
+export default {
+  title: 'RadioGroup',
+  component: RadioGroup,
 };
 
 export const Default = () => {
@@ -17,5 +18,15 @@ export const Default = () => {
     { value: 'Option 3', label: 'Option 3' },
   ];
 
-  return <RadioGroup title="My Radio Group" description="Select an option" options={options} />;
+  const errors = null; 
+  const selectedOption = null; 
+
+  const register: UseFormRegisterReturn = {
+    onChange: async () => {},
+    onBlur: async () => {},
+    name: 'radioGroup',
+    ref: () => {},
+  };
+
+  return <RadioGroup title="My Radio Group" description="Select an option" options={options} errors={errors} selectedOption={selectedOption} register={register} />;
 };
