@@ -12,7 +12,7 @@ type Props = {
     selectedOption: string | null;
 };
 
-export const RadioGroup = ({ title, description, options, register, errors, selectedOption}: Props) => {
+export const RadioGroup = ({ title, description, options, register, errors, selectedOption }: Props) => {
     return (
         <div>
             <p className="section-subtext font-text">{title}</p>
