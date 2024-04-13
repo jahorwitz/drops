@@ -20,6 +20,10 @@ interface WeekdayFormValues {
 }
 
 
+interface FormValues {
+  optionName: string;
+}
+
 export const WithTextInputs = () => {
   const {
     register,
@@ -112,10 +116,6 @@ export const WithWeekdays = () => {
     </Form>
   );
 };
-
-interface FormValues {
-  optionName: string;
-}
 
 export const WithRadioGroup = () => {
   const {
