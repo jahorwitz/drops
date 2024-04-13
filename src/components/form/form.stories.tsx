@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Form } from "./form";
-import { RadioGroup } from "./radio-group";
 
 export default {
   title: "Form",
@@ -130,8 +129,9 @@ export const WithRadioGroup = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <RadioGroup
+      <Form.RadioGroup
         labelText="My Radio Group"
+        hintText="Select one option"
         options={[
           { value: "one", label: "Option 1" },
           { value: "two", label: "Option 2" },
