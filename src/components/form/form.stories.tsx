@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Form } from "./form";
+import { RadioGroup } from "./radio-group";
 
 export default {
   title: "Form",
@@ -108,6 +109,40 @@ export const WithWeekdays = () => {
       <button type="submit" className="bg-darkYellow p-4 rounded">
         Submit
       </button>
+    </Form>
+  );
+};
+
+interface FormValues {
+  optionName: string;
+}
+
+export const WithRadioGroup = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <RadioGroup
+        labelText="My Radio Group"
+        options={[
+          { value: "one", label: "Option 1" },
+          { value: "two", label: "Option 2" },
+          { value: "three", label: "Option 3" },
+        ]}
+        feedback={errors.optionName?.message}
+        {...register("optionName", {
+          required: "This field is required",
+        })}
+      />
+      {/* Replace with Submit button once button is finished */}
     </Form>
   );
 };
