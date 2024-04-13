@@ -26,7 +26,7 @@ export const RadioGroup = ({ title, description, options, errors, selectedOption
                             value={option.value}
                             checked={selectedOption === option.value}
                             required
-                            className={`appearance-none h-4 w-4 border-4 bold-border-black rounded-full checked:border-black focus:outline-none focus:ring 1 focus:ring-black ${selectedOption === option.value ? 'bg-white border-black' : 'bg-white border-lightGray'}`}
+                            className={`appearance-none h-2 w-2 border-2 bold-border-black rounded-full checked:border-black focus:outline-none focus:ring 2 focus:ring-black ${selectedOption === option.value ? 'bg-white border-black' : 'bg-white border-lightGray'}`}
                         />
                         <span className="text-paragraph-lg text-black-400">{option.label}</span>
                     </label>
