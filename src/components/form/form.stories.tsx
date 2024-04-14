@@ -81,13 +81,14 @@ export const WithNumericInputs = ()=> {
         feedback={errors.anEnumField?.message}
         {...register("anEnumField", {
           required: "This field is required",
-          validate: (value) =>
-            ["3"].includes(value) ||
-            "This field must be a Numeric value ",
+          validate: (value) => {
+            if (isNaN(Number(value))) {
+              return "This field must be a Numeric value";
+            }
+          return Number(value) >= 0 || "This field must be a positive value"
+        },
         })}
       />
-
-      {/* Replace with Submit button once button is finished */}
       <button type="submit" className="bg-darkYellow p-4 rounded">
         Submit
       </button>
