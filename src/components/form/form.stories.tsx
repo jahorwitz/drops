@@ -12,6 +12,13 @@ interface MyFormValues {
   anEnumField: "one" | "two" | "three";
 }
 
+
+interface WeekdayFormValues {
+  exersiceDays: string[];
+  taskDays: string[];
+}
+
+
 export const WithTextInputs = () => {
   const {
     register,
@@ -21,6 +28,7 @@ export const WithTextInputs = () => {
   const onSubmit = (data: MyFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
+
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -54,6 +62,46 @@ export const WithTextInputs = () => {
             ["one", "two", "three"].includes(value) ||
             "This field must be 'one' or 'two' or 'three'",
         })}
+      />
+
+      {/* Replace with Submit button once button is finished */}
+      <button type="submit" className="bg-darkYellow p-4 rounded">
+        Submit
+      </button>
+    </Form>
+  );
+};
+
+export const WithWeekdays = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<WeekdayFormValues>();
+
+  const onSubmit = (data: WeekdayFormValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.Weekday
+        {...register("exersiceDays", {
+          required: "This field is required",
+          validate: (value) => value.length > 0,
+        })}
+        labelText="Exercise days"
+        hintText="Here is a hint"
+        feedback={errors.exersiceDays?.message}
+      />
+      <Form.Weekday
+        {...register("taskDays", {
+          required: "This field is required",
+          validate: (value) => value.length > 0,
+        })}
+        labelText="Days of this task"
+        hintText=""
+        feedback={errors.taskDays?.message}
       />
 
       {/* Replace with Submit button once button is finished */}
