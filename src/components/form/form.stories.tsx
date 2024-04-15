@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
 import { Form } from "./form";
 
+
+
 export default {
   title: "Form",
   component: Form,
 };
+
+
 
 interface MyFormValues {
   myTextField: string;
@@ -13,9 +17,7 @@ interface MyFormValues {
 }
 
 interface TimePickerValues {
-  hours: string;
-  minutes: string;
-  timePeriod: string;
+  Time: string;
 }
 
 export const WithTextInputs = () => {
@@ -70,42 +72,49 @@ export const WithTextInputs = () => {
   );
 };
 
-export const WithTimePicker = () => {
+//Story for TimePicker component
+export const TimePickerStory = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TimePickerValues>();
 
+  // Submit function
   const onSubmit = (data: TimePickerValues) => {
     alert(JSON.stringify(data, null, 2));
+
   };
 
+  // const [time, setTime] = useState<string>('');
 
-return (
-  <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-    <Form.TimePicker
-     labelText="Reminder 1"
-     hintText="Here is a hint"
-      feedback={errors.hours?.message || errors.minutes?.message || errors.timePeriod?.message}
-      {...register("hours", {
-        required: true,
-        pattern: /^(0?[0-9]|1[0-2])$/,
-        min: 0,
-        max: 12,
+  // const handleTimeChange = (value: string) => {
+  //   console.log('Combined Time:', value);
+  // };
+  // const timeValue = watch("Time");
+
+  //  // Function to handle change in time value
+  //  const handleTimeChange = (hour: string, minute: string, period: string) => {
+  //   const value = `${hour}:${minute} ${period}`;
+  //   console.log("Selected Time:", value);
+  // };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.TimePicker
+        labelText="Reminder 1"
+        hintText="select a time"
+        feedback={errors.Time?.message}
+        {...register('Time', {
+          required: 'Time is required',
+         
         })}
-        {...register("minutes", {
-          required: true,
-          min: 0.0,
-          max: 59,
-          pattern: /^(0?[0-9]|[1-5][0-9]|60)$/,
-        })}
-        {...register("timePeriod", {
-         required: true,
-         pattern: /^(AM|PM)$/i, 
-          })}
-       
       />
-  </Form>
-);
+      <button type="submit" className="bg-darkYellow p-4 rounded">
+        Submit
+      </button>
+    </Form>
+  );
 };
+
+
