@@ -1,4 +1,4 @@
-import { StepWizardProvider } from "./stepWizardContext";
+import { StepWizardProvider } from "../store/stepWizardContext";
 import { StepWizard } from "./stepWizard";
 
 export default {

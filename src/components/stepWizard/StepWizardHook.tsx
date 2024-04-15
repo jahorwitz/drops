@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { StepWizardContext } from "./stepWizardContext";
+import { StepWizardContext } from "../store/stepWizardContext";
 
 export const useStepWizard = () => {
   const context = useContext(StepWizardContext);
