@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "../button/button";
 import { faX } from "@fortawesome/free-solid-svg-icons";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 
 // Types for modal props
 type modalProps = {
@@ -45,7 +45,7 @@ export const Modal = ({ title, children, buttonText }: modalProps) => {
             <Button
               variant="icon"
               onClick={() => setIsOpen(false)}
-              icon={faX as IconProp}
+              icon={faX as IconDefinition}
               className="outline-none"
             />
           </div>
