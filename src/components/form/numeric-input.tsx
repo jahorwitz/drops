@@ -1,4 +1,5 @@
 import cx from "classnames";
+import { isNumber } from "lodash";
 import { HTMLProps, forwardRef, useRef} from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
@@ -12,11 +13,11 @@ type Props = UseFormRegisterReturn<string> &
 
 export const NumericInput = forwardRef<HTMLInputElement, Props>(
   ({ labelText, hintText, feedback, className, ...rest }: Props) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>();
     const handleMinusClick = () => {
       if (inputRef.current) {
         const currentValue = parseInt(inputRef.current.value);
-        if (currentValue > 0) {
+        if (!isNaN(currentValue) && currentValue > 0) {
           inputRef.current.value = (currentValue - 1).toString();
         }
       }
@@ -25,8 +26,12 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
     const handlePlusClick = () => {
       if (inputRef.current) {
         const currentValue = parseInt(inputRef.current.value);
-        inputRef.current.value = (currentValue + 1).toString();
-      }
+        if (!isNaN(currentValue)) {
+          inputRef.current.value = (currentValue + 1).toString();
+        } else {
+          inputRef.current.value = "1"; // Set to 1 if empty or NaN
+        }  
+          }
     };
 
     return (

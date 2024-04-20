@@ -12,6 +12,9 @@ interface MyFormValues {
   anEnumField: "one" | "two" | "three";
 }
 
+interface NumericInputFormValues {
+  numericField: number;
+}
 
 interface WeekdayFormValues {
   exersiceDays: string[];
@@ -117,25 +120,21 @@ export const WithNumericInputs = ()=> {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<MyFormValues>();
-  const onSubmit = (data: MyFormValues) => {
+  } = useForm<NumericInputFormValues>();
+
+  const onSubmit = (data: NumericInputFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Form.NumericInput
+       {...register("numericField", {
+        validate: (value) => value < 3 || "This field must be greater than 3",
+      })}
         labelText="Meals per day"
         hintText="3 is a recommended amount"
-        feedback={errors.anEnumField?.message}
-        {...register("anEnumField", {
-          required: "This field is required",
-          validate: (value) => {
-            if (isNaN(Number(value))) {
-              return "This field must be a Numeric value";
-            }
-          return Number(value) >= 0 || "This field must be a positive value"
-        },
-        })}
+        feedback={errors.numericField?.message}
+        
       />
       <button type="submit" className="bg-darkYellow p-4 rounded">
         Submit
