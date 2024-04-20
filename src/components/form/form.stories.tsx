@@ -1,14 +1,11 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Form } from "./form";
-
 
 
 export default {
   title: "Form",
   component: Form,
 };
-
-
 
 interface MyFormValues {
   myTextField: string;
@@ -17,8 +14,9 @@ interface MyFormValues {
 }
 
 interface TimePickerValues {
-  Time: string;
+  time: string;  
 }
+
 
 export const WithTextInputs = () => {
   const {
@@ -72,49 +70,46 @@ export const WithTextInputs = () => {
   );
 };
 
-//Story for TimePicker component
+// Define the story function
 export const TimePickerStory = () => {
+  // Use useForm hook to manage form state
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<TimePickerValues>();
-
-  // Submit function
+ 
   const onSubmit = (data: TimePickerValues) => {
+    console.log(data);
     alert(JSON.stringify(data, null, 2));
-
+    
   };
-
-  // const [time, setTime] = useState<string>('');
-
-  // const handleTimeChange = (value: string) => {
-  //   console.log('Combined Time:', value);
-  // };
-  // const timeValue = watch("Time");
-
-  //  // Function to handle change in time value
-  //  const handleTimeChange = (hour: string, minute: string, period: string) => {
-  //   const value = `${hour}:${minute} ${period}`;
-  //   console.log("Selected Time:", value);
-  // };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <Form.TimePicker
-        labelText="Reminder 1"
-        hintText="select a time"
-        feedback={errors.Time?.message}
-        {...register('Time', {
-          required: 'Time is required',
-         
-        })}
+      {/* Render the Controller component with TimePicker as the "as" prop */}
+      <Controller
+        name="time"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <>
+          {field.value}
+             <Form.TimePicker
+            {...field}
+            labelText="Select Time"
+            hintText="Choose a time"
+            feedback={errors.time?.message}
+            {...register('time')} 
+          />
+          </>
+          
+        )}
       />
-      <button type="submit" className="bg-darkYellow p-4 rounded">
-        Submit
-      </button>
+      <button  className="bg-darkYellow p-4 rounded" type="submit">Submit</button>
+  
     </Form>
   );
 };
-
-

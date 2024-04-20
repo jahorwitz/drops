@@ -1,6 +1,6 @@
-import { HTMLProps, forwardRef, useRef, useEffect} from "react";
+import { HTMLProps, forwardRef, useRef, useEffect, useState} from "react";
 import cx from "classnames";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { UseFormRegisterReturn, useForm} from "react-hook-form";
 import IMask from 'imask';
 
 
@@ -10,64 +10,91 @@ type Props = UseFormRegisterReturn<string> &
     hintText?: string;
     feedback?: string;
     className?: string;
-    // onChange?:((value: string) => void);
+   
   };
 
-const addLeadingZero = (value: string): string => {
-  return value.length === 1 ? `0${value}` : value;
-};
 
-const handleInputBlur = (ref: React.RefObject<HTMLInputElement>) => {
-  return () => {
-    if (ref.current) {
-      const inputValue = ref.current.value.trim();
-      ref.current.value = addLeadingZero(inputValue);
-    }
-  };
-};
   export const TimePicker = forwardRef<HTMLInputElement, Props>(
-    ({ labelText, hintText, feedback, className, ...rest }: Props, _ref) => {
-      // const [period, setPeriod] = useState("AM");
+    ({ labelText, hintText, feedback, className, ...rest }: Props, ref ) => {
+    const [hour, setHour] = useState<string>('');
+    const [minute, setMinute] = useState<string>('');
+    const [period, setPeriod] = useState<string>('AM');
+
+    const { setValue } = useForm(); // Access the form instance
+
       // Refs for hour, minute, and period input fields
      const hourRef = useRef<HTMLInputElement>(null);
      const minuteRef = useRef<HTMLInputElement>(null);
      const periodRef = useRef<HTMLSelectElement>(null);
 
-    useEffect(() => {
-      if (hourRef.current) {
-        IMask(hourRef.current, {
-          mask: '00', // Format for hours
-          blocks: {
-            '00': {
-              mask: /^(?:[1-9]|1[0-2])$/,
-              placeholderChar: '00',
-            },
+     useEffect(() => {
+      const hourMask = IMask(hourRef.current!, {
+        mask: "00",
+        blocks: {
+          "00": {
+            mask: /^(?:[1-9]|1[0-2])$/,
+            placeholderChar: "00",
           },
-         
-        });
-      }
-      if (minuteRef.current) {
-        IMask(minuteRef.current, {
-          mask: '00', // Format for minutes
-          blocks: {
-            '00': {
-              mask: /^(0?[1-9]|[1-5][0-9]|60)$/,
-              placeholderChar: '00',
-            },
+        },
+      });
+      const minuteMask = IMask(minuteRef.current!, {
+        mask: "00",
+        blocks: {
+          "00": {
+            mask: /^(0?[1-9]|[1-5][0-9]|60)$/,
+            placeholderChar: "00",
           },
-         
-        });
-      }
+        },
+      });
+  
+      return () => {
+        hourMask.destroy();
+        minuteMask.destroy();
+      };
     }, []);
-
-
+  
    
+    useEffect(() => {
+      console.log('time', `${hour}:${minute}:${period}`);
+      setValue('time', `${hour}:${minute}:${period}`);
+    }, [hour, minute, period, setValue]);
 
-    //  // Function to handle the change of period
-    //   const handleChangePeriod = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    //     setPeriod(e.target.value);
-    //   };
-    
+
+ 
+    const addLeadingZero = (value: string): string => {
+    const parsedValue = parseInt(value, 10); // Parse the input value as an integer
+  //  if (isNaN(parsedValue)) return ''; // If parsing fails, return an empty string
+    return parsedValue < 10 ? `0${parsedValue}` : value; // Add leading zero if necessary
+
+  };
+
+    const handleInputBlur = (ref: React.RefObject<HTMLInputElement>) => {
+      return () => {
+        if (ref.current) {
+          let inputValue = ref.current.value.trim();
+          inputValue = addLeadingZero(inputValue);
+          ref.current.value = inputValue;
+        }
+      };
+    };
+
+    const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setHour(addLeadingZero(value));
+    };
+
+    const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setMinute(addLeadingZero(value))
+ 
+};
+    const handlePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const value = e.target.value;
+      setPeriod(value);
+    };
+   
+   
+ 
     const inputClassName = "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
     return (
         <div>
@@ -77,6 +104,8 @@ const handleInputBlur = (ref: React.RefObject<HTMLInputElement>) => {
           type= "text"
             {...rest}
             ref={hourRef}
+            value={hour}
+            onChange={handleHourChange}
             className={cx(inputClassName, className)}
             inputMode="numeric"
             onBlur={handleInputBlur(hourRef)} // Add onBlur event handler
@@ -87,17 +116,18 @@ const handleInputBlur = (ref: React.RefObject<HTMLInputElement>) => {
           type="text"
            {...rest}
            ref={minuteRef}
+           value={minute}
+            onChange={handleMinuteChange}
            className={cx(inputClassName, className, "mr-2")}
            inputMode="numeric" // Show numeric keypad on mobile
            onBlur={handleInputBlur(minuteRef)} // Add onBlur event handler
-           placeholder="00" // Add placeholder for hours
+           placeholder="00" // Add placeholder for minute
            />
        
        <select
-       
-          // value={period}
-          // onChange={handleChangePeriod}
           ref={periodRef}
+          value={period}
+          onChange={handlePeriodChange}
           className={cx(inputClassName, className, "font-text")}
           >
           <option value="AM">AM</option>
@@ -114,6 +144,3 @@ const handleInputBlur = (ref: React.RefObject<HTMLInputElement>) => {
     },
   );
  TimePicker.displayName = "TimePicker";
-
-
-
