@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { HTMLProps, forwardRef, useRef} from "react";
+import { HTMLProps, forwardRef, useState} from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 type Props = UseFormRegisterReturn<string> &
@@ -8,29 +8,27 @@ type Props = UseFormRegisterReturn<string> &
     hintText?: string;
     feedback?: string;
     className?: string;
+    defaultValue?: string | number;  // Add a defaultValue prop
   };
 
 export const NumericInput = forwardRef<HTMLInputElement, Props>(
-  ({ labelText, hintText, feedback, className, ...rest }: Props) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+  ({ labelText, hintText, feedback, className, defaultValue, ...rest }: Props, ref) => {
+    const [value, setValue] = useState<string | undefined>(defaultValue?.toString() || "");
+
     const handleMinusClick = () => {
-      if (inputRef.current) {
-        const currentValue = parseInt(inputRef.current.value);
-        if (!isNaN(currentValue) && currentValue > 0) {
-          inputRef.current.value = (currentValue - 1).toString();
-        }
+      const currentValue = parseInt(value || "0", 10);
+      if (!isNaN(currentValue) && currentValue > 0) {
+        setValue((currentValue - 1).toString());
       }
     };
 
     const handlePlusClick = () => {
-      if (inputRef.current) {
-        const currentValue = parseInt(inputRef.current.value);
-        if (!isNaN(currentValue)) {
-          inputRef.current.value = (currentValue + 1).toString();
-        } else {
-          inputRef.current.value = "1"; // Set to 1 if empty or NaN
-        }  
-          }
+      const currentValue = parseInt(value || "0", 10);
+      if (!isNaN(currentValue)) {
+        setValue((currentValue + 1).toString());
+      } else {
+        setValue("1"); // Set to 1 if empty or NaN
+      }
     };
 
     return (
@@ -38,7 +36,9 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
         <label>{labelText}</label>
         <input
           {...rest}
-          ref={inputRef}
+          ref={ref}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}  // Update state on change  
           className={cx(
             `rounded-lg border-black border-[1px] py-5 px-3 relative`,
             className,
@@ -56,4 +56,5 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
     );
   },
 );
+
 NumericInput.displayName = "NumericInput";

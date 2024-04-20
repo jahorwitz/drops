@@ -115,7 +115,7 @@ export const WithWeekdays = () => {
   );
 };
 
-export const WithNumericInputs = ()=> {
+export const WithNumericInputs = () => {
   const {
     register,
     handleSubmit,
@@ -125,21 +125,20 @@ export const WithNumericInputs = ()=> {
   const onSubmit = (data: NumericInputFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
+  
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Form.NumericInput
-       {...register("numericField", {
-        validate: (value) => value < 3 || "This field must be greater than 3",
+      {...register("numericField", {
+        validate: (value) =>(value ? value >= 3 || 'This field must be greater than or equal to 3' : 'This field is required'),
       })}
         labelText="Meals per day"
         hintText="3 is a recommended amount"
         feedback={errors.numericField?.message}
-        
       />
       <button type="submit" className="bg-darkYellow p-4 rounded">
         Submit
       </button>
     </Form>
   );
-
 }
