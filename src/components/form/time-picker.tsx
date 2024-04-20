@@ -41,7 +41,7 @@ type Props = UseFormRegisterReturn<string> &
         mask: "00",
         blocks: {
           "00": {
-            mask: /^(0?[1-9]|[1-5][0-9]|60)$/,
+            mask: /^(0?[1-9]|[1-5][0-9]|59)$/,
             placeholderChar: "00",
           },
         },
@@ -63,10 +63,11 @@ type Props = UseFormRegisterReturn<string> &
  
     const addLeadingZero = (value: string): string => {
     const parsedValue = parseInt(value, 10); // Parse the input value as an integer
-  //  if (isNaN(parsedValue)) return ''; // If parsing fails, return an empty string
-    return parsedValue < 10 ? `0${parsedValue}` : value; // Add leading zero if necessary
+    if (isNaN(parsedValue)) return ''; // If parsing fails, return an empty string
+    return parsedValue < 10 && parsedValue >= 10 ? `0${parsedValue}` : value; // Add leading zero if necessary and value is not negative
+};
 
-  };
+  
 
     const handleInputBlur = (ref: React.RefObject<HTMLInputElement>) => {
       return () => {
