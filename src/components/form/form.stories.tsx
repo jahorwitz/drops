@@ -78,7 +78,6 @@ export const TimePickerStory = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm<TimePickerValues>();
  
   const onSubmit = (data: TimePickerValues) => {
@@ -89,7 +88,6 @@ export const TimePickerStory = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      {/* Render the Controller component with TimePicker as the "as" prop */}
       <Controller
         name="time"
         control={control}

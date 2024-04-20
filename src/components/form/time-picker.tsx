@@ -15,7 +15,7 @@ type Props = UseFormRegisterReturn<string> &
 
 
   export const TimePicker = forwardRef<HTMLInputElement, Props>(
-    ({ labelText, hintText, feedback, className, ...rest }: Props, ref ) => {
+    ({ labelText, hintText, feedback, className, ...rest }: Props, ) => {
     const [hour, setHour] = useState<string>('');
     const [minute, setMinute] = useState<string>('');
     const [period, setPeriod] = useState<string>('AM');
