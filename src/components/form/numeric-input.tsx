@@ -12,7 +12,7 @@ type Props = UseFormRegisterReturn<string> &
 
 export const NumericInput = forwardRef<HTMLInputElement, Props>(
   ({ labelText, hintText, feedback, className, ...rest }: Props) => {
-    const inputRef = useRef<HTMLInputElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
     const handleMinusClick = () => {
       if (inputRef.current) {
         const currentValue = parseInt(inputRef.current.value);
