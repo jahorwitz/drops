@@ -2,6 +2,8 @@ import { useForm, Controller } from "react-hook-form";
 import { Form } from "./form";
 
 
+
+
 export default {
   title: "Form",
   component: Form,
@@ -13,8 +15,12 @@ interface MyFormValues {
   anEnumField: "one" | "two" | "three";
 }
 
-interface TimePickerValues {
-  time: string;  
+interface TimePicker {
+  timeValue: {
+    hours: string;
+    minutes: string;
+    period: "AM" | "PM";
+  };
 }
 
 
@@ -72,42 +78,55 @@ export const WithTextInputs = () => {
 
 // Define the story function
 export const TimePickerStory = () => {
-  // Use useForm hook to manage form state
   const {
     control,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TimePickerValues>();
+  } = useForm<TimePicker>();
  
-  const onSubmit = (data: TimePickerValues) => {
-    console.log(data);
+  const onSubmit = (data: TimePicker) => {
+    console.log("value of hour, minute , period" + data);
     alert(JSON.stringify(data, null, 2));
     
   };
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Controller
-        name="time"
+        name="timeValue"
         control={control}
-        defaultValue=""
+        // defaultValue='00:00:AM' 
         render={({ field }) => (
           <>
           {field.value}
-             <Form.TimePicker
-            {...field}
-            labelText="Select Time"
+          <Form.TimePicker
+            // {...field}
+            labelText="Reminder 1"
             hintText="Choose a time"
-            feedback={errors.time?.message}
-            {...register('time')} 
+            // setValue={setValue} 
+            feedback={errors.timeValue?.message}
+            {...register('timeValue.hours')}
+
           />
           </>
           
-        )}
+        )} 
+
       />
+
+      
       <button  className="bg-darkYellow p-4 rounded" type="submit">Submit</button>
-  
     </Form>
+  
   );
 };
+
+
+
+
+
+
+
+
+
+

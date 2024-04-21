@@ -1,6 +1,7 @@
+
 import { HTMLProps, forwardRef, useRef, useEffect, useState} from "react";
 import cx from "classnames";
-import { UseFormRegisterReturn, useForm} from "react-hook-form";
+import { UseFormRegisterReturn, useForm } from "react-hook-form";
 import IMask from 'imask';
 
 
@@ -10,15 +11,16 @@ type Props = UseFormRegisterReturn<string> &
     hintText?: string;
     feedback?: string;
     className?: string;
+  
+  
    
   };
-
-
   export const TimePicker = forwardRef<HTMLInputElement, Props>(
-    ({ labelText, hintText, feedback, className, ...rest }: Props, ) => {
+    ({ labelText, hintText, feedback, className, ...rest }: Props) => {
     const [hour, setHour] = useState<string>('');
     const [minute, setMinute] = useState<string>('');
     const [period, setPeriod] = useState<string>('AM');
+    
 
     const { setValue } = useForm(); // Access the form instance
 
@@ -46,49 +48,56 @@ type Props = UseFormRegisterReturn<string> &
           },
         },
       });
-  
       return () => {
         hourMask.destroy();
         minuteMask.destroy();
       };
     }, []);
   
-   
-    useEffect(() => {
-      console.log('time', `${hour}:${minute}:${period}`);
-      setValue('time', `${hour}:${minute}:${period}`);
-    }, [hour, minute, period, setValue]);
-
-
- 
     const addLeadingZero = (value: string): string => {
-    const parsedValue = parseInt(value, 10); // Parse the input value as an integer
-    if (isNaN(parsedValue)) return ''; // If parsing fails, return an empty string
-    return parsedValue < 10 && parsedValue >= 10 ? `0${parsedValue}` : value; // Add leading zero if necessary and value is not negative
-};
+      const parsedValue = parseInt(value, 10); // Parse the input value as an integer
+      if (!isNaN(parsedValue) && parsedValue < 10 && !(parsedValue === 0)) {
+          return `0${parsedValue}`; // Add leading zero if necessary and value is less than 10
+      } else {
+          return value; 
+      }
+    
+    }
 
-  
+    useEffect(() => {
+      console.log('timeValue', `${hour}:${minute}:${period}`);
+      setValue('timeValue', `${hour}:${minute}:${period}`,{ 
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+    }, [hour, minute, period, setValue]);
+    
 
-    const handleInputBlur = (ref: React.RefObject<HTMLInputElement>) => {
-      return () => {
-        if (ref.current) {
-          let inputValue = ref.current.value.trim();
-          inputValue = addLeadingZero(inputValue);
-          ref.current.value = inputValue;
-        }
-      };
-    };
-
-    const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setHour(addLeadingZero(value));
-    };
+      console.log(value);
+      setHour((value));
+     
+  };
+  
+  const handleHourBlur = () => {
+    // Process the value when the focus is lost
+    setHour(addLeadingZero(hour));
+  
+};
 
     const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setMinute(addLeadingZero(value))
+      setMinute((value));
  
 };
+
+    const handleMinuteBlur = () => {
+  // Process the value when the focus is lost
+    setMinute(addLeadingZero(minute));
+    };
+
     const handlePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const value = e.target.value;
       setPeriod(value);
@@ -106,11 +115,13 @@ type Props = UseFormRegisterReturn<string> &
             {...rest}
             ref={hourRef}
             value={hour}
+            name={hour}
             onChange={handleHourChange}
+            onBlur={handleHourBlur}
             className={cx(inputClassName, className)}
             inputMode="numeric"
-            onBlur={handleInputBlur(hourRef)} // Add onBlur event handler
-            placeholder="00" // Add placeholder for hours
+            // onBlur={handleInputBlur(hourRef)} // Add onBlur event handler
+            placeholder="00"
           />
            <span className="ml-[12px] mr-3">:</span>
           <input 
@@ -118,16 +129,20 @@ type Props = UseFormRegisterReturn<string> &
            {...rest}
            ref={minuteRef}
            value={minute}
+           name={minute}
             onChange={handleMinuteChange}
+            onBlur={handleMinuteBlur}
+
            className={cx(inputClassName, className, "mr-2")}
            inputMode="numeric" // Show numeric keypad on mobile
-           onBlur={handleInputBlur(minuteRef)} // Add onBlur event handler
-           placeholder="00" // Add placeholder for minute
+          //  onBlur={handleInputBlur(minuteRef)} // Add onBlur event handler
+           placeholder="00" 
            />
        
        <select
           ref={periodRef}
           value={period}
+          name={period}
           onChange={handlePeriodChange}
           className={cx(inputClassName, className, "font-text")}
           >
