@@ -1,79 +1,82 @@
-import React from "react";
+import { Form } from "../form/form";
 import { useForm } from "react-hook-form";
-
-type FormData = {
-  [key: string]: string;
-};
-
-type Option = {
-  label: string;
-};
+import React, { useState } from "react";
 
 export type SelectProps = {
   title: string;
-  name: keyof FormData;
-  options: Option[];
-  placeholderValue?: string;
-  description?: string;
+  placeholderValue: string;
+  hintText: string;
+  options: string[]; // Array of options
 };
 
-export const FormSelect: React.FC<SelectProps> = ({
+const FormSelect = ({
   title,
-  name,
-  options,
   placeholderValue,
-  description,
-}) => {
+  hintText,
+  options,
+}: SelectProps) => {
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm();
+  const [selectedOption, setSelectedOption] = useState(""); // State to track selected option
 
-  const onSubmit = (data: FormData) => {
-    if (!errors[name]) {
-      alert(`You have selected ${data[name]}`);
+  const onSubmit = () => {
+    if (!selectedOption) {
+      setError("selectedOption", {
+        message: "Please select an option",
+      });
     } else {
-      console.log(errors);
-
-      alert(`Please select ${title.toLowerCase()}.`);
+      clearErrors("selectedOption");
+      console.log(selectedOption); // Log selected option value
     }
+  };
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value); // Update selected option
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="text-black max-w-pageContent w-[358px] h-auto flex flex-col	m-0 px-4">
-        <label
-          htmlFor={name as string}
-          className="font-text font-normal text-base leading-normal pb-1"
-        >
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <div className="text-black max-w-pageContent w-[358px] h-auto flex flex-col m-0 px-4">
+        <label className="font-text font-normal text-base leading-normal pb-1">
           {title}
         </label>
         <select
-          id={name as string}
-          {...register(name as string, { required: true })}
-          defaultValue=""
-          className="m-0 box-border  border shadow-sm rounded-lg grow-0 h-[60px] p-2    font-text rounded-s-lg px-3	py-5"
+          {...register("selectedOption")} // Register select input with react-hook-form
+          className="m-0 box-border border shadow-sm rounded-lg grow-0 h-[60px] p-2 font-text rounded-s-lg px-3 py-5"
+          value={selectedOption || ""} // Set selected option
+          onChange={handleChange} // Handle option change
         >
           <option value="" disabled hidden>
             {placeholderValue}
           </option>
-          {options.map((option, index) => (
-            <option
-              className="font-text text-base font-normal leading-none "
-              key={index}
-              value={option.label}
-            >
-              {option.label}
-            </option>
-          ))}
+
+          {options.map((option) =>
+            (selectedOption !== "" && option !== placeholderValue) ||
+            selectedOption === "" ? (
+              <option
+                className="font-text text-base font-normal leading-none"
+                key={option}
+                value={option}
+              >
+                {option}
+              </option>
+            ) : null,
+          )}
         </select>
-        {errors[name] && (
-          <span className="text-base font-normal leading-none text-red">
-            {description}
+        {errors.selectedOption && (
+          <span className="text-red">
+            {errors.selectedOption.message?.toString()}
           </span>
         )}
+
+        {hintText && <span className="text-black/60 text-sm">{hintText}</span>}
       </div>
-    </form>
+    </Form>
   );
 };
+
+export default FormSelect;
