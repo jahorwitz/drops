@@ -82,12 +82,10 @@ export const TimePickerStory = () => {
     control,
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<TimePicker>();
  
   const onSubmit = (data: TimePicker) => {
-    console.log("value of hour, minute , period" + data);
     alert(JSON.stringify(data, null, 2));
     
   };
@@ -96,7 +94,7 @@ export const TimePickerStory = () => {
       <Controller
         name="timeValue"
         control={control}
-        // defaultValue='00:00:AM' 
+        defaultValue='00:00:AM' 
         render={({ field }) => (
           <>
           {field.value}
@@ -104,7 +102,7 @@ export const TimePickerStory = () => {
              {...field}
             labelText="Reminder 1"
             hintText="Choose a time"
-            setValue={setValue}
+            setValue={(name, value) => field.onChange({ target: { name, value } })}
             feedback={errors.timeValue?.message}
             {...register('timeValue')}
 
