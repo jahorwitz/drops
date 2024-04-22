@@ -14,8 +14,6 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     setValue:  UseFormSetValue<T>;
   };
 
-
-
   export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
     ({ labelText, hintText, feedback, className, setValue, ...rest }: Props<FieldValues>) => {
     const [hour, setHour] = useState<string>('');
@@ -55,11 +53,10 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     const addLeadingZero = (value: string): string => {
       const parsedValue = parseInt(value, 10); // Parse the input value as an integer
       if (!isNaN(parsedValue) && parsedValue < 10 && !(parsedValue === 0)) {
-          return `0${parsedValue}`; // Add leading zero if necessary and value is less than 10
+          return `0${parsedValue}`;
       } else {
           return value; 
       }
-    
     }
 
     useEffect(() => {

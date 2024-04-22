@@ -94,10 +94,8 @@ export const TimePickerStory = () => {
       <Controller
         name="timeValue"
         control={control}
-        defaultValue='00:00:AM' 
         render={({ field }) => (
           <>
-          {field.value}
           <Form.TimePicker
              {...field}
             labelText="Reminder 1"
