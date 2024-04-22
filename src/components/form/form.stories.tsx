@@ -16,11 +16,11 @@ interface MyFormValues {
 }
 
 interface TimePicker {
-  timeValue: {
-    hours: string;
-    minutes: string;
-    period: "AM" | "PM";
-  };
+  timeValue: string;
+  //   hours: string;
+  //   minutes: string;
+  //   period: "AM" | "PM";
+  // };
 }
 
 
@@ -82,6 +82,7 @@ export const TimePickerStory = () => {
     control,
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TimePicker>();
  
@@ -100,12 +101,12 @@ export const TimePickerStory = () => {
           <>
           {field.value}
           <Form.TimePicker
-            // {...field}
+             {...field}
             labelText="Reminder 1"
             hintText="Choose a time"
-            // setValue={setValue} 
+            setValue={setValue}
             feedback={errors.timeValue?.message}
-            {...register('timeValue.hours')}
+            {...register('timeValue')}
 
           />
           </>

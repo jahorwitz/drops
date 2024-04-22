@@ -1,29 +1,27 @@
 
-import { HTMLProps, forwardRef, useRef, useEffect, useState} from "react";
+import { HTMLProps, forwardRef, useRef, useEffect, useState } from "react";
 import cx from "classnames";
-import { UseFormRegisterReturn, useForm } from "react-hook-form";
+import { UseFormRegisterReturn, UseFormSetValue, FieldValues } from "react-hook-form";
 import IMask from 'imask';
 
 
-type Props = UseFormRegisterReturn<string> &
+type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
     labelText?: string;
     hintText?: string;
     feedback?: string;
     className?: string;
-  
-  
-   
+    setValue:  UseFormSetValue<T>;
   };
-  export const TimePicker = forwardRef<HTMLInputElement, Props>(
-    ({ labelText, hintText, feedback, className, ...rest }: Props) => {
+
+
+
+  export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
+    ({ labelText, hintText, feedback, className, setValue, ...rest }: Props<FieldValues>) => {
     const [hour, setHour] = useState<string>('');
     const [minute, setMinute] = useState<string>('');
     const [period, setPeriod] = useState<string>('AM');
     
-
-    const { setValue } = useForm(); // Access the form instance
-
       // Refs for hour, minute, and period input fields
      const hourRef = useRef<HTMLInputElement>(null);
      const minuteRef = useRef<HTMLInputElement>(null);
@@ -71,12 +69,13 @@ type Props = UseFormRegisterReturn<string> &
         shouldDirty: true,
         shouldTouch: true,
       });
+      
     }, [hour, minute, period, setValue]);
     
 
   const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      console.log(value);
+
       setHour((value));
      
   };
