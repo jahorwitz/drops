@@ -15,7 +15,7 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   };
 
   export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-    ({ labelText, hintText, feedback, className, setValue, ...rest }: Props<FieldValues>) => {
+    ({ labelText, hintText, feedback, className, setValue, ...rest }: Props<FieldValues>, ) => {
     const [hour, setHour] = useState<string>('');
     const [minute, setMinute] = useState<string>('');
     const [period, setPeriod] = useState<string>('AM');
@@ -60,7 +60,6 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     }
 
     useEffect(() => {
-      console.log('timeValue', `${hour}:${minute}:${period}`);
       setValue('timeValue', `${hour}:${minute}:${period}`,{ 
         shouldValidate: true,
         shouldDirty: true,
@@ -72,21 +71,17 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
 
   const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-
       setHour((value));
-     
   };
   
   const handleHourBlur = () => {
     // Process the value when the focus is lost
     setHour(addLeadingZero(hour));
-  
 };
 
     const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setMinute((value));
- 
 };
 
     const handleMinuteBlur = () => {
@@ -116,7 +111,6 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
             onBlur={handleHourBlur}
             className={cx(inputClassName, className)}
             inputMode="numeric"
-            // onBlur={handleInputBlur(hourRef)} // Add onBlur event handler
             placeholder="00"
           />
            <span className="ml-[12px] mr-3">:</span>
@@ -131,7 +125,6 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
 
            className={cx(inputClassName, className, "mr-2")}
            inputMode="numeric" // Show numeric keypad on mobile
-          //  onBlur={handleInputBlur(minuteRef)} // Add onBlur event handler
            placeholder="00" 
            />
        

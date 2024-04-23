@@ -96,13 +96,21 @@ export const TimePickerStory = () => {
         control={control}
         render={({ field }) => (
           <>
+
           <Form.TimePicker
              {...field}
+             {...register("timeValue", { 
+              required: "Time value is required",
+              pattern: {
+                value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
+                message: "Invalid time format. Please use hh:mm:AM/PM"
+              }
+            })}
             labelText="Reminder 1"
             hintText="Choose a time"
             setValue={(name, value) => field.onChange({ target: { name, value } })}
             feedback={errors.timeValue?.message}
-            {...register('timeValue')}
+           
 
           />
           </>
