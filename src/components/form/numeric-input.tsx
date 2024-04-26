@@ -8,7 +8,7 @@ type Props = UseFormRegisterReturn<string> &
     hintText?: string;
     feedback?: string;
     className?: string;
-    defaultValue?: string | number;  // Add a defaultValue prop
+    defaultValue?: string | number; 
   };
 
 export const NumericInput = forwardRef<HTMLInputElement, Props>(
