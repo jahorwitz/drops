@@ -2,8 +2,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Form } from "./form";
 
 
-
-
 export default {
   title: "Form",
   component: Form,
@@ -15,14 +13,21 @@ interface MyFormValues {
   anEnumField: "one" | "two" | "three";
 }
 
-interface TimePicker {
-  timeValue: string;
-  //   hours: string;
-  //   minutes: string;
-  //   period: "AM" | "PM";
-  // };
+
+interface WeekdayFormValues {
+  exersiceDays: string[];
+  taskDays: string[];
 }
 
+
+interface FormValues {
+  optionName: string;
+}
+
+interface TimePicker {
+  timeValue: string;
+ 
+}
 
 export const WithTextInputs = () => {
   const {
@@ -33,6 +38,7 @@ export const WithTextInputs = () => {
   const onSubmit = (data: MyFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
+
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -76,6 +82,76 @@ export const WithTextInputs = () => {
   );
 };
 
+export const WithWeekdays = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<WeekdayFormValues>();
+
+  const onSubmit = (data: WeekdayFormValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.Weekday
+        {...register("exersiceDays", {
+          required: "This field is required",
+          validate: (value) => value.length > 0,
+        })}
+        labelText="Exercise days"
+        hintText="Here is a hint"
+        feedback={errors.exersiceDays?.message}
+      />
+      <Form.Weekday
+        {...register("taskDays", {
+          required: "This field is required",
+          validate: (value) => value.length > 0,
+        })}
+        labelText="Days of this task"
+        hintText=""
+        feedback={errors.taskDays?.message}
+      />
+
+      {/* Replace with Submit button once button is finished */}
+      <button type="submit" className="bg-darkYellow p-4 rounded">
+        Submit
+      </button>
+    </Form>
+  );
+};
+
+export const WithRadioGroup = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.RadioGroup
+        labelText="My Radio Group"
+        hintText="Select one option"
+        options={[
+          { value: "one", label: "Option 1" },
+          { value: "two", label: "Option 2" },
+          { value: "three", label: "Option 3" },
+        ]}
+        feedback={errors}
+        {...register("optionName" as keyof FormValues, {
+          required: "This field is required",
+        })}
+      />
+      {/* Replace with Submit button once button is finished */}
+    </Form>
+  );
+};
 // Define the story function
 export const TimePickerStory = () => {
   const {
@@ -96,7 +172,6 @@ export const TimePickerStory = () => {
         control={control}
         render={({ field }) => (
           <>
-
           <Form.TimePicker
              {...field}
              {...register("timeValue", { 
@@ -110,22 +185,16 @@ export const TimePickerStory = () => {
             hintText="Choose a time"
             setValue={(name, value) => field.onChange({ target: { name, value } })}
             feedback={errors.timeValue?.message}
-           
-
           />
-          </>
-          
+          </> 
         )} 
 
-      />
-
-      
+      />  
       <button  className="bg-darkYellow p-4 rounded" type="submit">Submit</button>
     </Form>
   
   );
 };
-
 
 
 
