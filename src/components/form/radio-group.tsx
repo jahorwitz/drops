@@ -1,29 +1,30 @@
 import { HTMLProps, forwardRef } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegisterReturn } from "react-hook-form";
 
 type Option = {
   value: string;
   label: string;
 };
 
-type Props = UseFormRegisterReturn<string> &
+type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
     labelText?: string;
     hintText?: string;
     options: Option[];
-    feedback?: string;
+    feedback?: FieldErrors<T>;
   };
 
-export const RadioGroup = forwardRef<HTMLInputElement, Props>(
-  ({ labelText, hintText, options, feedback,  ...rest }: Props, ref) => {
+export const RadioGroup = forwardRef<HTMLInputElement, Props<FieldValues>>(
+  ({ name, labelText, hintText, options, feedback,  ...rest }: Props<FieldValues>, ref) => {
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
         <label>{labelText}</label>
         <div className="space-y-2">
           {options.map((option, index) => (
-            <label key={index} className="font-text flex items-center space-x-2 border-2 border-lightGray rounded-lg p-3 text-paragraph-lg">
+            <label key={index} htmlFor={name} className="font-text flex items-center space-x-2 border-2 border-lightGray rounded-lg p-3 text-paragraph-lg">
               <input
                 {...rest}
+                name={name}
                 ref={ref}
                 type="radio"
                 value={option.value}
@@ -34,7 +35,7 @@ export const RadioGroup = forwardRef<HTMLInputElement, Props>(
           ))}
         </div>
         {feedback ? (
-          <span className="text-red text-base leading-5">{feedback}</span>
+          <span className="text-red text-base leading-5">{feedback[name]?.message as string}</span>
         ) : hintText ? (
           <span className="text-black/60 text-base">{hintText}</span>
         ) : null}

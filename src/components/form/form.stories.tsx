@@ -137,8 +137,8 @@ export const WithRadioGroup = () => {
           { value: "two", label: "Option 2" },
           { value: "three", label: "Option 3" },
         ]}
-        feedback={errors.optionName?.message}
-        {...register("optionName", {
+        feedback={errors}
+        {...register("optionName" as keyof FormValues, {
           required: "This field is required",
         })}
       />
