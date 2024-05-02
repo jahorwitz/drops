@@ -119,6 +119,37 @@ export const WithWeekdays = () => {
   );
 };
 
+export const WithRadioGroup = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.RadioGroup
+        labelText="My Radio Group"
+        hintText="Select one option"
+        options={[
+          { value: "one", label: "Option 1" },
+          { value: "two", label: "Option 2" },
+          { value: "three", label: "Option 3" },
+        ]}
+        feedback={errors}
+        {...register("optionName" as keyof FormValues, {
+          required: "This field is required",
+        })}
+      />
+      {/* Replace with Submit button once button is finished */}
+    </Form>
+  );
+};
+
 export const WithNumericInputs = () => {
   const {
     register,
