@@ -15,5 +15,5 @@ SelectOptions.args = {
   title: "Sex",
   placeholderValue: "Choose",
   hintText: "",
-  options: ["male", "female", "others"],
+  options: ["male", "female", "other"],
 };
