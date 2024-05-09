@@ -1,6 +1,9 @@
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import cx from "classnames";
-import { HTMLProps, forwardRef, useState} from "react";
+import { HTMLProps, forwardRef, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
+import { Button } from "../button";
 
 type Props = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
@@ -8,28 +11,12 @@ type Props = UseFormRegisterReturn<string> &
     hintText?: string;
     feedback?: string;
     className?: string;
-    defaultValue?: string | number; 
+    defaultValue?: number;
   };
 
 export const NumericInput = forwardRef<HTMLInputElement, Props>(
   ({ labelText, hintText, feedback, className, defaultValue, ...rest }: Props, ref) => {
-    const [value, setValue] = useState<string | undefined>(defaultValue?.toString() || "");
-
-    const handleMinusClick = () => {
-      const currentValue = parseInt(value || "0", 10);
-      if (!isNaN(currentValue) && currentValue > 0) {
-        setValue((currentValue - 1).toString());
-      }
-    };
-
-    const handlePlusClick = () => {
-      const currentValue = parseInt(value || "0", 10);
-      if (!isNaN(currentValue)) {
-        setValue((currentValue + 1).toString());
-      } else {
-        setValue("1"); // Set to 1 if empty or NaN
-      }
-    };
+    const [value, setValue] = useState<number | undefined>(defaultValue);
 
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
@@ -38,15 +25,27 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
           {...rest}
           ref={ref}
           value={value}
-          onChange={(e) => setValue(e.target.value)}  // Update state on change  
+          onChange={(e) => {
+            const numericValue = e.target.value.replace(/[^0-9]/g, "");
+            setValue(Number(numericValue));
+          }}
           className={cx(
-            `rounded-lg border-black border-[1px] py-5 px-3 relative`,
+            `rounded-lg border border-black py-5 px-3 relative`,
             className,
           )}
         />
-        <button type="button" className = "absolute top-14 right-20 z-1 rounded-full border-solid border border-[#000] h-8 w-8 text-[16px]" onClick={handleMinusClick}
->-</button>
-        <button type="button" className = "absolute top-14 right-10 z-1 rounded-full border-solid border border-[#000] h-8 w-8 text-[16px]" onClick={handlePlusClick}>+</button>
+        <Button
+          variant="icon"
+          className="absolute top-14 right-20 z-1 border border-black"
+          icon={faMinus as IconDefinition}
+          onClick={() => setValue((prev) => (prev || 0) - 1)}
+        />
+        <Button
+          variant="icon"
+          className="absolute top-14 right-10 z-1 border border-black"
+          icon={faPlus as IconDefinition}
+          onClick={() => setValue((prev) => (prev || 0) + 1)}
+        />
         {feedback ? (
           <span className="text-red text-base leading-5">{feedback}</span>
         ) : hintText ? (

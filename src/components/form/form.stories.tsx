@@ -172,9 +172,7 @@ export const WithNumericInputs = () => {
         hintText="3 is a recommended amount"
         feedback={errors.numericField?.message}
       />
-      <button type="submit" className="bg-darkYellow p-4 rounded">
-        Submit
-      </button>
+      <Button type="submit">Submit</Button>
     </Form>
   );
 }
