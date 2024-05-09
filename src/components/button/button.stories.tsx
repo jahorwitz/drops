@@ -1,5 +1,6 @@
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { Button } from "./button";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 
 export default {
   title: "Button",
@@ -42,7 +43,7 @@ export const Danger = () => (
 export const Icon = () => (
   <Button
     variant="icon"
-    icon={faTrashCan}
+    icon={faTrashCan as IconDefinition}
     onClick={() => alert("I'm an icon button")}
   />
 );
