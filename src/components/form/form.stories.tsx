@@ -1,5 +1,7 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Form } from "./form";
+import { Button } from "../button";
+
 
 export default {
   title: "Form",
@@ -21,6 +23,11 @@ interface WeekdayFormValues {
 
 interface FormValues {
   optionName: string;
+}
+
+interface TimePicker {
+  timeValue: string;
+
 }
 
 export const WithTextInputs = () => {
@@ -68,10 +75,7 @@ export const WithTextInputs = () => {
         })}
       />
 
-      {/* Replace with Submit button once button is finished */}
-      <button type="submit" className="bg-darkYellow p-4 rounded">
-        Submit
-      </button>
+      <Button type="submit">Submit</Button>
     </Form>
   );
 };
@@ -108,10 +112,7 @@ export const WithWeekdays = () => {
         feedback={errors.taskDays?.message}
       />
 
-      {/* Replace with Submit button once button is finished */}
-      <button type="submit" className="bg-darkYellow p-4 rounded">
-        Submit
-      </button>
+      <Button type="submit">Submit</Button>
     </Form>
   );
 };
@@ -142,7 +143,59 @@ export const WithRadioGroup = () => {
           required: "This field is required",
         })}
       />
-      {/* Replace with Submit button once button is finished */}
+      <Button type="submit">Submit</Button>
     </Form>
   );
 };
+
+export const TimePicker = () => {
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TimePicker>();
+
+  const onSubmit = (data: TimePicker) => {
+    alert(JSON.stringify(data, null, 2));
+
+  };
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Controller
+        name="timeValue"
+        control={control}
+        render={({ field }) => (
+          <>
+            <Form.TimePicker
+              {...field}
+              {...register("timeValue", {
+                required: "Time value is required",
+                pattern: {
+                  value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
+                  message: "Invalid time format. Please use hh:mm:AM/PM"
+                }
+              })}
+              labelText="Reminder 1"
+              hintText="Choose a time"
+              setValue={(name, value) => field.onChange({ target: { name, value } })}
+              feedback={errors.timeValue?.message}
+            />
+          </>
+        )}
+
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+
+  );
+};
+
+
+
+
+
+
+
+
+
