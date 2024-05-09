@@ -14,6 +14,9 @@ interface MyFormValues {
   anEnumField: "one" | "two" | "three";
 }
 
+interface NumericInputFormValues {
+  numericField: number;
+}
 
 interface WeekdayFormValues {
   exersiceDays: string[];
@@ -147,6 +150,32 @@ export const WithRadioGroup = () => {
     </Form>
   );
 };
+
+export const WithNumericInputs = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NumericInputFormValues>();
+
+  const onSubmit = (data: NumericInputFormValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.NumericInput
+        {...register("numericField", {
+          validate: (value) => (value ? value >= 3 || 'This field must be greater than or equal to 3' : 'This field is required'),
+        })}
+        labelText="Meals per day"
+        hintText="3 is a recommended amount"
+        feedback={errors.numericField?.message}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+}
 
 export const TimePicker = () => {
   const {

@@ -1,8 +1,9 @@
 import { FormEventHandler, ReactNode } from "react";
 import { TextInput } from "./text-input";
-import { TimePicker } from "./time-picker"; 
+import { TimePicker } from "./time-picker";
 import { WeekdaySelector } from "./weekday";
 import { RadioGroup } from "./radio-group";
+import { NumericInput } from "./numeric-input";
 
 type Props = {
   className?: string;
@@ -19,7 +20,7 @@ export const Form = ({ className, children, onSubmit, ...rest }: Props) => {
 };
 
 Form.TextInput = TextInput;
+Form.NumericInput = NumericInput;
 Form.TimePicker = TimePicker;
-
 Form.Weekday = WeekdaySelector;
 Form.RadioGroup = RadioGroup;

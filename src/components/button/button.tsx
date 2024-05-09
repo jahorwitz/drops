@@ -23,9 +23,9 @@ export const Button = ({
       type={type as 'button' | 'submit' | 'reset'}
       {...rest}
       className={twMerge(
-        `text-lg font-medium font-text`,
+        `text-lg font-medium font-text active:opacity-60`,
         variant === "primary" &&
-        "text-lightGray bg-black px-10 py-4 leading-5 rounded-lg hover:opacity-60",
+        "text-lightGray bg-black px-10 py-4 leading-5 rounded-lg hover:opacity-80",
         variant === "secondary" &&
         `text-black px-10 py-4 leading-5 border-black border rounded-lg hover:opacity-60`,
         variant === "text" &&
