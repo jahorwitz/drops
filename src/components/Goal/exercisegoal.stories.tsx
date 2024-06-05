@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import ExerciseGoal, { ExerciseGoalProps } from './exercisegoal';
-import { GoalType } from '../../utils/goal';
+import { GoalType } from '../../utils/goaltype';
 
 export default {
   title:'ExerciseGoal',
