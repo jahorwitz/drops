@@ -1,24 +1,47 @@
+// src/GoalForm.stories.tsx
+
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import ExerciseGoal, { ExerciseGoalProps } from './goal';
+import GoalForm from './goal';
+import { Goal } from './goal';
 import { GoalType } from '../../utils/goaltype';
 
 export default {
-  title:'ExerciseGoal',
-  component: ExerciseGoal,
-} as Meta;
+  title: 'GoalForm',
+  component: GoalForm,
+};
 
+const Template: Story<{ goal: Goal; onSave: (goal: Goal) => void }> = (args) => <GoalForm {...args} />;
 
-const Template: Story<ExerciseGoalProps> = (args) => <ExerciseGoal {...args} />;
-
-export const YogaExercise = Template.bind({});
-  YogaExercise.args = {
+export const ExerciseGoal = Template.bind({});
+ExerciseGoal.args = {
+  goal: {
     type: GoalType.Exercise,
-    name: 'Yoga',
-    metric: {
-      amount: 60,
-      unitOfMeasure: 'min',
-    },
-    daysOfWeek: ['Monday', 'Wednesday'],
-  };
+    name: 'Morning Run',
+    metric: { amount: 5, unitOfMeasure: 'km' },
+    daysOfWeek: ['Monday', 'Wednesday', 'Friday'],
+  },
+  onSave: (goal) => console.log('Saved Goal:', goal),
+};
 
+export const DietGoal = Template.bind({});
+DietGoal.args = {
+  goal: {
+    type: GoalType.Diet,
+    name: 'Vegetable Intake',
+    metric: { amount: 3, unitOfMeasure: 'servings' },
+    daysOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+  },
+  onSave: (goal) => console.log('Saved Goal:', goal),
+};
+
+export const EmptyGoal = Template.bind({});
+EmptyGoal.args = {
+  goal: {
+    type: GoalType.Exercise,
+    name: '',
+    metric: { amount: 0, unitOfMeasure: '' },
+    daysOfWeek: [],
+  },
+  onSave: (goal) => console.log('Saved Goal:', goal),
+};
