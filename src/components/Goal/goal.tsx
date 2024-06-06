@@ -14,7 +14,7 @@ export interface Goal {
   name: string;
   daysOfWeek:  DayOfWeek[];
   metric: Metric;
-};
+}
 
 import React, { useState } from 'react';
 

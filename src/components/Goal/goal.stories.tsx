@@ -1,7 +1,5 @@
 // src/GoalForm.stories.tsx
-
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { Story } from '@storybook/react';
 import GoalForm from './goal';
 import { Goal } from './goal';
 import { GoalType } from '../../utils/goaltype';
