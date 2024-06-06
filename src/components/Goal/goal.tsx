@@ -1,5 +1,5 @@
 
-import { GoalType } from '../../utils/goal';
+import { GoalType } from '../../utils/goaltype';
 
 export type ExerciseGoalProps = {
   type: GoalType;
