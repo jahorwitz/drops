@@ -220,6 +220,36 @@ export const TimePicker = () => {
   );
 };
 
+export const SelectForm = () =>{
+  const {
+    register, 
+    handleSubmit, 
+    formState: {errors},
+  } = useForm<FormValues>(); 
+
+  const onSubmit = (data: FormValues) => {
+    alert(JSON.stringify(data, null, 2))
+  }
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4">
+      <Form.SelectForm
+      labelText="Sex"
+      hintText = "Select one option"
+      options={[
+        {value: "male", label: "Male"},
+        {value: "female", label: "Female"},
+        {value: "other", label: "Other"}
+      ]}
+      feedback={errors}
+        {...register("Sex" as keyof FormValues, {
+          required: "This field is required",
+        })}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  )
+}; 
 
 
 
