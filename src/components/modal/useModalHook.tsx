@@ -1,8 +1,11 @@
-import { useContext } from "react";
-import { ModalContext } from "./modalContext";
+import { ModalContext } from "./modal";
+import { useContext } from "react"
 
 
-export const useModal = () => {
-  const context = useContext(ModalContext);
-  return context;
-};
+/* useContext Hook */
+const useModal = () => {
+    const context = useContext(ModalContext);
+    return context;
+  };
+
+  export default useModal
