@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./global/default.css";
-import WelcomeScreeen from "./components/welcome.screen/welcome.screen";
+import WelcomeScreen from "../src/routes/welcome.screen/welcome";
 
 const client = new ApolloClient({
   uri: "http://localhost:8080/api/graphql",
@@ -16,9 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
-          <Route path="/welcome" element={<WelcomeScreeen />} />
+          <Route path="/welcome" element={<WelcomeScreen />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

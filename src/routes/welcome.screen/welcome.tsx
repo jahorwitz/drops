@@ -1,7 +1,8 @@
 import React from "react";
-import logo from "./droplogo.svg";
-import bgimg from "./bgimg.svg";
-import { Button } from "../button";
+import logo from "../../images/Logo.svg";
+import cover from "../../images/Polygon.svg";
+import { Link } from "react-router-dom";
+import { Button } from "../../components/button/button";
 
 const textStyles = {
   base: "font-text text-section-subtext font-normal leading-[24px] text-center",
@@ -14,15 +15,16 @@ const WelcomeScreen: React.FC = () => {
   return (
     <div className="flex flex-col bg-lightYellow max-w-screen-sm pb-8 relative overflow-hidden m-auto">
       <img
-        src={bgimg}
+        src={cover}
         alt="Background image"
-        className="absolute inset-x-0 w-full h-[680px]"
+        className="absolute inset-x-0 w-full h-[700px] 
+        "
       />
       <div className="z-10">
         <img
           src={logo}
           alt="Drop Logo"
-          className="w-20 h-[104.27px] mt-10 mx-auto z-1"
+          className="w-20 h-[112.27px] mt-14 mx-auto z-1"
         />
 
         <div className="flex flex-col gap-10 items-center pt-20">
@@ -42,18 +44,22 @@ const WelcomeScreen: React.FC = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center gap-3 pt-20">
-          <Button
-            className={textStyles.buttonStyles}
-            variant="primary"
-            buttonText="Register"
-            onClick={() => alert("I'm Register button")}
-          />
-          <Button
-            className={textStyles.buttonStyles}
-            variant="secondary"
-            buttonText="Login"
-            onClick={() => alert("I'm Login button")}
-          />
+          <Link to="/register">
+            <Button
+              className={textStyles.buttonStyles}
+              variant="primary"
+              buttonText="Register"
+              onClick={() => alert("Register button")}
+            />
+          </Link>
+          <Link to="/login">
+            <Button
+              className={textStyles.buttonStyles}
+              variant="secondary"
+              buttonText="Log In"
+              onClick={() => alert("Login button")}
+            />
+          </Link>
         </div>
       </div>
     </div>
