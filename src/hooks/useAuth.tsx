@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
- interface UserSessionData {
+interface UserSessionData {
   id: string;
   name: string;
   isAdmin: boolean;
