@@ -1,1 +1,1 @@
-export * from "../routes/welcome.screen/welcome";
+export * from "./welcome/welcome";

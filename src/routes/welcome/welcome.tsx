@@ -13,11 +13,11 @@ const textStyles = {
 
 const WelcomeScreen: React.FC = () => {
   return (
-    <div className="flex flex-col bg-lightYellow max-w-screen-sm pb-8 relative overflow-hidden m-auto">
+    <div className="flex flex-col bg-lightYellow max-w-screen-md pb-8 relative overflow-hidden m-auto  h-screen">
       <img
         src={cover}
         alt="Background image"
-        className="absolute inset-x-0 w-full h-[700px] 
+        className="absolute inset-x-0 w-full h-[700px]
         "
       />
       <div className="z-10">
