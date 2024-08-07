@@ -1,5 +1,7 @@
-import { Modal } from "./modal";
+import { Button } from "../button";
+import { Modal, ModalProvider } from "./modal";
 import { useForm } from "react-hook-form";
+import useModal from "./useModalHook";
 
 export default {
   title: "Modal",
@@ -13,7 +15,7 @@ interface MyFormValues {
 }
 
 
-export const ModalStory = () => {
+export const Default = () => {
 
   const {
     handleSubmit,
@@ -22,10 +24,26 @@ export const ModalStory = () => {
     alert(JSON.stringify(data, null, 2));
   };
 
-  return (
-    <Modal title="Add Glucose Measurement" buttonText="Add Measurement" onSubmit={handleSubmit(onSubmit)}>
+  const ModalTrigger = () => {
+    const { openModal } = useModal();
+    return (
+      <Button
+        variant="secondary"
+        buttonText="Open Modal"
+        onClick={() => openModal("glucose-measurement")}
+      />
+    );
+  }
 
-    </Modal>
+  return (
+    <ModalProvider>
+      <div>
+        <ModalTrigger />
+        <Modal modalId="glucose-measurement" title="Add Glucose Measurement" buttonText="Add Measurement" onSubmit={handleSubmit(onSubmit)}>
+          This is a modal
+        </Modal>
+      </div>
+    </ModalProvider>
   );
 };
 

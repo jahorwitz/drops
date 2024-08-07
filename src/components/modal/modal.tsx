@@ -1,52 +1,59 @@
-import { MouseEventHandler, ReactNode, useState, createContext } from "react";
+import { MouseEventHandler, ReactNode, useState, createContext, PropsWithChildren } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "../button/button";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import useModal from "./useModalHook";
 
 /* Modal Context */
 type ModalContextType = {
-    isOpen: boolean;
-    currentModal: string | null;
-    openModal: (modalId: string) => void;
-    closeModal: () => void;
+  currentModal: string;
+  openModal: (modalId: string) => void;
+  closeModal: () => void;
+};
+
+export const ModalContext = createContext<ModalContextType>({
+  currentModal: "",
+  openModal: () => { },
+  closeModal: () => { },
+});
+
+export const ModalProvider = ({ children }: PropsWithChildren) => {
+  const [currentModal, setCurrentModal] = useState("");
+
+  const openModal = (modalId: string) => {
+    setCurrentModal(modalId);
+
   };
-  
-   export const ModalContext = createContext<ModalContextType | undefined>(
-    undefined,
+
+  const closeModal = () => {
+    setCurrentModal("");
+  };
+
+  return (
+    <ModalContext.Provider value={{ currentModal, openModal, closeModal }}>
+      {children}
+    </ModalContext.Provider>
   );
+}
 
-  
-
-  /* Modal Component */
+/* Modal Component */
 type modalProps = {
+  modalId: string;
   title?: string;
   buttonText?: string;
   children?: ReactNode;
   onSubmit?: MouseEventHandler
   isOpen?: boolean
-  onClose? : () => void
+  onClose?: () => void
 };
 
-export const Modal = ({ title, children, buttonText, onSubmit }: modalProps) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [currentModal, setCurrentModal] = useState("");
-
-  const openModal = (modalId: string) => {
-    setCurrentModal(modalId);
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setCurrentModal("");
-    setIsOpen(false);
-  };
-
+export const Modal = ({ title, modalId, children, buttonText, onSubmit }: modalProps) => {
+  const { currentModal, closeModal } = useModal();
 
   return (
-    <ModalContext.Provider value={{ isOpen, currentModal, openModal, closeModal }}>
-    <Transition show={isOpen} appear={true}>
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+    <Transition show={currentModal === modalId} appear={true}>
+      <Dialog open={currentModal === modalId} onClose={closeModal}>
         <Transition.Child
           appear={true}
           enter="transition-opacity linear duration-300"
@@ -67,17 +74,17 @@ export const Modal = ({ title, children, buttonText, onSubmit }: modalProps) => 
           leaveFrom="translate-y-0"
           leaveTo="translate-y-full"
         ></Transition.Child>
-        <Dialog.Panel className="bg-white fixed flex flex-col min-h-[540px] left-0 bottom-0 w-full rounded-t-[20px] px-4 pt-5 pb-7">
+        <Dialog.Panel className="bg-white fixed flex flex-col min-h-[60vh] left-0 bottom-0 w-full rounded-t-[20px] px-4 pt-5 pb-7">
           <div className="flex justify-between z-10">
             <Dialog.Title className="font-text text-section-subtext font-medium pb-8">
               {title}
             </Dialog.Title>
             <Button
               variant="icon"
-              onClick={() => setIsOpen(false)}
+              onClick={closeModal}
               icon={faX as IconDefinition}
               className="outline-none"
-              />
+            />
           </div>
           <div className="flex flex-col w-full">{children}</div>
           <Button
@@ -90,6 +97,5 @@ export const Modal = ({ title, children, buttonText, onSubmit }: modalProps) => 
         </Dialog.Panel>
       </Dialog>
     </Transition>
-    </ModalContext.Provider>
   );
 };
