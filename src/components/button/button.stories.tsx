@@ -46,3 +46,14 @@ export const Icon = () => (
     onClick={() => alert("I'm an icon button")}
   />
 );
+
+export const logout = () => (
+  <Button
+  variant="text"
+  className="font-medium text-base text-black"
+  buttonText="Log out"
+  onClick={() => alert("I'm a logout button")}
+  />
+)
+
+
