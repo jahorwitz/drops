@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./global/default.css";
-import WelcomeScreen from "../src/routes/welcome.screen/welcome";
+
 import RegistrConfirmation from "../src/routes/registration/registration-confirm";
 
 const client = new ApolloClient({
@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
-          <Route path="/welcome" element={<WelcomeScreen />} />
+          <Route path="/welcome" element={<div>WelcomeScreen </div>} />
           <Route path="/registration-confirm" element={<RegistrConfirmation />} />
         </Routes>
       </BrowserRouter>

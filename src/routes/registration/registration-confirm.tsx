@@ -17,7 +17,7 @@ const textStyles = {
   const RegistrConfirmation: React.FC = () => {
     return (
       
-      <div className="flex flex-col bg-lightYellow max-w-screen-sm relative overflow-hidden m-auto pb-80">
+      <div className="flex flex-col bg-lightYellow max-w-screen-md relative overflow-hidden m-auto pb-80 h-screen">
         <img
           src={cover}
           alt="Background image"
