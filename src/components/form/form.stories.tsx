@@ -237,7 +237,7 @@ export const AccountCreationForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col  max-w-md justify-center m-auto gap-4">
       <Form.AccountCreationForm
         labelText="Name"
         placeholder="Enter your name"

@@ -12,7 +12,7 @@ type Props = UseFormRegisterReturn<string> &
 export const AccountCreationForm = forwardRef<HTMLInputElement, Props>(
   ({ labelText, hintText, feedback, ...rest }: Props, ref) => {
     return (
-      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text ">
+      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text  ">
         <label>{labelText}</label>
         <input
           {...rest}
