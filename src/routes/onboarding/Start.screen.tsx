@@ -1,51 +1,35 @@
 import React from "react";
-import logo from "../../images/Logo.svg";
-import cover from "../../images/Polygon.svg";
-import backbutton from "../../images/Backbutton.svg";
-import { Link } from "react-router-dom";
-
 
 
 
 const textStyles = {
     base: "font-text text-section-subtext font-normal leading-[24px] text-center",
    confirmationTitle:
-      "font-text text-section-header font-medium leading-[52.8px] text-center max-w-[362px] mx-auto",
+      "font-text text-section-header font-medium leading-[38.4px] text-center max-w-[362px] mx-auto",
   };
 
 
-  const RegistrConfirmation: React.FC = () => {
+  const StartScreen: React.FC = () => {
     return (
       
-      <div className="flex flex-col bg-lightYellow max-w-screen-md relative overflow-hidden m-auto pb-80 h-screen">
-        <img
-          src={cover}
-          alt="Background image"
-          className="absolute inset-x-0 w-full h-[700px] 
-          "
-        />
-        <div className="z-10 mt-12 ml-5">
-          <Link to="/welcome">
-          <img
-            src={backbutton}
-          />
-           </Link>
-           </div>
+      <div className="flex flex-col max-w-screen-md relative overflow-hidden m-auto pb-80 h-screen">
+        
         <div className="z-10 ">
-          <img
-            src={logo}
-            alt="Drop Logo"
-            className="w-20 h-[112.27px]  mx-auto z-1 mt-3"
-          />
           
-          <div className="flex flex-col gap-5 items-center pt-32">
+          
+          <div className="flex flex-col gap-6 items-center pt-32">
             <h2 className={textStyles.confirmationTitle}>
-              Almost there!<br /> We've sent you an email<br /> with confirmation link <link rel="stylesheet" href="" />
+              Welcome, Rachel!<br /> 
+              Let's set up the app to<br /> 
+              help you feel your best.
+               <link rel="stylesheet" href="" />
             </h2>
   
-            <div className="w-[346px] flex flex-col items-center gap-y-3 ">
+            <div className="w-[346px] flex flex-col items-center  ">
               <p className={textStyles.base}>
-                Open it to confirm your account
+                Next, you'll set up goals for:<br /> 
+                glucose levels, madication,<br /> 
+                activity levels and diet
               </p>
               
             </div>
@@ -55,5 +39,5 @@ const textStyles = {
     );
   };
   
-  export default RegistrConfirmation;
+  export default StartScreen;
   
