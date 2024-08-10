@@ -12,7 +12,7 @@ const textStyles = {
   const StartScreen: React.FC = () => {
     return (
       
-      <div className="flex flex-col max-w-screen-md relative overflow-hidden m-auto pb-80 h-screen">
+      <div className="flex flex-col max-w-screen-md bg-lightBlue relative overflow-hidden m-auto pb-80 h-screen">
         
         <div className="z-10 ">
           
