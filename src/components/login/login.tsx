@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "./logo.svg"; 
+import Logo from "./logo.svg"; //fix path
 import arrow from "./arrow.svg"; 
 
 const Login: React.FC = () => {
