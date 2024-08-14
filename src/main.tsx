@@ -2,6 +2,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import GlucoseNotificationList from "./routes/onboarding/glucose-notification-list-route";
 import "./global/default.css";
 
 const client = new ApolloClient({
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
+          <Route path="/onboarding" element={<GlucoseNotificationList />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
