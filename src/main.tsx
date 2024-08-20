@@ -2,6 +2,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import DietGoalReminderList from "./routes/onboarding/diet-goal-reminders-route";
 import "./global/default.css";
 
 const client = new ApolloClient({

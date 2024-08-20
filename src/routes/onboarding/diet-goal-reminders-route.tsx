@@ -1,4 +1,5 @@
 import { TimePicker } from "../../components/form/time-picker";
+import DeleteIcon from "../../images/delete-icon.svg";
 
 const textStyles = {
     base: "font-text text-section-subtext font-normal leading-[24px] text-center",
@@ -20,6 +21,18 @@ function DietGoalReminderList() {
                 <h1 className={textStyles.reminderTitle}>
                      Set your diet goals reminders
                  </h1>
+                 <div onChange={onChange}>
+                    <TimePicker
+                    name={"Set Diet Goal Reminder"}
+                    setValue={onClick}
+                    labelText={"Meal 1 Reminder"}
+                    >
+                    
+                    </TimePicker>
+                    <img src={DeleteIcon} alt="delete" />
+                    <button>+ Add More</button>
+                 </div>
+                 
             </div>
         </div>
     )
