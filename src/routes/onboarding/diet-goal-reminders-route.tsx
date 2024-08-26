@@ -21,12 +21,13 @@ function DietGoalReminderList() {
                 <h1 className={textStyles.reminderTitle}>
                      Set your diet goals reminders
                  </h1>
-                 <div onChange={onChange} className="w-96" >
+                 <div onChange={onChange} className="bg-white w-96" >
                 
                  <TimePicker
                     name={"Set Diet Goal Reminder"}
                     setValue={onClick}
                     labelText={"Meal 1 Reminder"}
+                    className="bg-lightGray"
                     >
                     </TimePicker>
                     <img src={DeleteIcon} alt="delete" />
