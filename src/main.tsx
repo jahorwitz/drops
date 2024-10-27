@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./global/default.css";
-import { Start } from "./routes";
+import { Start, Welcome } from "./routes";
 
 const client = new ApolloClient({
   uri: "http://localhost:8080/api/graphql",
@@ -16,9 +16,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
+          <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
