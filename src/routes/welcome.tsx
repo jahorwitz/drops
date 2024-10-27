@@ -6,7 +6,7 @@ import { Button } from "../components";
 
 export const Welcome: React.FC = () => {
   return (
-    <div className="flex flex-col bg-lightYellow max-w-screen-md pb-8 relative overflow-hidden m-auto">
+    <div className="flex flex-col bg-lightYellow max-w-screen-md pb-8 relative overflow-hidden m-auto h-screen">
       <img
         src={cover}
         alt="Background image"
