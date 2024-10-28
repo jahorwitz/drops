@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Confirmation: React.FC = () => {
+export const GlucoseNotificationPrompt: React.FC = () => {
   return (
     <div className="flex flex-col max-w-screen-md bg-lightPink relative overflow-hidden m-auto pb-80 h-screen">
       <div className="z-10">

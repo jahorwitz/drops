@@ -1,2 +1,2 @@
-export * from "./confirmation";
+export * from "./glucose-notification-prompt";
 export * from "./start";
