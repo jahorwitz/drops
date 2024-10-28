@@ -1,1 +1,2 @@
-export * from "./onboarding/glucose-notification-route";
+export * from "./welcome";
+export * from "./onboarding";
