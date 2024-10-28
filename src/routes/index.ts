@@ -1,1 +1,3 @@
-export * from "../routes/registration/registration-confirm";
+export * from "./welcome";
+export * from "./onboarding";
+export * from "./registration";

@@ -29,11 +29,11 @@ export const WeekdaySelector = forwardRef<HTMLInputElement, Props>(
     };
 
     return (
-      <div className={`max-w-pageContent mx-3 relative font-text ${className}`}>
+      <div className={`font-text ${className}`}>
         <label className="">{labelText}</label>
-        <div className="flex justify-between mt-3">
+        <div className="flex gap-3 mt-3">
           {enumKeys(Weekday).map((day) => (
-            <div key={Weekday[day]} className={`relative`}>
+            <div key={Weekday[day]} className="relative">
               <input
                 {...rest}
                 ref={ref}
@@ -46,11 +46,10 @@ export const WeekdaySelector = forwardRef<HTMLInputElement, Props>(
               />
               <label
                 htmlFor={`${uniqueId}-${day}`}
-                className={`flex items-center justify-center h-10 w-10 rounded-full border text-sm ${
-                  currentSelectedDays.includes(day)
-                    ? "text-white bg-black border-black"
-                    : "text-black/60 border-black/30"
-                }`}
+                className={`flex items-center justify-center h-10 w-10 rounded-full border text-sm ${currentSelectedDays.includes(day)
+                  ? "text-white bg-black border-black"
+                  : "text-black/60 border-black/30"
+                  }`}
               >
                 {capitalize(shortenWeekday(Weekday[day]))}
               </label>
