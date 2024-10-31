@@ -44,6 +44,9 @@ export default {
       maxWidth: {
         pageContent: "370px",
       },
+      spacing: {
+        16: "60px",
+      },
     },
   },
   plugins: [
