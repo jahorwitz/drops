@@ -15,7 +15,7 @@ type Props = UseFormRegisterReturn<string> &
   };
 
 export const NumericInput = forwardRef<HTMLInputElement, Props>(
-  ({ labelText, hintText, feedback, className, defaultValue, ...rest }: Props, ref) => {
+  ({ labelText, hintText, feedback, className, defaultValue, name, onChange, ...rest }: Props, ref) => {
     const [value, setValue] = useState<number | undefined>(defaultValue);
 
     return (
@@ -28,6 +28,7 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
           onChange={(e) => {
             const numericValue = e.target.value.replace(/[^0-9]/g, "");
             setValue(Number(numericValue));
+            onChange && onChange({ target: { name, value: Number(numericValue) } });
           }}
           className={cx(
             `rounded-lg border border-black py-5 px-3 relative`,
@@ -38,13 +39,25 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
           variant="icon"
           className="absolute top-14 right-20 z-1 border border-black"
           icon={faMinus as IconDefinition}
-          onClick={() => setValue((prev) => (prev || 0) - 1)}
+          onClick={() => {
+            setValue((prev) => {
+              const newVal = (prev || 0) - 1;
+              onChange && onChange({ target: { name, value: newVal } });
+              return newVal;
+            })
+          }}
         />
         <Button
           variant="icon"
           className="absolute top-14 right-10 z-1 border border-black"
           icon={faPlus as IconDefinition}
-          onClick={() => setValue((prev) => (prev || 0) + 1)}
+          onClick={() => {
+            setValue((prev) => {
+              const newVal = (prev || 0) + 1;
+              onChange && onChange({ target: { name, value: newVal } });
+              return newVal;
+            })
+          }}
         />
         {feedback ? (
           <span className="text-red text-base leading-5">{feedback}</span>

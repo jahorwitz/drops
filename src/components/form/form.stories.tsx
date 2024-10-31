@@ -166,7 +166,7 @@ export const WithNumericInputs = () => {
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Form.NumericInput
         {...register("numericField", {
-          validate: (value) => (value ? value >= 3 || 'This field must be greater than or equal to 3' : 'This field is required'),
+          validate: (value) => (value ? (value >= 3 || 'This field must be greater than or equal to 3') : 'This field is required'),
         })}
         labelText="Meals per day"
         hintText="3 is a recommended amount"
@@ -220,6 +220,37 @@ export const TimePicker = () => {
   );
 };
 
+export const SelectForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    alert(JSON.stringify(data, null, 2))
+  }
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.SelectForm
+        labelText="Sex"
+        placeholder="Select one"
+        hintText="Select one option"
+        options={[
+          { value: "male", label: "Male" },
+          { value: "female", label: "Female" },
+          { value: "other", label: "Other" }
+        ]}
+        feedback={errors}
+        {...register("sex" as keyof FormValues, {
+          required: "This field is required",
+        })}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  )
+};
 
 
 
