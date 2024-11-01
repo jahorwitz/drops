@@ -3,7 +3,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./global/default.css";
-import { GlucoseNotificationPrompt, Start, Welcome, RegistrationConfirmation } from "./routes";
+import {
+  GlucoseNotificationPrompt,
+  GlucoseNotificationList,
+  Start,
+  Welcome,
+  RegistrationConfirmation,
+} from "./routes";
 
 const client = new ApolloClient({
   uri: "http://localhost:8080/api/graphql",
@@ -16,12 +22,22 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
-          <Route path="/registration-confirm" element={<RegistrationConfirmation />} />
-          <Route path="/onboarding/glucose-notifications" element={<GlucoseNotificationPrompt />} />
+          <Route
+            path="/registration-confirm"
+            element={<RegistrationConfirmation />}
+          />
+          <Route
+            path="/onboarding/glucose-notifications"
+            element={<GlucoseNotificationPrompt />}
+          />
+          <Route
+            path="/onboarding/glucose-notifications-list"
+            element={<GlucoseNotificationList />}
+          />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
-        </Routes >
-      </BrowserRouter >
-    </ApolloProvider >
-  </React.StrictMode >
+        </Routes>
+      </BrowserRouter>
+    </ApolloProvider>
+  </React.StrictMode>,
 );
