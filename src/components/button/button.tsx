@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { HTMLProps } from "react";
 
 type Props = HTMLProps<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "text" | "icon";
+  variant?: "primary" | "secondary" | "text" | "icon" | "primary-disabled";
   buttonText?: string;
   icon?: IconDefinition;
   className?: string;
@@ -26,6 +26,8 @@ export const Button = ({
         `text-lg font-medium font-text active:opacity-60`,
         variant === "primary" &&
         "text-lightGray bg-black px-10 py-4 leading-5 rounded-lg hover:opacity-80",
+        variant === "primary-disabled" && 
+        `text-lightGray bg-black px-10 py-4 leading-5 rounded-lg opacity-30 pointer-events-none`,
         variant === "secondary" &&
         `text-black px-10 py-4 leading-5 border-black border rounded-lg hover:opacity-60`,
         variant === "text" &&
