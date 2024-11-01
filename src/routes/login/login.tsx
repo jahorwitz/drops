@@ -73,10 +73,8 @@ export const Login: React.FC = () => {
           <Button
             type="submit"
             buttonText="Log In"
-            variant="primary"
-            className={`h-[60px] w-full ${
-              !isValid ? "pointer-events-none opacity-30" : ""
-            }`}
+            variant={isValid ? "primary" : "primary-disabled"}
+            className="h-[60px] w-full"
           ></Button>
           <Link to="/register">
             <Button
