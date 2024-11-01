@@ -17,7 +17,6 @@ export const Login: React.FC = () => {
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
-    console.log("submitting");
     alert(JSON.stringify(data, null, 2));
   };
 
