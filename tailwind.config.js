@@ -3,7 +3,6 @@ import HeadlessTailwindPlugin from "@headlessui/tailwindcss";
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{html,js,jsx,ts,tsx}"],
-  mode: "jit",
   purge: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
     screens: { sm: "390px" },
