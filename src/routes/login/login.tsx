@@ -75,7 +75,7 @@ export const Login: React.FC = () => {
             buttonText="Log In"
             variant="primary"
             className={`h-[60px] w-full ${
-              !isValid ? "pointer-events-none opacity-20" : ""
+              !isValid ? "pointer-events-none opacity-30" : ""
             }`}
           ></Button>
           <Link to="/register">
@@ -91,59 +91,3 @@ export const Login: React.FC = () => {
     </div>
   );
 };
-
-{
-  /* <Form
-onSubmit={handleSubmit(onSubmit)}
-className="flex flex-col max-w-[390px] w-full px-4  mt-8 h-full  max-h-[502px] self-center"
->
-<div className="flex flex-col h-full gap-5">
-  <Form.TextInput
-    labelText="Email"
-    placeholder="Enter your email"
-    type="text"
-    feedback={errors.email?.message}
-    {...register("email", {
-      required: "This field is required",
-      pattern: {
-        value:
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        message: "Please enter a valid email address",
-      },
-    })}
-  />
-  <Form.TextInput
-    labelText="Password"
-    placeholder="Enter your password"
-    type="password"
-    feedback={errors.password?.message}
-    {...register("password", {
-      required: "This field is required",
-      minLength: {
-        value: 8,
-        message: "Password must be at least 8 characters long",
-      },
-    })}
-  />
-</div>
-<div className="flex flex-col items-center">
-  <Button
-    type="submit"
-    buttonText="Log In"
-    variant="primary"
-    disabled={!isValid}
-    className={`h-[60px] w-full ${
-      !isValid ? "pointer-events-none opacity-20" : ""
-    }`}
-  ></Button>
-  <Link to="/register">
-    <Button
-      type="button"
-      buttonText="Or register"
-      variant="text"
-      className="opacity-100 hover:opacity-80 mt-8 p-0 rounded-lg"
-    ></Button>
-  </Link>
-</div>
-</Form> */
-}
