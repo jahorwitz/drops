@@ -23,12 +23,12 @@ export const DietGoalsForm: React.FC = () => {
   }});
 
   return (
-    <div>
+    <div className="flex flex-col bg-neutral-100 overflow-auto max-w-screen-md pb-8 relative m-auto h-screen">
       <h2 className="font-text text-section-header font-medium mt-16 leading-[52.8px] text-center max-w-[358px] mx-auto">
         Set your diet goals
       </h2>
-      <Form className="flex flex-col max-w-[390px] w-full px-4  mt-8 h-full  max-h-[502px] self-center">
-        <div className="flex flex-col h-full gap-5">
+      <Form className="flex flex-col bg-white max-w-[370px] w-full px-3  mt-8 h-fit  max-h-[900px] py-4 self-center rounded-3xl">
+        <div className="flex flex-col h-fit gap-5">
           <Form.NumericInput {...register("meals", {
               validate: (value) => (value ? (value >= 3 || 'This field must be greater than or equal to 3') : 'This field is required'),
             })}
