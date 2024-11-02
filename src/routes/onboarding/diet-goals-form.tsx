@@ -12,6 +12,7 @@ export const DietGoalsForm: React.FC = () => {
     calories: number;
   }
 
+  // register acts as onChange function
   const {
     register,
     formState: {errors},
