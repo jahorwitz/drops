@@ -24,7 +24,7 @@ export const DietGoalsForm: React.FC = () => {
   }});
 
   return (
-    <div className="flex flex-col bg-neutral-100 overflow-auto max-w-screen-md pb-8 relative m-auto h-screen">
+    <div className="flex flex-col bg-lightGreen overflow-auto max-w-screen-md pb-8 relative m-auto h-screen">
       <h2 className="font-text text-section-header font-medium mt-5 leading-[52.8px] text-center max-w-[358px] mx-auto">
         Set your diet goals
       </h2>
