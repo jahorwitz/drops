@@ -58,7 +58,7 @@ export const DietGoalReminderList : React.FC<{
                                         name={"Set Diet Goal Reminder"}
                                         setValue={onChange}
                                         labelText={`${item.name} reminder`}
-                                        className="bg-lightGray mx-0" onDelete={() => {deleteReminder(item.index)}}>
+                                        className="bg-lightGray mx-0" handleDelete={() => {deleteReminder(item.index)}}>
                                     </TimePicker>
                                 )
                             })

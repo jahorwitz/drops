@@ -8,7 +8,7 @@ import deleteIcon from "../../images/delete-icon.svg"
 
 type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
-    onDelete?: () => void;
+    handleDelete?: () => void;
     labelText?: string;
     hintText?: string;
     feedback?: string;
@@ -17,7 +17,7 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   };
 
   export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-    ({ labelText, hintText, feedback, className, setValue, onDelete: deleteThis, ...rest }: Props<FieldValues>, ) => {
+    ({ labelText, hintText, feedback, className, setValue, handleDelete, ...rest }: Props<FieldValues>, ) => {
     const [hour, setHour] = useState<string>('');
     const [minute, setMinute] = useState<string>('');
     const [period, setPeriod] = useState<string>('AM');
@@ -140,7 +140,7 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
-        <button type="button" className="ml-auto my-[14px] mr-3" onClick={deleteThis}>
+        <button type="button" className="ml-auto my-[14px] mr-3" onClick={handleDelete}>
           <img src={deleteIcon} alt="delete" />
         </button>
         </div>
