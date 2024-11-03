@@ -30,12 +30,19 @@ function DietGoalReminderList() {
     }
 
     const addNewReminder = () => {
-        const copy = {...reminders }
+        const copy = {...reminders };
         copy.currentIndex = reminders.currentIndex + 1;
         copy.items.push({
             index: copy.currentIndex,
             name: `Meal ${copy.currentIndex + 1}`
         });
+
+        setReminders(copy);
+    }
+
+    const deleteReminder = (index: number) => {
+        const copy = {... reminders};
+        copy.items = copy.items.filter((item) => item.index != index);
 
         setReminders(copy);
     }
@@ -56,7 +63,7 @@ function DietGoalReminderList() {
                                         name={"Set Diet Goal Reminder"}
                                         setValue={onClick}
                                         labelText={`${item.name} reminder`}
-                                        className="bg-lightGray mx-0" onChange={onChange} onBlur={onChange}>
+                                        className="bg-lightGray mx-0" onChange={onChange} onBlur={onChange} onDelete={() => {deleteReminder(item.index)}}>
                                     </TimePicker>
                                 )
                             })
