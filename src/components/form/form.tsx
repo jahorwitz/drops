@@ -5,6 +5,7 @@ import { WeekdaySelector } from "./weekday";
 import { RadioGroup } from "./radio-group";
 import { NumericInput } from "./numeric-input";
 import { SelectForm } from "./select-form";
+import { AddMoreButton } from "./add-more-button";
 
 type Props = {
   className?: string;
@@ -26,3 +27,4 @@ Form.TimePicker = TimePicker;
 Form.Weekday = WeekdaySelector;
 Form.RadioGroup = RadioGroup;
 Form.SelectForm = SelectForm; 
+Form.AddMorebutton = AddMoreButton;
