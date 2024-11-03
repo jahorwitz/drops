@@ -56,7 +56,7 @@ function DietGoalReminderList() {
                                         name={"Set Diet Goal Reminder"}
                                         setValue={onClick}
                                         labelText={`${item.name} reminder`}
-                                        className="bg-lightGray mx-3" onChange={onChange} onBlur={onChange}>
+                                        className="bg-lightGray mx-0" onChange={onChange} onBlur={onChange}>
                                     </TimePicker>
                                 )
                             })

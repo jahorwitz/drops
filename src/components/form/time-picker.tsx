@@ -3,10 +3,12 @@ import { HTMLProps, forwardRef, useRef, useEffect, useState } from "react";
 import cx from "classnames";
 import { UseFormRegisterReturn, UseFormSetValue, FieldValues } from "react-hook-form";
 import IMask from 'imask';
+import deleteIcon from "../../images/delete-icon.svg"
 
 
 type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
+    onDelete?: () => void;
     labelText?: string;
     hintText?: string;
     feedback?: string;
@@ -15,7 +17,7 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   };
 
   export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-    ({ labelText, hintText, feedback, className, setValue, ...rest }: Props<FieldValues>, ) => {
+    ({ labelText, hintText, feedback, className, setValue, onDelete, ...rest }: Props<FieldValues>, ) => {
     const [hour, setHour] = useState<string>('');
     const [minute, setMinute] = useState<string>('');
     const [period, setPeriod] = useState<string>('AM');
@@ -138,6 +140,9 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
+        <button type="button" className="ml-auto my-[14px] mr-3" onClick={onDelete}>
+          <img src={deleteIcon} alt="delete" />
+        </button>
         </div>
         {feedback ? (
             <span className="text-red text-base leading-5">{feedback}</span>
