@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Form } from "../../components/form";
 import { TimePicker } from "../../components/form/time-picker";
+import { FieldValues, UseFormSetValue } from "react-hook-form";
 
+//temporary
 const dummyData = {
     currentIndex: 0,
     items: [
@@ -16,18 +18,10 @@ const textStyles = {
     reminderTitle: "font-text text-section-header font-medium leader-[38.4px] text-center max-w-[358px] mx-auto",
 };
 
-function DietGoalReminderList() {
-    const [reminders, setReminders] = useState(dummyData)
-
-    const onChange = () => {
-        console.log("onChange");
-
-        return Promise.resolve();
-    }
-
-    const onClick = () => {
-        console.log("onClick");
-    }
+export const DietGoalReminderList : React.FC<{
+    onChange: () => UseFormSetValue<FieldValues>
+}> = ({onChange}) => {
+    const [reminders, setReminders] = useState(dummyData);
 
     const addNewReminder = () => {
         const copy = {...reminders };
@@ -53,17 +47,18 @@ function DietGoalReminderList() {
                 <h1 className={textStyles.reminderTitle}>
                      Set your diet goals reminders
                  </h1>
-                 <div onChange={onChange} className="bg-white w-96 p-3 rounded-2xl flex flex-col" >
+                 <div className="bg-white w-96 p-3 rounded-2xl flex flex-col" >
                     <Form className="flex flex-col gap-5">
                         {
                             reminders.items.map((item) => {
                                 return (
+                                    //@ts-expect-error, timepicker currently requires onChange and onBlur but it does not use passed functions
                                     <TimePicker
                                         key={item.index}
                                         name={"Set Diet Goal Reminder"}
-                                        setValue={onClick}
+                                        setValue={onChange}
                                         labelText={`${item.name} reminder`}
-                                        className="bg-lightGray mx-0" onChange={onChange} onBlur={onChange} onDelete={() => {deleteReminder(item.index)}}>
+                                        className="bg-lightGray mx-0" onDelete={() => {deleteReminder(item.index)}}>
                                     </TimePicker>
                                 )
                             })
@@ -75,9 +70,5 @@ function DietGoalReminderList() {
                  
             </div>
         </div>
-    )
-
-
+    );
 }
-
-export default DietGoalReminderList;
