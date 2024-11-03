@@ -2,7 +2,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Form } from "./form";
 import { Button } from "../button";
 
-
 export default {
   title: "Form",
   component: Form,
@@ -23,14 +22,12 @@ interface WeekdayFormValues {
   taskDays: string[];
 }
 
-
 interface FormValues {
   optionName: string;
 }
 
 interface TimePicker {
   timeValue: string;
-
 }
 
 export const WithTextInputs = () => {
@@ -42,7 +39,6 @@ export const WithTextInputs = () => {
   const onSubmit = (data: MyFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
-
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -166,7 +162,10 @@ export const WithNumericInputs = () => {
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Form.NumericInput
         {...register("numericField", {
-          validate: (value) => (value ? (value >= 3 || 'This field must be greater than or equal to 3') : 'This field is required'),
+          validate: (value) =>
+            value
+              ? value >= 3 || "This field must be greater than or equal to 3"
+              : "This field is required",
         })}
         labelText="Meals per day"
         hintText="3 is a recommended amount"
@@ -175,7 +174,7 @@ export const WithNumericInputs = () => {
       <Button type="submit">Submit</Button>
     </Form>
   );
-}
+};
 
 export const TimePicker = () => {
   const {
@@ -187,7 +186,6 @@ export const TimePicker = () => {
 
   const onSubmit = (data: TimePicker) => {
     alert(JSON.stringify(data, null, 2));
-
   };
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -202,21 +200,21 @@ export const TimePicker = () => {
                 required: "Time value is required",
                 pattern: {
                   value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
-                  message: "Invalid time format. Please use hh:mm:AM/PM"
-                }
+                  message: "Invalid time format. Please use hh:mm:AM/PM",
+                },
               })}
               labelText="Reminder 1"
               hintText="Choose a time"
-              setValue={(name, value) => field.onChange({ target: { name, value } })}
+              setValue={(name, value) =>
+                field.onChange({ target: { name, value } })
+              }
               feedback={errors.timeValue?.message}
             />
           </>
         )}
-
       />
       <Button type="submit">Submit</Button>
     </Form>
-
   );
 };
 
@@ -228,8 +226,8 @@ export const SelectForm = () => {
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
-    alert(JSON.stringify(data, null, 2))
-  }
+    alert(JSON.stringify(data, null, 2));
+  };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -240,7 +238,7 @@ export const SelectForm = () => {
         options={[
           { value: "male", label: "Male" },
           { value: "female", label: "Female" },
-          { value: "other", label: "Other" }
+          { value: "other", label: "Other" },
         ]}
         feedback={errors}
         {...register("sex" as keyof FormValues, {
@@ -249,13 +247,5 @@ export const SelectForm = () => {
       />
       <Button type="submit">Submit</Button>
     </Form>
-  )
+  );
 };
-
-
-
-
-
-
-
-
