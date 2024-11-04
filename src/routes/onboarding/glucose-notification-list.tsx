@@ -38,7 +38,9 @@ export const GlucoseNotificationList: React.FC = () => {
 
             return (
               <div key={reminder}>
-                <p>{`Reminder ${reminderIndex}`} </p>
+                <p className="text-base leading-[19px] font-text mb-1">
+                  {`Reminder ${reminderIndex}`}{" "}
+                </p>
                 <div className="flex items-center">
                   <Controller
                     name={reminder}
@@ -60,6 +62,7 @@ export const GlucoseNotificationList: React.FC = () => {
                           }
                           feedback={errors[reminder]?.message as string}
                           delete={() => {
+                            if (reminders.length <= 1) return;
                             unregister(reminder);
                             removeReminder(reminder);
                           }}
