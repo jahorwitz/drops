@@ -1,9 +1,13 @@
-
 import { HTMLProps, forwardRef, useRef, useEffect, useState } from "react";
 import cx from "classnames";
-import { UseFormRegisterReturn, UseFormSetValue, FieldValues } from "react-hook-form";
-import IMask from 'imask';
-
+import {
+  UseFormRegisterReturn,
+  UseFormSetValue,
+  FieldValues,
+} from "react-hook-form";
+import IMask from "imask";
+import { Button } from "../button";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
@@ -11,21 +15,30 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     hintText?: string;
     feedback?: string;
     className?: string;
-    setValue:  UseFormSetValue<T>;
+    setValue: UseFormSetValue<T>;
+    delete: () => void;
   };
 
-  export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-    ({ labelText, hintText, feedback, className, setValue, ...rest }: Props<FieldValues>, ) => {
-    const [hour, setHour] = useState<string>('');
-    const [minute, setMinute] = useState<string>('');
-    const [period, setPeriod] = useState<string>('AM');
-    
-      // Refs for hour, minute, and period input fields
-     const hourRef = useRef<HTMLInputElement>(null);
-     const minuteRef = useRef<HTMLInputElement>(null);
-     const periodRef = useRef<HTMLSelectElement>(null);
+export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
+  ({
+    labelText,
+    hintText,
+    feedback,
+    className,
+    setValue,
+    delete: deleteTimePicker,
+    ...rest
+  }: Props<FieldValues>) => {
+    const [hour, setHour] = useState<string>("");
+    const [minute, setMinute] = useState<string>("");
+    const [period, setPeriod] = useState<string>("AM");
 
-     useEffect(() => {
+    // Refs for hour, minute, and period input fields
+    const hourRef = useRef<HTMLInputElement>(null);
+    const minuteRef = useRef<HTMLInputElement>(null);
+    const periodRef = useRef<HTMLSelectElement>(null);
+
+    useEffect(() => {
       const hourMask = IMask(hourRef.current!, {
         mask: "00",
         blocks: {
@@ -49,60 +62,59 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
         minuteMask.destroy();
       };
     }, []);
-  
+
     const addLeadingZero = (value: string): string => {
       const parsedValue = parseInt(value, 10); // Parse the input value as an integer
       if (!isNaN(parsedValue) && parsedValue < 10 && !(parsedValue === 0)) {
-          return `0${parsedValue}`;
+        return `0${parsedValue}`;
       } else {
-          return value; 
+        return value;
       }
-    }
+    };
 
     useEffect(() => {
-      setValue('timeValue', `${hour}:${minute}:${period}`,{ 
+      setValue("timeValue", `${hour}:${minute}:${period}`, {
         shouldValidate: true,
         shouldDirty: true,
         shouldTouch: true,
       });
-      
     }, [hour, minute, period, setValue]);
-    
 
-  const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setHour((value));
-  };
-  
-  const handleHourBlur = () => {
-    // Process the value when the focus is lost
-    setHour(addLeadingZero(hour));
-};
+      setHour(value);
+    };
+
+    const handleHourBlur = () => {
+      // Process the value when the focus is lost
+      setHour(addLeadingZero(hour));
+    };
 
     const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setMinute((value));
-};
+      setMinute(value);
+    };
 
     const handleMinuteBlur = () => {
-  // Process the value when the focus is lost
-    setMinute(addLeadingZero(minute));
+      // Process the value when the focus is lost
+      setMinute(addLeadingZero(minute));
     };
 
     const handlePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const value = e.target.value;
       setPeriod(value);
     };
-   
-   
- 
-    const inputClassName = "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
+
+    const inputClassName =
+      "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
     return (
-        <div>
-          <label className="text-base leading-[19px] font-text mb-1">{labelText}</label>
-          <div className="h-[76px] bg-gray-100 rounded-lg flex items-center p-2">
+      <div className="w-full">
+        <label className="text-base leading-[19px] font-text mb-1">
+          {labelText}
+        </label>
+        <div className="h-[76px] bg-gray-100 rounded-lg flex items-center p-2">
           <input
-          type= "text"
+            type="text"
             {...rest}
             ref={hourRef}
             value={hour}
@@ -113,39 +125,46 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
             inputMode="numeric"
             placeholder="00"
           />
-           <span className="ml-[12px] mr-3">:</span>
-          <input 
-          type="text"
-           {...rest}
-           ref={minuteRef}
-           value={minute}
-           name={minute}
+          <span className="ml-[12px] mr-3">:</span>
+          <input
+            type="text"
+            {...rest}
+            ref={minuteRef}
+            value={minute}
+            name={minute}
             onChange={handleMinuteChange}
             onBlur={handleMinuteBlur}
+            className={cx(inputClassName, className, "mr-2")}
+            inputMode="numeric" // Show numeric keypad on mobile
+            placeholder="00"
+          />
 
-           className={cx(inputClassName, className, "mr-2")}
-           inputMode="numeric" // Show numeric keypad on mobile
-           placeholder="00" 
-           />
-       
-       <select
-          ref={periodRef}
-          value={period}
-          name={period}
-          onChange={handlePeriodChange}
-          className={cx(inputClassName, className, "font-text")}
+          <select
+            ref={periodRef}
+            value={period}
+            name={period}
+            onChange={handlePeriodChange}
+            className={cx(inputClassName, className, "font-text")}
           >
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+          <Button
+            type="button"
+            variant="icon"
+            buttonText=""
+            className="ml-auto"
+            icon={faTrashCan}
+            onClick={() => deleteTimePicker()}
+          ></Button>
         </div>
         {feedback ? (
-            <span className="text-red text-base leading-5">{feedback}</span>
-          ) : hintText ? (
-            <span className="text-black/60 text-base">{hintText}</span>
-          ) : null}
-          </div>
-      );
-    },
-  );
- TimePicker.displayName = "TimePicker";
+          <span className="text-red text-base leading-5">{feedback}</span>
+        ) : hintText ? (
+          <span className="text-black/60 text-base">{hintText}</span>
+        ) : null}
+      </div>
+    );
+  },
+);
+TimePicker.displayName = "TimePicker";
