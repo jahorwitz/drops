@@ -40,6 +40,9 @@ export const MedicationTimeInput: React.FC<Props> = ({ index}) => {
                   hintText="Choose a time"
                   setValue={(name, value) => field.onChange({ target: { name, value } })}
                   feedback={errors.reminder1?.message}
+                  delete={() => {
+                    console.log("delete");
+                  }}
                 />
                 
               </>

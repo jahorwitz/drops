@@ -20,12 +20,13 @@ export const MedicationSection: React.FC<Props> = ({ index }) =>  {
   } = useForm<FormValues>();
 
   return (
-    <div>
-          <div>
-            <h3>Medication {index}</h3>
+    <div className="bg-white mx-auto min-w-[315px] max-w-[400px] px-4 py-3 w-full rounded-[16px]">
+          <div className="flex items-center ">
+            <h3 className="text-base leading-[19px] font-text mb-1">Medication {index}</h3>
             <Button
               variant="icon"
               icon={faTrashCan}
+              className="ml-auto"
               onClick={() => alert("I'm an icon button")}
             />
           </div>
@@ -39,11 +40,6 @@ export const MedicationSection: React.FC<Props> = ({ index }) =>  {
           })}
           />
           <MedicationTimeInput index={1} />
-        <Button
-            variant="icon"
-            icon={faTrashCan}
-            onClick={() => alert("I'm an icon button")}
-          />
           <Form.AddMorebutton buttonText="+ Add more reminders">
             <MedicationTimeInput />
           </Form.AddMorebutton>

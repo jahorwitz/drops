@@ -3,7 +3,8 @@ import { HTMLProps, forwardRef, useRef, useEffect, useState } from "react";
 import cx from "classnames";
 import { UseFormRegisterReturn, UseFormSetValue, FieldValues } from "react-hook-form";
 import IMask from 'imask';
-
+import { Button } from "../button";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
@@ -11,11 +12,12 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     hintText?: string;
     feedback?: string;
     className?: string;
-    setValue:  UseFormSetValue<T>;
+    setValue: UseFormSetValue<T>;
+    delete: () => void;
   };
 
   export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-    ({ labelText, hintText, feedback, className, setValue, ...rest }: Props<FieldValues>, ) => {
+    ({ labelText, hintText, feedback, className, setValue, delete: deleteTimePicker, ...rest }: Props<FieldValues>, ) => {
     const [hour, setHour] = useState<string>('');
     const [minute, setMinute] = useState<string>('');
     const [period, setPeriod] = useState<string>('AM');
@@ -98,7 +100,7 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
  
     const inputClassName = "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
     return (
-        <div>
+        <div className="w-full">
           <label className="text-base leading-[19px] font-text mb-1">{labelText}</label>
           <div className="h-[76px] bg-gray-100 rounded-lg flex items-center p-2">
           <input
@@ -138,6 +140,14 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
+        <Button
+            type="button"
+            variant="icon"
+            buttonText=""
+            className="ml-auto"
+            icon={faTrashCan}
+            onClick={() => deleteTimePicker()}
+          ></Button>
         </div>
         {feedback ? (
             <span className="text-red text-base leading-5">{feedback}</span>
