@@ -3,33 +3,32 @@ import { Controller } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { Form } from "../../../components";
 
-interface FormValues {
-  medication1: string;
-  reminder1: string;
-}
-
 interface Props {
   index?: number;
+  onDelete?: (index:number) => void;
+  elementId?: number;
 }
 
-export const MedicationTimeInput: React.FC<Props> = ({ index}) => {
-  
+export const MedicationTimeInput: React.FC<Props> = ({ index, onDelete, elementId}) => {
   const {
     control,
     register,
+    unregister,
     formState: {errors},
-  } = useForm<FormValues>();
+  } = useForm();
+
+  const inputName = `reminder${elementId}` || "reminder6"
 
   return (
     <div>
             <Controller
-            name="reminder1"
+            name={inputName}
             control={control}
             render={({ field }) => (
               <>
                 <Form.TimePicker
                   {...field}
-                  {...register("reminder1", {
+                  {...register(inputName, {
                     required: "Time value is required",
                     pattern: {
                       value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
@@ -39,9 +38,12 @@ export const MedicationTimeInput: React.FC<Props> = ({ index}) => {
                   labelText={`Reminder ${index}`}
                   hintText="Choose a time"
                   setValue={(name, value) => field.onChange({ target: { name, value } })}
-                  feedback={errors.reminder1?.message}
+                  feedback={errors.inputName?.message as string | undefined}
                   delete={() => {
-                    console.log("delete");
+                    if (onDelete && elementId) {
+                      onDelete(elementId);
+                      unregister(inputName);
+                    }
                   }}
                 />
                 

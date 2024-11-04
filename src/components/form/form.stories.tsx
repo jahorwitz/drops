@@ -209,6 +209,7 @@ export const TimePicker = () => {
               hintText="Choose a time"
               setValue={(name, value) => field.onChange({ target: { name, value } })}
               feedback={errors.timeValue?.message}
+              delete={() => alert("handle deleting this TimePicker")}
             />
           </>
         )}

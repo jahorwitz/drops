@@ -6,18 +6,19 @@ import { MedicationTimeInput } from "./medication-time-input";
 
 interface Props {
   index?: number;
+  onDelete?: (index:number) => void;
+  elementId?: number;
 }
 
-export const MedicationSection: React.FC<Props> = ({ index }) =>  {
-  interface FormValues {
-    medication1: string;
-    reminder1: string;
-  }
+export const MedicationSection: React.FC<Props> = ({ index, onDelete, elementId}) =>  {
 
   const {
     register,
+    unregister,
     formState: {errors},
-  } = useForm<FormValues>();
+  } = useForm();
+
+  const inputName = `medication${elementId}` || "medication6"
 
   return (
     <div className="flex flex-col gap-5 bg-white mx-auto min-w-[315px] max-w-[400px] px-4 py-3 w-full rounded-[16px]">
@@ -27,19 +28,23 @@ export const MedicationSection: React.FC<Props> = ({ index }) =>  {
               variant="icon"
               icon={faTrashCan}
               className="ml-auto"
-              onClick={() => alert("I'm an icon button")}
+              onClick={() => {
+                if (onDelete && elementId) {
+                  onDelete(elementId);
+                  unregister(inputName);
+                }
+              }}
             />
           </div>
           <Form.TextInput 
           labelText="Medication name & amount"
           placeholder="Medication name & amount"
           type="text"
-          feedback={errors.medication1?.message}
-          {...register("medication1", {
+          feedback={errors[inputName]?.message as string | undefined}
+          {...register(inputName, {
             required: "This field is required",
           })}
           />
-          <MedicationTimeInput index={1} />
           <Form.AddMorebutton buttonText="+ Add more reminders">
             <MedicationTimeInput />
           </Form.AddMorebutton>

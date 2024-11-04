@@ -3,6 +3,8 @@ import { Button } from "../button";
 
 type ChildProps = {
   index: number;
+  onDelete: (index:number) => void;
+  elementId: number;
 }
 
 type Props = {
@@ -12,23 +14,29 @@ type Props = {
 };
 
 export const AddMoreButton = ({ buttonText, className, children, ...rest }: Props) => {
-  const [childList, setChildList] = useState<number[]>([]);
-  const [childIndex, setChildIndex] = useState<number>(1);
+  const [childList, setChildList] = useState<number[]>([1]);
+  const [childIndex, setChildIndex] = useState<number>(2);
 
   const addChild = () => {
     setChildList((prevState) => [...prevState, childIndex]);
     setChildIndex(childIndex + 1);
   }
 
+  const removeChild = (index: number) => {
+    setChildList((prevState) => {
+      return prevState.filter((item) => item != index);
+    })
+  }
+
   return (
     <>
-    {childList.map((child) => {
-      const index = childList.indexOf(child) + 2;
+    {childList.map((child, i) => {
+      const index = i + 1;
 
       return (
         <div key={child}>
           {React.isValidElement(children)
-            ? React.cloneElement(children, { index })
+          ? React.cloneElement(children, { index, onDelete: removeChild, elementId: child })
             : children}       
         </div>
       )
