@@ -6,27 +6,28 @@ import { Form } from "../../components/form/form";
 import { Button } from "../../components/button";
 
 export const GlucoseNotificationList: React.FC = () => {
-  const [reminders, setReminders] = useState<Array<{ [key: string]: string }>>([
-    { "123": "00:00:AM" },
-  ]);
+  const [reminders, setReminders] = useState<string[]>([uuidv4()]);
 
   const {
     control,
     register,
+    unregister,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data: { [key: string]: string }) => {
-    alert(JSON.stringify(data, null, 2));
+    alert(JSON.stringify(Object.values(data), null, 2));
   };
 
   const addReminder = (id: string) => {
-    setReminders((prevState) => [...prevState, { [id]: "00:00:AM" }]);
+    setReminders((prevState) => [...prevState, id]);
   };
 
   const removeReminder = (reminder: { [key: number]: string }) => {
-    setReminders(reminders.filter((item) => item != reminder));
+    setReminders((prevState) => {
+      return prevState.filter((item) => item != reminder);
+    });
   };
 
   return (
@@ -34,19 +35,18 @@ export const GlucoseNotificationList: React.FC = () => {
       <div className="bg-white mx-auto px-4 py-3 rounded-lg">
         <Form onSubmit={handleSubmit(onSubmit)}>
           {reminders.map((reminder) => {
-            const reminderKey = reminders.indexOf(reminder);
-            const reminderName = `reminder${reminderKey}`;
+            const reminderIndex = reminders.indexOf(reminder) + 1;
 
             return (
-              <div className="flex" key={Object.keys(reminder)[0]}>
+              <div className="flex" key={reminder}>
                 <Controller
-                  name={reminderName}
+                  name={reminder}
                   control={control}
                   render={({ field }) => {
                     return (
                       <Form.TimePicker
                         {...field}
-                        {...register(reminderName, {
+                        {...register(reminder, {
                           required: "Time value is required",
                           pattern: {
                             value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
@@ -54,11 +54,11 @@ export const GlucoseNotificationList: React.FC = () => {
                               "Invalid time format. Please use hh:mm:AM/PM",
                           },
                         })}
-                        labelText={`Reminder ${reminderKey}`}
+                        labelText={`Reminder ${reminderIndex}`}
                         setValue={(name, value) =>
                           field.onChange({ target: { name, value } })
                         }
-                        feedback={errors[reminderName]?.message as string}
+                        feedback={errors[reminder]?.message as string}
                       />
                     );
                   }}
@@ -68,7 +68,10 @@ export const GlucoseNotificationList: React.FC = () => {
                   variant="icon"
                   buttonText=""
                   icon={faTrashCan}
-                  onClick={() => removeReminder(reminder)}
+                  onClick={() => {
+                    unregister(reminder);
+                    removeReminder(reminder);
+                  }}
                 ></Button>
               </div>
             );
