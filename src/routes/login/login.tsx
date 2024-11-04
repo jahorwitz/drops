@@ -68,7 +68,7 @@ export const Login: React.FC = () => {
             })}
           />
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mt-[40px]">
           <Button
             type="submit"
             buttonText="Log In"
