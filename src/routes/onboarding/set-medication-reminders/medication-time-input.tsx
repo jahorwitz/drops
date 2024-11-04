@@ -1,8 +1,25 @@
 import React from "react";
 import { Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Form } from "../../../components";
 
-export const MedicationTimeInput: React.FC = ({ control, register, index, errors }) => {
+interface FormValues {
+  medication1: string;
+  reminder1: string;
+}
+
+interface Props {
+  index?: number;
+}
+
+export const MedicationTimeInput: React.FC<Props> = ({ index}) => {
+  
+  const {
+    control,
+    register,
+    formState: {errors},
+  } = useForm<FormValues>();
+
   return (
     <div>
             <Controller

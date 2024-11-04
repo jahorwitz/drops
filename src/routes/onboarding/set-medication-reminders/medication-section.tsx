@@ -4,14 +4,17 @@ import { Form, Button } from "../../../components"
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { MedicationTimeInput } from "./medication-time-input";
 
-export const MedicationSection: React.FC = ({ index }) =>  {
+interface Props {
+  index?: number;
+}
+
+export const MedicationSection: React.FC<Props> = ({ index }) =>  {
   interface FormValues {
     medication1: string;
     reminder1: string;
   }
 
   const {
-    control,
     register,
     formState: {errors},
   } = useForm<FormValues>();
@@ -35,14 +38,14 @@ export const MedicationSection: React.FC = ({ index }) =>  {
             required: "This field is required",
           })}
           />
-          <MedicationTimeInput control={control} register={register} errors={errors} index={1} />
+          <MedicationTimeInput index={1} />
         <Button
             variant="icon"
             icon={faTrashCan}
             onClick={() => alert("I'm an icon button")}
           />
           <Form.AddMorebutton buttonText="+ Add more reminders">
-            <MedicationTimeInput control={control} register={register} errors={errors} />
+            <MedicationTimeInput />
           </Form.AddMorebutton>
         </div>
   )

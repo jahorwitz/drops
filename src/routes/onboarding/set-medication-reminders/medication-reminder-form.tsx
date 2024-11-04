@@ -8,7 +8,7 @@ export const MedicationReminderForm: React.FC = () => {
       <h2>Medication Reminders</h2>
       <p>It’s important to be consistent in your medications, and notifications may help!</p>
       <Form>
-        <MedicationSection />
+        <MedicationSection index={1} />
         <Form.AddMorebutton buttonText="+ Add another medication">
           <MedicationSection />
         </Form.AddMorebutton>
