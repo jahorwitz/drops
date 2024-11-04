@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { DietGoalReminderList } from "./routes/onboarding/diet-goal-reminders-route";
 import "./global/default.css";
-import { UseFormSetValue, FieldValues } from "react-hook-form";
+import { GlucoseNotificationPrompt, Start, Welcome, RegistrationConfirmation } from "./routes";
 
 const client = new ApolloClient({
   uri: "http://localhost:8080/api/graphql",
@@ -17,11 +17,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
-          <Route path="/onboarding" element={<DietGoalReminderList onChange={function (): UseFormSetValue<FieldValues> {
-            throw new Error("Function not implemented.");
-          } }/>} />
-        </Routes>
-      </BrowserRouter>
-    </ApolloProvider>
-  </React.StrictMode>,
+          <Route path="/registration-confirm" element={<RegistrationConfirmation />} />
+          <Route path="/onboarding/glucose-notifications" element={<GlucoseNotificationPrompt />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/onboarding" element={<Start />} />
+        </Routes >
+      </BrowserRouter >
+    </ApolloProvider >
+  </React.StrictMode >
 );
