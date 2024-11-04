@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { useForm, Controller } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { Form } from "../../components/form/form";
@@ -31,58 +30,55 @@ export const GlucoseNotificationList: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col bg-black max-w-screen-md pb-8 relative overflow-hidden m-auto h-screen">
-      <div className="bg-white mx-auto px-4 py-3 rounded-lg">
-        <Form onSubmit={handleSubmit(onSubmit)}>
+    <div className="flex flex-col bg-[#FFCCD4] max-w-screen-md pb-8 px-[10px] relative overflow-hidden m-auto h-screen">
+      <div className="bg-white mx-auto min-w-[315px] max-w-[400px] px-4 py-3 w-full rounded-[16px]">
+        <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
           {reminders.map((reminder) => {
             const reminderIndex = reminders.indexOf(reminder) + 1;
 
             return (
-              <div className="flex" key={reminder}>
-                <Controller
-                  name={reminder}
-                  control={control}
-                  render={({ field }) => {
-                    return (
-                      <Form.TimePicker
-                        {...field}
-                        {...register(reminder, {
-                          required: "Time value is required",
-                          pattern: {
-                            value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
-                            message:
-                              "Invalid time format. Please use hh:mm:AM/PM",
-                          },
-                        })}
-                        labelText={`Reminder ${reminderIndex}`}
-                        setValue={(name, value) =>
-                          field.onChange({ target: { name, value } })
-                        }
-                        feedback={errors[reminder]?.message as string}
-                      />
-                    );
-                  }}
-                />
-                <Button
-                  type="button"
-                  variant="icon"
-                  buttonText=""
-                  icon={faTrashCan}
-                  onClick={() => {
-                    unregister(reminder);
-                    removeReminder(reminder);
-                  }}
-                ></Button>
+              <div key={reminder}>
+                <p>{`Reminder ${reminderIndex}`} </p>
+                <div className="flex items-center">
+                  <Controller
+                    name={reminder}
+                    control={control}
+                    render={({ field }) => {
+                      return (
+                        <Form.TimePicker
+                          {...field}
+                          {...register(reminder, {
+                            required: "Time value is required",
+                            pattern: {
+                              value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
+                              message:
+                                "Invalid time format. Please use hh:mm:AM/PM",
+                            },
+                          })}
+                          setValue={(name, value) =>
+                            field.onChange({ target: { name, value } })
+                          }
+                          feedback={errors[reminder]?.message as string}
+                          delete={() => {
+                            unregister(reminder);
+                            removeReminder(reminder);
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                </div>
               </div>
             );
           })}
-          <Button type="submit" variant="primary" buttonText="Submit"></Button>
           <Button
             type="button"
             variant="text"
             buttonText="+ Add more"
+            className="my-5 p-0"
             onClick={() => addReminder(uuidv4())}
           ></Button>
+          <Button type="submit" variant="primary" buttonText="Submit"></Button>
         </Form>
       </div>
     </div>
