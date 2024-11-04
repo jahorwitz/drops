@@ -20,9 +20,9 @@ export const MedicationSection: React.FC<Props> = ({ index }) =>  {
   } = useForm<FormValues>();
 
   return (
-    <div className="bg-white mx-auto min-w-[315px] max-w-[400px] px-4 py-3 w-full rounded-[16px]">
-          <div className="flex items-center ">
-            <h3 className="text-base leading-[19px] font-text mb-1">Medication {index}</h3>
+    <div className="flex flex-col gap-5 bg-white mx-auto min-w-[315px] max-w-[400px] px-4 py-3 w-full rounded-[16px]">
+          <div className="flex items-centerw">
+            <h3 className="font-text text-section-subtext font-normal leading-[24px] text-center">Medication {index}</h3>
             <Button
               variant="icon"
               icon={faTrashCan}
