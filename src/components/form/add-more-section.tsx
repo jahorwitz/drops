@@ -13,7 +13,8 @@ type Props = {
   children?: ReactElement<ChildProps>;
 };
 
-export const AddMoreButton = ({ buttonText, className, children, ...rest }: Props) => {
+// The section will accept an element and dupclicate upon button press. It also passes an index numbber and delete function as props to the element.
+export const AddMoreSection = ({ buttonText, className, children, ...rest }: Props) => {
   const [childList, setChildList] = useState<number[]>([1]);
   const [childIndex, setChildIndex] = useState<number>(2);
 

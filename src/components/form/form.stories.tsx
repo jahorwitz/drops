@@ -221,6 +221,27 @@ export const TimePicker = () => {
   );
 };
 
+export const WithAddMoreSection = () => {
+  const {
+    handleSubmit,
+  } = useForm<TimePicker>();
+
+  const onSubmit = (data: TimePicker) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.AddMoreSection buttonText="+ Add another reminder">
+      {/* this timePicker will be duplicated on button presses */}
+      {/* <MedicationTimePicker/> */}
+      </Form.AddMoreSection>
+      
+      <Button type="submit">Submit</Button>
+    </Form>
+  )
+}
+
 export const SelectForm = () => {
   const {
     register,

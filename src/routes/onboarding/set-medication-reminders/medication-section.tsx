@@ -45,9 +45,9 @@ export const MedicationSection: React.FC<Props> = ({ index, onDelete, elementId}
             required: "This field is required",
           })}
           />
-          <Form.AddMorebutton buttonText="+ Add more reminders">
+          <Form.AddMoreSection buttonText="+ Add more reminders">
             <MedicationTimeInput />
-          </Form.AddMorebutton>
+          </Form.AddMoreSection>
         </div>
   )
 }
