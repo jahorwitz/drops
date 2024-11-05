@@ -6,8 +6,6 @@ import {
   FieldValues,
 } from "react-hook-form";
 import IMask from "imask";
-import { Button } from "../button";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
@@ -16,7 +14,6 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     feedback?: string;
     className?: string;
     setValue: UseFormSetValue<T>;
-    delete: () => void;
   };
 
 export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
@@ -26,7 +23,6 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
     feedback,
     className,
     setValue,
-    delete: deleteTimePicker,
     ...rest
   }: Props<FieldValues>) => {
     const [hour, setHour] = useState<string>("");
@@ -149,14 +145,6 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
             <option value="AM">AM</option>
             <option value="PM">PM</option>
           </select>
-          <Button
-            type="button"
-            variant="icon"
-            buttonText=""
-            className="ml-auto"
-            icon={faTrashCan}
-            onClick={() => deleteTimePicker()}
-          ></Button>
         </div>
         {feedback ? (
           <span className="text-red text-base leading-5">{feedback}</span>
