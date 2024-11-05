@@ -1,5 +1,4 @@
 import React from "react";
-import { useForm } from "react-hook-form";
 import smRectangle from "../../images/Smallrectangle.svg";
 import shareBar from "../../images/Sharebar.svg";
 import lgRectangle from "../../images/Largerectangle.svg";
