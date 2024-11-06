@@ -13,11 +13,9 @@ export const AddToHomescreen: React.FC = () => {
       <div className="flex items-center flex-col">
         <div className="relative">
           <img src={shareBar} alt="Share Button" />
-          <img src={smRectangle} alt="Click Share" className="absolute top-[1px] left-[163px]"/>
         </div>
         <div className="relative">
           <img src={icons} alt="Add to home screen tray" />
-          <img src={lgRectangle} alt="Add to home screen button" className="absolute bottom-[24px] left-[20px]"/>
         </div>
       </div>
     </div>
