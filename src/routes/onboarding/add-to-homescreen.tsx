@@ -1,7 +1,5 @@
 import React from "react";
-import smRectangle from "../../images/Smallrectangle.svg";
 import shareBar from "../../images/Sharebar.svg";
-import lgRectangle from "../../images/Largerectangle.svg";
 import icons from "../../images/Addtohomescreenicons.svg";
 
 export const AddToHomescreen: React.FC = () => {
