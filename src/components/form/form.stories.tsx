@@ -232,8 +232,7 @@ export const WithAddMoreSection = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Form.AddMoreSection buttonText="+ Add another reminder">
-      {/* this timePicker will be duplicated on button presses */}
-      {/* <MedicationTimePicker/> */}
+        <Form.ListTimeInput label="reminder" varient2Text="Meal"/>      
       </Form.AddMoreSection>
       
       <Button type="submit">Submit</Button>

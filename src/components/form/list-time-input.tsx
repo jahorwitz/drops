@@ -1,7 +1,7 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { Form, Button } from "../../../components"
+import { Form, Button } from ".."
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 interface Props {
@@ -58,7 +58,7 @@ export const ListTimeInput: React.FC<Props> = ({ index, onDelete, elementId, lab
            <Button
               variant="icon"
               icon={faTrashCan}
-              className="absolute bottom-6 right-5"
+              className="absolute bottom-[22px] right-5"
               onClick={() => {
                 if (onDelete && elementId) {
                   console.log(inputName)
