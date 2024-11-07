@@ -30,9 +30,9 @@ export const SetExerciseGoals: React.FC<Props> = ({
     ]
 
     return (
-        <div>
-            <div>
-                <h3>Exercise {index}</h3>
+        <div className="flex flex-col gap-5 bg-white rounded-2xl px-3 py-4">
+            <div className="flex">
+            <h3>Exercise {index}</h3>
                 <Button 
                 variant="icon"
                 icon={faTrashCan}
@@ -44,6 +44,7 @@ export const SetExerciseGoals: React.FC<Props> = ({
                     }
                 }}
                 />
+            </div>
                 <Form.TextInput 
                 labelText="Name"
                 placeholder="Enter name"
@@ -66,7 +67,11 @@ export const SetExerciseGoals: React.FC<Props> = ({
                 type="text"
                 feedback={errors[inputName]?.message as string | undefined}
                 {...register(inputName, {
-                    required: "This field is required"
+                    required: "This field is required",
+                    pattern: {
+                        value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
+                        message: "Invalid time format. Please use hh:mm:AM/PM"
+                      }
                 })}
                 />
                 <Form.TextInput 
@@ -88,7 +93,6 @@ export const SetExerciseGoals: React.FC<Props> = ({
                     required: "This field is required"
                 })}
                 />
-            </div>
         </div>
     )
 }

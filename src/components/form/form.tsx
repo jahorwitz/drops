@@ -27,3 +27,4 @@ Form.TimePicker = TimePicker;
 Form.Weekday = WeekdaySelector;
 Form.RadioGroup = RadioGroup;
 Form.SelectForm = SelectForm; 
+Form.AddMoreSection = AddMoreSection;
