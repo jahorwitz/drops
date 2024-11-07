@@ -8,7 +8,7 @@ import {
   GlucoseNotificationList,
   Start,
   Welcome,
-  RegistrationConfirmation,
+  RegistrationConfirmation, MedicationReminderForm,
 } from "./routes";
 
 const client = new ApolloClient({
@@ -34,6 +34,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             path="/onboarding/glucose-notifications-list"
             element={<GlucoseNotificationList />}
           />
+          <Route path="/onboarding/medication-reminders" element={<MedicationReminderForm />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
         </Routes>
