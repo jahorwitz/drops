@@ -8,15 +8,12 @@ import {
   Start,
   Welcome,
   RegistrationConfirmation,
-  AddToHomescreen,
 } from "./routes";
 
 const client = new ApolloClient({
   uri: "http://localhost:8080/api/graphql",
   cache: new InMemoryCache(),
 });
-
-//test
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -31,10 +28,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route
             path="/onboarding/glucose-notifications"
             element={<GlucoseNotificationPrompt />}
-          />
-          <Route
-            path="/onboarding/add-to-homescreen"
-            element={<AddToHomescreen />}
           />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
