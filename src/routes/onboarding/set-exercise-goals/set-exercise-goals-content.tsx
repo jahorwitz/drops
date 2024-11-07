@@ -32,7 +32,7 @@ export const SetExerciseGoals: React.FC<Props> = ({
     return (
         <div className="flex flex-col gap-5 bg-white rounded-2xl px-3 py-4">
             <div className="flex">
-            <h3>Exercise {index}</h3>
+            <h3 className="font-text text-[24px] font-medium leader-[28.8px]">Exercise {index}</h3>
                 <Button 
                 variant="icon"
                 icon={faTrashCan}
