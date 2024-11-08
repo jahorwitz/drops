@@ -3,11 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./global/default.css";
-import { GlucoseNotificationPrompt, 
-  Start, 
-  Welcome, 
-  RegistrationConfirmation, 
-  MedicationReminderForm} from "./routes";
+import { MedicationReminderForm} from "./routes";
 import { SetExerciseGoalsForm } from "./routes/onboarding/set-exercise-goals/set-exercise-goals-form";
 import { GlucoseNotificationPrompt, Start, Welcome, RegistrationConfirmation } from "./routes";
 
