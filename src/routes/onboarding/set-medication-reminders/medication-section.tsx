@@ -24,7 +24,7 @@ export const MedicationSection: React.FC<Props> = ({ index, onDelete, elementId}
   return (
     <div className="flex flex-col gap-5 bg-white mx-auto min-w-[315px] max-w-[400px] px-4 py-3 w-full rounded-[16px]">
           <div className="flex items-centerw">
-            <h3 className="font-text text-section-subtext font-normal leading-[24px] text-center">Medication {index}</h3>
+            <h3 className="font-text text-section-subtext font-medium leading-[24px] text-center text-2xl">Medication {index}</h3>
             <Button
               variant="icon"
               icon={faTrashCan}

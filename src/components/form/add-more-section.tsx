@@ -23,10 +23,13 @@ export const AddMoreSection = ({ buttonText, className, children, ...rest }: Pro
     setChildIndex(childIndex + 1);
   }
 
+  //Only removes element if there is more than one
   const removeChild = (index: number) => {
-    setChildList((prevState) => {
-      return prevState.filter((item) => item != index);
-    })
+    if (childList.length > 1) {
+      setChildList((prevState) => {
+        return prevState.filter((item) => item != index);
+      })
+    }
   }
 
   return (
@@ -42,7 +45,7 @@ export const AddMoreSection = ({ buttonText, className, children, ...rest }: Pro
         </div>
       )
     })}
-    <Button variant="text" className={className} buttonText={buttonText} onClick={() => addChild()} {...rest} />
+  <Button variant="text" className={`p-0 ${className}`} buttonText={buttonText} onClick={() => addChild()} {...rest} />
     </>
   )
 }
