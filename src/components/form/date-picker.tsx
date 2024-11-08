@@ -24,33 +24,27 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
     setValue,
     ...rest
   }: Props<FieldValues>) => {
-    const [hour, setHour] = useState<string>("");
-    const [minute, setMinute] = useState<string>("");
+    const [date, setDate] = useState<string>("");
 
     // Refs for hour, minute, and period input fields
-    const hourRef = useRef<HTMLInputElement>(null);
-    const minuteRef = useRef<HTMLInputElement>(null);
+    const dateRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-      setValue("timeValue", `${hour}:${minute}`, {
+      setValue("Value", `${date}`, {
         shouldValidate: true,
         shouldDirty: true,
         shouldTouch: true,
       });
-    }, [hour, minute, setValue]);
+    }, [date, setValue]);
 
-    const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setHour(value);
-    };
-
-    const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setMinute(value);
+      setDate(value);
     };
 
     const inputClassName =
       "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
+
     return (
       <div>
         <label className="text-base leading-[19px] font-text mb-1">
@@ -60,25 +54,13 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
           <input
             type="text"
             {...rest}
-            ref={hourRef}
-            value={hour}
-            name={hour}
-            onChange={handleHourChange}
+            ref={dateRef}
+            value={date}
+            name={date}
+            onChange={handleDateChange}
             className={cx(inputClassName, className)}
             inputMode="numeric"
-            placeholder="00"
-          />
-          <span className="ml-[12px] mr-3">:</span>
-          <input
-            type="text"
-            {...rest}
-            ref={minuteRef}
-            value={minute}
-            name={minute}
-            onChange={handleMinuteChange}
-            className={cx(inputClassName, className, "mr-2")}
-            inputMode="numeric" // Show numeric keypad on mobile
-            placeholder="00"
+            placeholder="DD.MM.YYYY"
           />
         </div>
         {feedback ? (
