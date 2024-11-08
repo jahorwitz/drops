@@ -5,10 +5,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./global/default.css";
 import {
   GlucoseNotificationPrompt,
-  GlucoseNotificationList,
   Start,
   Welcome,
-  RegistrationConfirmation, MedicationReminderForm,
+  RegistrationConfirmation,
+  MedicationReminderForm,
 } from "./routes";
 
 const client = new ApolloClient({
@@ -31,10 +31,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             element={<GlucoseNotificationPrompt />}
           />
           <Route
-            path="/onboarding/glucose-notifications-list"
-            element={<GlucoseNotificationList />}
+            path="/onboarding/medication-reminders"
+            element={<MedicationReminderForm />}
           />
-          <Route path="/onboarding/medication-reminders" element={<MedicationReminderForm />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
         </Routes>
