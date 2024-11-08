@@ -8,8 +8,8 @@ interface Props {
 
 export const GlucoseNotificationList: React.FC<Props> = ({ index }) => {
   return (
-    <div className="flex flex-col max-w-screen-md bg-lightPink relative overflow-hidden m-auto pb-80 h-screen">
-      <div className="flex flex-col self-center gap-6 items-center pt-32 px-4 max-w-[500px]">
+    <div className="flex flex-col max-w-screen-md bg-lightPink overflow-y-auto relative m-auto h-screen">
+      <div className="flex flex-col self-center gap-6 items-center px-4 max-w-[500px]">
         <h2 className="font-text text-section-header font-medium leading-[38.4px] text-center max-w-[358px] mx-auto">
           Get notified to measure glucose!
         </h2>
