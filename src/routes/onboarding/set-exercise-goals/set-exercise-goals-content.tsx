@@ -10,6 +10,7 @@ interface Props {
     elementId?: number;
 }
 
+// initialize form use
 export const SetExerciseGoals: React.FC<Props> = ({
     index, onDelete, elementId }) => {
     const {
@@ -31,8 +32,9 @@ export const SetExerciseGoals: React.FC<Props> = ({
 
     return (
         <div className="flex flex-col gap-5 bg-white rounded-2xl px-3 py-4">
+            // title and delete component
             <div className="flex">
-            <h3 className="font-text text-[24px] font-medium leader-[28.8px]">Exercise {index}</h3>
+                <h3 className="font-text text-[24px] font-medium leader-[28.8px]">Exercise {index}</h3>
                 <Button 
                 variant="icon"
                 icon={faTrashCan}
@@ -45,6 +47,7 @@ export const SetExerciseGoals: React.FC<Props> = ({
                 }}
                 />
             </div>
+                // name input
                 <Form.TextInput 
                 labelText="Name"
                 placeholder="Enter name"
@@ -54,6 +57,7 @@ export const SetExerciseGoals: React.FC<Props> = ({
                     required: "This field is required"
                 })}
                 />
+                // weekday input
                 <Form.Weekday 
                 labelText="Days to exercise"
                 feedback={errors[inputName]?.message as string | undefined}
@@ -61,6 +65,7 @@ export const SetExerciseGoals: React.FC<Props> = ({
                     required: "This field is required"
                 })}
                 />
+                // time input
                 <Form.TextInput 
                 labelText="Time"
                 placeholder="Enter time"
@@ -74,6 +79,7 @@ export const SetExerciseGoals: React.FC<Props> = ({
                       }
                 })}
                 />
+                // duration input
                 <Form.TextInput 
                 labelText="Duration (min)"
                 placeholder="Enter duration"
@@ -83,6 +89,7 @@ export const SetExerciseGoals: React.FC<Props> = ({
                     required: "This field is required"
                 })}
                 />
+                // reminder frequency select input
                 <Form.SelectForm 
                 labelText="Reminder"
                 placeholder="When to remind of the exercise?"
