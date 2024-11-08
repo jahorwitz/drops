@@ -9,6 +9,7 @@ import { GlucoseNotificationPrompt,
   RegistrationConfirmation, 
   MedicationReminderForm} from "./routes";
 import { SetExerciseGoalsForm } from "./routes/onboarding/set-exercise-goals/set-exercise-goals-form";
+import { GlucoseNotificationPrompt, Start, Welcome, RegistrationConfirmation } from "./routes";
 
 const client = new ApolloClient({
   uri: "http://localhost:8080/api/graphql",
