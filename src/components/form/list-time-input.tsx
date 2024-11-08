@@ -61,7 +61,6 @@ export const ListTimeInput: React.FC<Props> = ({ index, onDelete, elementId, lab
               className="absolute bottom-[22px] right-5"
               onClick={() => {
                 if (onDelete && elementId) {
-                  console.log(inputName)
                   onDelete(elementId);
                   unregister(inputName);
                 }
