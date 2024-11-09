@@ -72,12 +72,12 @@ export const Login: React.FC = () => {
           <Button
             type="submit"
             buttonText="Log In"
-            variant={isValid ? "primary" : "primary-disabled"}
+            variant="primary"
+            disabled={!isValid}
             className="h-[60px] w-full"
           ></Button>
           <Link to="/register">
             <Button
-              type="button"
               buttonText="Or register"
               variant="text"
               className="opacity-100 hover:opacity-80 mt-8 p-0 rounded-lg"

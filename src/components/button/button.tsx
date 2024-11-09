@@ -16,18 +16,20 @@ export const Button = ({
   icon,
   className,
   type = "button",
+  disabled,
   ...rest
 }: Props) => {
   return (
     <button
       type={type as 'button' | 'submit' | 'reset'}
       {...rest}
+      disabled={disabled}
       className={twMerge(
         `text-lg font-medium font-text active:opacity-60`,
         variant === "primary" &&
         "text-lightGray bg-black px-10 py-4 leading-5 rounded-lg hover:opacity-80",
-        variant === "primary-disabled" && 
-        `text-lightGray bg-black px-10 py-4 leading-5 rounded-lg opacity-30 pointer-events-none`,
+        disabled &&
+        `text-lightGray bg-black px-10 py-4 leading-5 rounded-lg opacity-30 hover:opacity-30 active:opacity-30`,
         variant === "secondary" &&
         `text-black px-10 py-4 leading-5 border-black border rounded-lg hover:opacity-60`,
         variant === "text" &&

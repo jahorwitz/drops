@@ -16,7 +16,8 @@ export const Primary = () => (
 
 export const PrimaryDisabled = () => (
   <Button
-    variant="primary-disabled"
+    variant="primary"
+    disabled
     buttonText="Value"
     onClick={() => alert("I'm disabled primary button")}
   />
