@@ -1,42 +1,47 @@
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { setGraphqlHeaders } from '../store';
 
 interface UserSessionData {
   id: string;
   name: string;
-  isAdmin: boolean;
+  email: string;
   token: string;
 }
 
-interface UseAuthProps {
-  onLoginSuccess?: (data: { token: string; session: UserSessionData }) => void;
-  onLogoutSuccess?: () => void;
-}
+// interface UseAuthProps {
+//   onLoginSuccess?: (data: { session: UserSessionData }) => void;
+//   onLogoutSuccess?: () => void;
+// }
 
-const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
-  const context = useContext(AuthContext);
+//TODO: Remove the commented out variables as they become necessary
+const useAuth = (/*{ onLoginSuccess, onLogoutSuccess }: UseAuthProps*/) => {
+  const [currentUser, /*setCurrentUser*/] = useState<UserSessionData | undefined>();
 
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  const login = useCallback((/*username: string, password: string*/) => {
+    // TODO: Implement login logic
+    // 1) Call API to authenticate user with username/email and password
+    // 2) If successful:
+    //      - save token to localStorage using AUTH_TOKEN key from store/apollo-client.tsx
+    //      - set current user to the session data
+    //      - call onLoginSuccess callback if provided
+  }, []);
 
-  const { currentUser, isLoggedIn, login, logout } = context;
+  const logout = useCallback(() => {
+    // TODO: Implement logout logic
+    // 1) Call API to end the session (see endSession mutation in graphql schema)
+    // 2) If successful:
+    //      - remove token from localStorage using AUTH_TOKEN key from store/apollo-client.tsx
+    //      - set current user to undefined
+    //      - call onLogoutSuccess callback if provided
+  }, []);
 
-  const wrappedLogin = (user: UserSessionData) => {
-    login(user);
-    if (onLoginSuccess) {
-      onLoginSuccess({ token: user.token, session: user });
-    }
-  };
+  const isLoggedIn = useMemo(() => !!currentUser, [currentUser]);
 
-  const wrappedLogout = () => {
-    logout();
-    if (onLogoutSuccess) {
-      onLogoutSuccess();
-    }
-  };
+  useEffect(() => {
+    setGraphqlHeaders(currentUser?.token);
+  }, [currentUser]);
 
-  return { currentUser, isLoggedIn, login: wrappedLogin, logout: wrappedLogout };
+  return { currentUser, isLoggedIn, login, logout };
 };
 
 export default useAuth;
