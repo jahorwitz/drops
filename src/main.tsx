@@ -7,6 +7,7 @@ import {
   GlucoseNotificationPrompt,
   Start,
   Welcome,
+  Login,
   RegistrationConfirmation,
 } from "./routes";
 import { client } from "./store";
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>

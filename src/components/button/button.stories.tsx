@@ -14,6 +14,15 @@ export const Primary = () => (
   />
 );
 
+export const PrimaryDisabled = () => (
+  <Button
+    variant="primary"
+    disabled
+    buttonText="Value"
+    onClick={() => alert("I'm disabled primary button")}
+  />
+);
+
 export const Secondary = () => (
   <Button
     variant="secondary"
