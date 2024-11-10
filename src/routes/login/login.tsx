@@ -13,6 +13,7 @@ export const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
   } = useForm<FormValues>();
 
@@ -45,6 +46,7 @@ export const Login: React.FC = () => {
             placeholder="Enter your email"
             type="text"
             feedback={errors.email?.message}
+            filled={`${!watch("email") ? "filled" : ""}`}
             {...register("email", {
               required: "This field is required",
               pattern: {
@@ -59,6 +61,7 @@ export const Login: React.FC = () => {
             placeholder="Enter your password"
             type="password"
             feedback={errors.password?.message}
+            filled={`${!watch("password") ? "filled" : ""}`}
             {...register("password", {
               required: "This field is required",
               minLength: {
