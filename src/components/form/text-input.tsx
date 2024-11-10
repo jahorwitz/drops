@@ -18,7 +18,7 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
       "border-[1px]": true,
       "py-5": true,
       "px-3": true,
-      "border-black": true,
+      "border-[#121212]": true,
       "border-opacity-30": filled,
     });
 
