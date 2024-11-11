@@ -1,33 +1,43 @@
-import React, { createContext, useCallback, useState, ReactNode } from "react";
+// WizardContext.tsx
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useCallback,
+} from "react";
 
-interface contextType {
+type WizardContextType = {
   currentStep: number;
   totalSteps: number;
-  nextStep: () => void;
-  previousStep: () => void;
+  goToNextStep: () => void;
+  goToPreviousStep: () => void;
   goToStep: (step: number) => void;
-}
+};
 
-export const StepWizardContext = createContext<contextType | undefined>(
-  undefined,
-);
+const WizardContext = createContext<WizardContextType | undefined>(undefined);
 
-interface StepWizardProps {
-  children?: ReactNode;
-}
+type WizardProviderProps = {
+  children: ReactNode;
+  totalSteps: number;
+};
 
-export const StepWizardProvider = ({ children }: StepWizardProps) => {
+export const WizardProvider: React.FC<WizardProviderProps> = ({
+  children,
+  totalSteps,
+}) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = React.Children.count(children);
 
-  const nextStep = useCallback(
+  const goToNextStep = useCallback(
     () => setCurrentStep((step) => Math.min(step + 1, totalSteps)),
     [totalSteps],
   );
-  const previousStep = useCallback(
+
+  const goToPreviousStep = useCallback(
     () => setCurrentStep((step) => Math.max(step - 1, 1)),
     [],
   );
+
   const goToStep = useCallback(
     (step: number) =>
       setCurrentStep(() => Math.max(Math.min(step, 1), totalSteps)),
@@ -35,10 +45,24 @@ export const StepWizardProvider = ({ children }: StepWizardProps) => {
   );
 
   return (
-    <StepWizardContext.Provider
-      value={{ currentStep, totalSteps, nextStep, previousStep, goToStep }}
+    <WizardContext.Provider
+      value={{
+        currentStep,
+        totalSteps,
+        goToNextStep,
+        goToPreviousStep,
+        goToStep,
+      }}
     >
       {children}
-    </StepWizardContext.Provider>
+    </WizardContext.Provider>
   );
+};
+
+export const useStepWizard = () => {
+  const context = useContext(WizardContext);
+  if (!context) {
+    throw new Error("useWizard must be used within a WizardProvider");
+  }
+  return context;
 };
