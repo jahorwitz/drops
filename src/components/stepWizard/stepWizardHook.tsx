@@ -8,8 +8,8 @@ type StepProps = {
   children: React.ReactNode;
 };
 
-const Step: React.FC<StepProps> = ({ stepNumber, children }) => {
-  const { currentStep, goToNextStep, goToPreviousStep, goToStep } = useStepWizard();
+const StepWizardHook: React.FC<StepProps> = ({ stepNumber, children }) => {
+  const { currentStep, goToNextStep, goToPreviousStep } = useStepWizard();
 
   if (currentStep !== stepNumber) return null;
 
@@ -32,4 +32,4 @@ const Step: React.FC<StepProps> = ({ stepNumber, children }) => {
   );
 };
 
-export default Step;
+export default StepWizardHook;
