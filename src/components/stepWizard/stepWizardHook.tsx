@@ -9,25 +9,13 @@ type StepProps = {
 };
 
 const StepWizardHook: React.FC<StepProps> = ({ stepNumber, children }) => {
-  const { currentStep, goToNextStep, goToPreviousStep } = useStepWizard();
+  const { currentStep } = useStepWizard();
 
   if (currentStep !== stepNumber) return null;
 
   return (
     <div>
       <div>{children}</div>
-      <div>
-        {currentStep > 1 && (
-          <Button
-            variant="primary"
-            buttonText="Back"
-            onClick={goToPreviousStep}
-          />
-        )}
-        {currentStep <= stepNumber && (
-          <Button variant="primary" buttonText="Next" onClick={goToNextStep} />
-        )}
-      </div>
     </div>
   );
 };

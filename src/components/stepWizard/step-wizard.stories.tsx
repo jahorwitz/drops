@@ -1,37 +1,33 @@
 // onBoardingStepWizard
 import React from "react";
 import Wizard from "./wizard";
-import Step from "./stepWizardHook";
-import DietGoals from "../../routes/onboarding/diet.goals";
-import { GlucoseNotificationPrompt } from "../../routes/onboarding/glucose-notification-prompt";
+import StepWizardHook from "./stepWizardHook";
+import { Header } from "./example usage/header";
+import Footer from "./example usage/footer";
+import { Page } from "./example usage/page";
 
 export const onBoardingStepWizard: React.FC = () => {
   return (
     <Wizard totalSteps={3}>
-      <Step stepNumber={1}>
+      <StepWizardHook stepNumber={1}>
         {/* Here is where you would import your header, page, and footer
-        The buttons in stepWizardHook are just to show functionality. The
-        idea is you would import stepWizard in your footer and add the buttons and
-        onClick functions there.
-        Eventually, this hook would just look something like :
-        <Wizard>
-          <step stepNumber={1}>
-            <div>
-              <Header />
-              <children />
-              <footer />
-            </div>  
-          </step>
-          ....more steps    
-        */}
-        <GlucoseNotificationPrompt />
-      </Step>
-      <Step stepNumber={2}>
-        <GlucoseNotificationPrompt />
-      </Step>
-      <Step stepNumber={3}>
-        <GlucoseNotificationPrompt />
-      </Step>
+        The idea is you would useStepWizard where ever you needed button
+        functionality or currentStep/totalStep information.*/}
+
+        <Header />
+        <Page />
+        <Footer stepNumber={1} />
+      </StepWizardHook>
+      <StepWizardHook stepNumber={2}>
+        <Header />
+        <Page />
+        <Footer stepNumber={2} />
+      </StepWizardHook>
+      <StepWizardHook stepNumber={3}>
+        <Header />
+        <Page />
+        <Footer stepNumber={3} />
+      </StepWizardHook>
     </Wizard>
   );
 };
@@ -39,5 +35,5 @@ export const onBoardingStepWizard: React.FC = () => {
 export default {
   title: "StepWizard",
   component: Wizard,
-  Step,
+  StepWizardHook,
 };
