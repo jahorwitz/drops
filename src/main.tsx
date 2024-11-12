@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -7,13 +7,10 @@ import {
   GlucoseNotificationPrompt,
   Start,
   Welcome,
+  Login,
   RegistrationConfirmation,
 } from "./routes";
-
-const client = new ApolloClient({
-  uri: "http://localhost:8080/api/graphql",
-  cache: new InMemoryCache(),
-});
+import { client } from "./store";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -31,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
