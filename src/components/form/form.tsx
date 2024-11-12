@@ -27,6 +27,6 @@ Form.NumericInput = NumericInput;
 Form.TimePicker = TimePicker;
 Form.Weekday = WeekdaySelector;
 Form.RadioGroup = RadioGroup;
-Form.SelectForm = SelectForm; 
+Form.SelectForm = SelectForm;
 Form.ListTimeInput = ListTimeInput;
 Form.AddMoreSection = AddMoreSection;
