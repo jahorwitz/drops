@@ -1,7 +1,6 @@
-import React from "react";
-import { useStepWizard } from "../../store/stepWizardContext";
+import { useStepWizard } from "../Steps";
 
-export const Header = () => {
+const Header = () => {
   const { currentStep, totalSteps } = useStepWizard();
   return (
     <div className="flex flex-col">
@@ -14,3 +13,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default Header;

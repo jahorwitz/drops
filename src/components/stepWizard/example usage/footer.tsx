@@ -1,5 +1,5 @@
 import React from "react";
-import { useStepWizard } from "../../store/stepWizardContext";
+import { useStepWizard } from "../Steps";
 import { Button } from "../../button";
 
 type StepProps = {
@@ -8,8 +8,6 @@ type StepProps = {
 
 const Footer: React.FC<StepProps> = ({ stepNumber }) => {
   const { currentStep, goToNextStep, goToPreviousStep } = useStepWizard();
-
-  if (currentStep !== stepNumber) return null;
 
   return (
     <div>

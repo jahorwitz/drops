@@ -1,4 +1,3 @@
-// WizardContext.tsx
 import React, {
   createContext,
   useContext,
@@ -22,7 +21,7 @@ type WizardProviderProps = {
   totalSteps: number;
 };
 
-export const WizardProvider: React.FC<WizardProviderProps> = ({
+export const Steps: React.FC<WizardProviderProps> = ({
   children,
   totalSteps,
 }) => {
@@ -62,7 +61,7 @@ export const WizardProvider: React.FC<WizardProviderProps> = ({
 export const useStepWizard = () => {
   const context = useContext(WizardContext);
   if (!context) {
-    throw new Error("useWizard must be used within a WizardProvider");
+    throw new Error("Step must be used within Steps");
   }
   return context;
 };
