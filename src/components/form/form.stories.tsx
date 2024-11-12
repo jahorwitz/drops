@@ -30,6 +30,10 @@ interface TimePicker {
   timeValue: string;
 }
 
+interface DatePicker {
+  dateValue: string;
+}
+
 export const WithTextInputs = () => {
   const {
     register,
@@ -200,6 +204,49 @@ export const TimePicker = () => {
                 required: "Time value is required",
                 pattern: {
                   value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
+                  message: "Invalid time format. Please use hh:mm:AM/PM",
+                },
+              })}
+              labelText="Reminder 1"
+              hintText="Choose a time"
+              setValue={(name, value) =>
+                field.onChange({ target: { name, value } })
+              }
+              feedback={errors.timeValue?.message}
+            />
+          </>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+
+export const DatePicker = () => {
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<DatePicker>();
+
+  const onSubmit = (data: DatePicker) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Controller
+        name="timeValue"
+        control={control}
+        render={({ field }) => (
+          <>
+            <Form.TimePicker
+              {...field}
+              {...register("timeValue", {
+                required: "Time value is required",
+                pattern: {
+                  value:
+                    /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(\d{4})$/i,
                   message: "Invalid time format. Please use hh:mm:AM/PM",
                 },
               })}
