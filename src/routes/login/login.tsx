@@ -4,6 +4,7 @@ import logo from "../../images/Logo.svg";
 import backbutton from "../../images/Backbutton.svg";
 import { Button, Form } from "../../components";
 import { useAuth } from "../../hooks/useAuth";
+import { gql, useLazyQuery } from "@apollo/client";
 
 export const Login: React.FC = () => {
   interface FormValues {
@@ -20,9 +21,24 @@ export const Login: React.FC = () => {
 
   const auth = useAuth();
 
-  const onSubmit = (data: FormValues) => {
-    alert(JSON.stringify(data, null, 2));
+  const GET_USER = gql`
+    query User {
+      users {
+        name
+      }
+    }
+  `;
+
+  const [loadGetUser, { called, loading }] = useLazyQuery(GET_USER);
+
+  const onSubmit = (formData: FormValues) => {
+    alert(JSON.stringify(formData, null, 2));
     auth.login();
+
+    if (!called && !loading) {
+      loadGetUser();
+    }
+    // console.log(data);
   };
 
   return (
