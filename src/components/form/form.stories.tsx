@@ -30,6 +30,10 @@ interface TimePicker {
   timeValue: string;
 }
 
+interface DatePicker {
+  dateValue: string;
+}
+
 export const WithTextInputs = () => {
   const {
     register,
@@ -209,6 +213,50 @@ export const TimePicker = () => {
                 field.onChange({ target: { name, value } })
               }
               feedback={errors.timeValue?.message}
+            />
+          </>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+
+export const DatePicker = () => {
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<DatePicker>();
+
+  const onSubmit = (data: DatePicker) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Controller
+        name="dateValue"
+        control={control}
+        render={({ field }) => (
+          <>
+            <Form.DatePicker
+              {...field}
+              {...register("dateValue", {
+                required: "Date is required",
+                pattern: {
+                  value:
+                    /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d\d$/,
+                  message: "Invalid date format. Use DD.MM.YYYY",
+                },
+              })}
+              labelText="Event Date"
+              hintText="Enter a date in DD.MM.YYYY format"
+              setValue={(name, value) =>
+                field.onChange({ target: { name, value } })
+              }
+              feedback={errors.dateValue?.message}
             />
           </>
         )}
