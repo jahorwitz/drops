@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../../components/form";
-import { Button } from "../../components/button";
 
 type FormValues = {
   name: string;
@@ -33,6 +32,7 @@ export const AccountCreationForm: React.FC = () => {
         <Form.TextInput
           labelText="Name"
           type="text"
+          minLength={3}
           placeholder="Enter your name"
           {...register("name", { required: "Name is required" })}
           feedback={errors.name?.message}
@@ -61,6 +61,11 @@ export const AccountCreationForm: React.FC = () => {
               value: 8,
               message: "Password must be at least 8 characters",
             },
+            pattern: {
+              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/,
+              message:
+                "Password must contain at least one letter and one number",
+            },
           })}
           feedback={errors.password?.message}
         />
@@ -70,15 +75,9 @@ export const AccountCreationForm: React.FC = () => {
           placeholder="Repeat your password"
           {...register("repeatPassword", {
             required: "Please repeat your password",
-            validate: (value) =>
-              value === password || "Passwords do not match",
+            validate: (value) => value === password || "Passwords do not match",
           })}
           feedback={errors.repeatPassword?.message}
-        />
-        <Button
-          className="mt-[103px]"
-          buttonText="Continue"
-          type="submit"
         />
       </Form>
     </div>

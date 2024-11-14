@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
           <Route path="/registration-confirm" element={<RegistrationConfirmation />} />
-          <Route path="/registration-account-creation" element={<AccountCreationForm />} />
+          <Route path="/registration" element={<AccountCreationForm />} />
           <Route path="/onboarding/glucose-notifications" element={<GlucoseNotificationPrompt />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />

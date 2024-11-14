@@ -24,6 +24,3 @@ dist-ssr
 *.sln
 *.sw?
 
-*storybook.log
-package.json
-package-lock.json
