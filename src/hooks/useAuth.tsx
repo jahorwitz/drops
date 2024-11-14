@@ -25,19 +25,21 @@ export const useAuth = ({
     ({ email, password }: { email: string; password: string }) => {
       loadGetUser({
         variables: { email: email, password: password },
-      }).then((res) => {
-        const result = res.data.authenticateUserWithPassword;
-        if (result.message)
-          return alert(JSON.stringify(result.message, null, 2));
-        const session = {
-          id: result.item.id,
-          name: result.item.name,
-          email: result.item.email,
-          token: result.sessionToken,
-        };
-        setCurrentUser(session);
-        if (onLoginSuccess) onLoginSuccess({ session });
-      });
+      })
+        .then((res) => {
+          const result = res.data.authenticateUserWithPassword;
+          if (result.message)
+            return alert(JSON.stringify(result.message, null, 2));
+          const session = {
+            id: result.item.id,
+            name: result.item.name,
+            email: result.item.email,
+            token: result.sessionToken,
+          };
+          setCurrentUser(session);
+          if (onLoginSuccess) onLoginSuccess({ session });
+        })
+        .catch((err) => console.error(err));
     },
     [loadGetUser, onLoginSuccess],
   );
