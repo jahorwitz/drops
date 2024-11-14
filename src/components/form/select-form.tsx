@@ -22,7 +22,7 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
   ({ name, labelText, placeholder, hintText, options, feedback, onChange }: Props<FieldValues>) => {
     const [selected, setSelected] = useState<Option | undefined>();
     return (
-      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
+      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text z-10">
         <label htmlFor={name} className="text-base leading-[19px] font-text mb-1">{labelText}</label>
         <Listbox value={selected} onChange={(o) => {
           setSelected(o);
