@@ -29,7 +29,7 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
           onChange && onChange({ target: { name, value: o.value } })
         }}>
           <div className="relative">
-            <Listbox.Button className="w-full relative border-2 border-gray-300 rounded-lg py-5 px-3 focus:outline-none focus:border-blue-500 flex">
+            <Listbox.Button className={cx("w-full relative border-2 rounded-lg py-5 px-3 focus:outline-none focus:border-blue-500 flex", selected ? "border-[#121212]" : "border-gray-300")}>
               <span className={cx("block truncate", !selected && "text-black/60")}>{selected?.label || placeholder || "Choose"}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                 <ChevronDownIcon

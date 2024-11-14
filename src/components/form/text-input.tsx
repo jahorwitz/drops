@@ -8,21 +8,24 @@ type Props = UseFormRegisterReturn<string> &
     hintText?: string;
     feedback?: string;
     className?: string;
+    filled?: string;
   };
 
 export const TextInput = forwardRef<HTMLInputElement, Props>(
-  ({ labelText, hintText, feedback, className, ...rest }: Props, ref) => {
+  ({ labelText, hintText, feedback, filled, ...rest }: Props, ref) => {
+    const textInputClass = cx({
+      "rounded-lg": true,
+      "border-[1px]": true,
+      "py-5": true,
+      "px-3": true,
+      "border-[#121212]": true,
+      "border-opacity-30": filled,
+    });
+
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
         <label>{labelText}</label>
-        <input
-          {...rest}
-          ref={ref}
-          className={cx(
-            `rounded-lg border-black border-[1px] py-5 px-3`,
-            className,
-          )}
-        />
+        <input {...rest} ref={ref} className={textInputClass} />
         {feedback ? (
           <span className="text-red text-base leading-5">{feedback}</span>
         ) : hintText ? (
