@@ -38,6 +38,7 @@ export const WithTextInputs = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<MyFormValues>();
   const onSubmit = (data: MyFormValues) => {
@@ -50,6 +51,7 @@ export const WithTextInputs = () => {
         labelText="My Text Field"
         hintText="Must be at least 5 characters long"
         feedback={errors.myTextField?.message}
+        filled={`${!watch("myTextField") ? "filled" : ""}`}
         {...register("myTextField", {
           required: "This field is required",
           minLength: {
@@ -62,6 +64,7 @@ export const WithTextInputs = () => {
         labelText="Another Text Field"
         placeholder="Must be 'foo'"
         feedback={errors.anotherTextField?.message}
+        filled={`${!watch("anotherTextField") ? "filled" : ""}`}
         {...register("anotherTextField", {
           required: "This field is required",
           validate: (value) => value === "foo" || "This field must be 'foo'",
@@ -70,6 +73,7 @@ export const WithTextInputs = () => {
       <Form.TextInput
         labelText="'one' or 'two' or 'three'"
         feedback={errors.anEnumField?.message}
+        filled={`${!watch("anEnumField") ? "filled" : ""}`}
         {...register("anEnumField", {
           required: "This field is required",
           validate: (value) =>
@@ -261,6 +265,24 @@ export const DatePicker = () => {
           </>
         )}
       />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+
+export const WithAddMoreSection = () => {
+  const { handleSubmit } = useForm<TimePicker>();
+
+  const onSubmit = (data: TimePicker) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Form.AddMoreSection buttonText="+ Add another reminder">
+        <Form.ListTimeInput label="reminder" varient2Text="Meal" />
+      </Form.AddMoreSection>
+
       <Button type="submit">Submit</Button>
     </Form>
   );

@@ -22,14 +22,14 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
   ({ name, labelText, placeholder, hintText, options, feedback, onChange }: Props<FieldValues>) => {
     const [selected, setSelected] = useState<Option | undefined>();
     return (
-      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
+      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text z-10">
         <label htmlFor={name} className="text-base leading-[19px] font-text mb-1">{labelText}</label>
         <Listbox value={selected} onChange={(o) => {
           setSelected(o);
           onChange && onChange({ target: { name, value: o.value } })
         }}>
           <div className="relative">
-            <Listbox.Button className="w-full relative border-2 border-gray-300 rounded-lg py-5 px-3 focus:outline-none focus:border-blue-500 flex">
+            <Listbox.Button className={cx("w-full relative border-2 rounded-lg py-5 px-3 focus:outline-none focus:border-blue-500 flex", selected ? "border-[#121212]" : "border-gray-300")}>
               <span className={cx("block truncate", !selected && "text-black/60")}>{selected?.label || placeholder || "Choose"}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                 <ChevronDownIcon

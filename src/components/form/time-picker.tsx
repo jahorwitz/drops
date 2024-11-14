@@ -104,7 +104,7 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
     const inputClassName =
       "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
     return (
-      <div>
+      <div className="w-full">
         <label className="text-base leading-[19px] font-text mb-1">
           {labelText}
         </label>

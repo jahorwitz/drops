@@ -51,7 +51,8 @@
     "react-spinners": "^0.13.8",
     "storybook": "^8.2.5",
     "styled-components": "^6.1.0",
-    "tailwind-merge": "^2.2.0"
+    "tailwind-merge": "^2.2.0",
+    "uuid": "^11.0.2"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
