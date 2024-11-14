@@ -1,11 +1,11 @@
-# Apiary Project: Synthesis Workshop
+# Apiary Project: Drops.care
 
 ## Getting Started
 
 Cloning the repository:
 
 ```
-git clone git@github.com:synthesis-workshop/frontend.git
+git clone git@github.com:jahorwitz/drops.git
 ```
 
 !!!IMPORTANT Make sure to install dependencies before making any code changes. This repository utilizes git-hooks which must be installed using npm before they will function.
@@ -30,8 +30,8 @@ npm run test
 
 ## Deployments
 
-- [Production](http://synthesis-workshop.com.s3-website-us-east-1.amazonaws.com/)
-- [Storybook](http://storybook.synthesis-workshop.com.s3-website-us-east-1.amazonaws.com/)
+- [Production (TBD)]()
+- [Storybook (TBD)]()
 
 ## Contributing
 
@@ -90,7 +90,3 @@ This project uses the following key libraries
 - [Storybook JS](https://storybook.js.org/)
 - [Testing Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet)
 - [Testing Cheatsheet #2](https://vitest.dev/api/)
-
-## Deployment
-
-The project is configured to deploy automatically using GitHub Actions whenever a commit is made to `main`. This workflow is triggered by merging a Pull Request. After the workflow runs, you can visit the deployed site here: http://synthesis-workshop.com.s3-website-us-east-1.amazonaws.com/
