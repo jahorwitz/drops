@@ -26,7 +26,7 @@ export const Login: React.FC = () => {
   } = useForm<FormValues>();
 
   const handleLoginSuccess = (data: { session: UserSessionData }) => {
-    alert(JSON.stringify(data, null, 2));
+    alert(JSON.stringify(`Hello ${data.session.name}!`, null, 2));
   };
 
   const auth = useAuth({ onLoginSuccess: handleLoginSuccess });
