@@ -4,12 +4,18 @@ import logo from "../../images/Logo.svg";
 import backbutton from "../../images/Backbutton.svg";
 import { Button, Form } from "../../components";
 import { useAuth } from "../../hooks/useAuth";
-import { gql, useLazyQuery } from "@apollo/client";
 
 export const Login: React.FC = () => {
   interface FormValues {
     email: string;
     password: string;
+  }
+
+  interface UserSessionData {
+    id: string;
+    name: string;
+    email: string;
+    token: string;
   }
 
   const {
@@ -19,26 +25,13 @@ export const Login: React.FC = () => {
     formState: { errors, isValid },
   } = useForm<FormValues>();
 
-  const auth = useAuth();
+  const handleLoginSuccess = (data: { session: UserSessionData }) => {
+    alert(JSON.stringify(data, null, 2));
+  };
 
-  const GET_USER = gql`
-    query User {
-      users {
-        name
-      }
-    }
-  `;
-
-  const [loadGetUser, { called, loading }] = useLazyQuery(GET_USER);
-
+  const auth = useAuth({ onLoginSuccess: handleLoginSuccess });
   const onSubmit = (formData: FormValues) => {
-    alert(JSON.stringify(formData, null, 2));
-    auth.login();
-
-    if (!called && !loading) {
-      loadGetUser();
-    }
-    // console.log(data);
+    auth.login(formData);
   };
 
   return (
