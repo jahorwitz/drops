@@ -6,6 +6,8 @@ import {
   FieldValues,
 } from "react-hook-form";
 import IMask from "imask";
+import DatePickerLib from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
@@ -25,14 +27,13 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
     setValue,
     ...rest
   }: Props<FieldValues>) => {
-    const [date, setDate] = useState<string>("");
-
+    const [selectedDate, setSelectedDate] = useState<string>("");
     const dateRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
       if (dateRef.current) {
         const mask = IMask(dateRef.current, {
-          mask: "d.`m.`Y",
+          mask: "d.`m.`y",
           blocks: {
             d: {
               mask: IMask.MaskedRange,
@@ -56,7 +57,7 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
         });
 
         mask.on("accept", () => {
-          setDate(mask.value);
+          setSelectedDate(mask.value);
           setValue("dateValue", mask.value, {
             shouldValidate: true,
             shouldDirty: true,
@@ -67,25 +68,31 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
 
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setDate(value);
+      setSelectedDate(value);
     };
 
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
         <label>{labelText}</label>
-        <input
-          type="text"
-          {...rest}
-          ref={dateRef}
-          value={date}
-          name={date}
-          onChange={handleDateChange}
-          className={cx(
-            `rounded-lg border-black border-[1px] py-5 px-3`,
-            className,
-          )}
-          inputMode="numeric"
-          placeholder="DD.MM.YYYY"
+        <DatePickerLib
+          dateFormat="DD.MM.YYYY"
+          onChange={(date) => setSelectedDate(date ? date.toString() : "")}
+          customInput={
+            <input
+              type="text"
+              {...rest}
+              ref={dateRef}
+              value={selectedDate}
+              name={selectedDate}
+              onChange={handleDateChange}
+              className={cx(
+                `rounded-lg border-black border-[1px] py-5 px-3`,
+                className,
+              )}
+              inputMode="numeric"
+              placeholder="DD.MM.YYYY"
+            />
+          }
         />
         {feedback ? (
           <span className="text-red text-base leading-5">{feedback}</span>
