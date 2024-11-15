@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { setGraphqlHeaders } from '../store';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { setGraphqlHeaders } from "../store";
+import { useMutation } from "@apollo/client";
+import { USER_LOGIN } from "../graphql/mutations/users";
 
 interface UserSessionData {
   id: string;
@@ -8,23 +10,39 @@ interface UserSessionData {
   token: string;
 }
 
-// interface UseAuthProps {
-//   onLoginSuccess?: (data: { session: UserSessionData }) => void;
-//   onLogoutSuccess?: () => void;
-// }
+interface UseAuthProps {
+  onLoginSuccess?: (data: { session: UserSessionData }) => void;
+  onLogoutSuccess?: () => void;
+}
 
-//TODO: Remove the commented out variables as they become necessary
-const useAuth = (/*{ onLoginSuccess, onLogoutSuccess }: UseAuthProps*/) => {
-  const [currentUser, /*setCurrentUser*/] = useState<UserSessionData | undefined>();
+export const useAuth = ({
+  onLoginSuccess /*, onLogoutSuccess */,
+}: UseAuthProps) => {
+  const [currentUser, setCurrentUser] = useState<UserSessionData | undefined>();
+  const [loadGetUser] = useMutation(USER_LOGIN);
 
-  const login = useCallback((/*username: string, password: string*/) => {
-    // TODO: Implement login logic
-    // 1) Call API to authenticate user with username/email and password
-    // 2) If successful:
-    //      - save token to localStorage using AUTH_TOKEN key from store/apollo-client.tsx
-    //      - set current user to the session data
-    //      - call onLoginSuccess callback if provided
-  }, []);
+  const login = useCallback(
+    ({ email, password }: { email: string; password: string }) => {
+      loadGetUser({
+        variables: { email: email, password: password },
+      })
+        .then((res) => {
+          const result = res.data.authenticateUserWithPassword;
+          if (result.message)
+            return alert(JSON.stringify(result.message, null, 2));
+          const session = {
+            id: result.item.id,
+            name: result.item.name,
+            email: result.item.email,
+            token: result.sessionToken,
+          };
+          setCurrentUser(session);
+          if (onLoginSuccess) onLoginSuccess({ session });
+        })
+        .catch((err) => console.error(err));
+    },
+    [loadGetUser, onLoginSuccess],
+  );
 
   const logout = useCallback(() => {
     // TODO: Implement logout logic
@@ -43,5 +61,3 @@ const useAuth = (/*{ onLoginSuccess, onLogoutSuccess }: UseAuthProps*/) => {
 
   return { currentUser, isLoggedIn, login, logout };
 };
-
-export default useAuth;

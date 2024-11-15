@@ -3,11 +3,19 @@ import { Link } from "react-router-dom";
 import logo from "../../images/Logo.svg";
 import backbutton from "../../images/Backbutton.svg";
 import { Button, Form } from "../../components";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Login: React.FC = () => {
   interface FormValues {
     email: string;
     password: string;
+  }
+
+  interface UserSessionData {
+    id: string;
+    name: string;
+    email: string;
+    token: string;
   }
 
   const {
@@ -17,8 +25,13 @@ export const Login: React.FC = () => {
     formState: { errors, isValid },
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    alert(JSON.stringify(data, null, 2));
+  const handleLoginSuccess = (data: { session: UserSessionData }) => {
+    alert(JSON.stringify(`Hello ${data.session.name}!`, null, 2));
+  };
+
+  const auth = useAuth({ onLoginSuccess: handleLoginSuccess });
+  const onSubmit = (formData: FormValues) => {
+    auth.login(formData);
   };
 
   return (
