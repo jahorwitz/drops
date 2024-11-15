@@ -1,1 +1,1 @@
-export * from "./notification-group";
+export * from "./insight-box";
