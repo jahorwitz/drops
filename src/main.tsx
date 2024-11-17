@@ -12,7 +12,7 @@ import {
   MedicationReminderForm,
 } from "./routes";
 import { client } from "./store";
-import { Insight } from "./components/insight-box";
+import { Notification } from "./components/notification-group/notification-item";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -22,7 +22,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route
             path="/"
             element={
-              <Insight
+              <Notification
+                type="activity"
                 title="You need to exercise more!"
                 message="Try walking for at least 1 hour per day."
               />
