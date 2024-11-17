@@ -2,7 +2,7 @@ import { Button } from "../components";
 
 export const Settings: React.FC = () => {
   return (
-    <div className="flex flex-col bg-lightGray">
+    <div className="flex flex-col bg-[#F5F5F5]">
       <Button
         variant="text"
         className="opacity-100 hover:opacity-60 text-base"
