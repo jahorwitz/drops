@@ -16,16 +16,16 @@ export const Insight: React.FC<InsightProps> = ({ title, message, icon }) => {
 
   return (
     <div className={variantStyles}>
+      <div className="flex items-center justify-between">
+        {icon && <span className={`float-left`}>{icon}</span>}
+      </div>
       <div className="flex flex-col gap-1 flex-grow">
         <span className="text-paragraph-lg leading-5 text-black font-medium font-text">
           {title}
         </span>
-        <span className="mt-1 text-base text-black-500 break-words font-text">
+        <span className="text-paragraph-lg leading-5 text-black opacity-60 break-words font-text">
           {message}
         </span>
-      </div>
-      <div className="flex items-center justify-between">
-        {icon && <span className={`float-left`}>{icon}</span>}
       </div>
     </div>
   );

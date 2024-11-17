@@ -40,7 +40,7 @@ export const Notification: React.FC<NotificationProps> = ({
   return (
     <div className={variantStyles}>
       <div className="flex flex-col gap-1 flex-grow">
-        <span className="text-caption-text leading-[14px] text-gray-400 font-text">
+        <span className="text-caption-text leading-[14px] text-black opacity-60 font-text">
           {title}
         </span>
         <span className="mt-1 text-paragraph-lg leading-5 text-black-500 break-words font-text">
