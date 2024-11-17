@@ -11,9 +11,9 @@ const Template: StoryFn<InsightProps> = (args: InsightProps) => (
   <Insight {...args} />
 );
 
-export const ActivityNotification = Template.bind({});
-ActivityNotification.args = {
-  title: "Activity",
-  message: "You have a scheduled workout at 5 PM.",
+export const InsightBox = Template.bind({});
+InsightBox.args = {
+  title: "You need to exercise more!",
+  message: "Try walking for at least 1 hour per day.",
   icon: <RiCapsuleLine className="w-8 h-8 fill-blue " />,
 };
