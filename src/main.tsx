@@ -9,8 +9,8 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
-  Settings,
   MedicationReminderForm,
+  Settings,
 } from "./routes";
 import { client } from "./store";
 
