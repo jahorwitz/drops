@@ -9,16 +9,25 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
-  MedicationReminderForm
+  MedicationReminderForm,
 } from "./routes";
 import { client } from "./store";
+import { Insight } from "./components/insight-box";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<div>Home Route</div>} />
+          <Route
+            path="/"
+            element={
+              <Insight
+                title="You need to exercise more!"
+                message="Try walking for at least 1 hour per day."
+              />
+            }
+          />
           <Route
             path="/registration-confirm"
             element={<RegistrationConfirmation />}
