@@ -9,7 +9,7 @@ export interface InsightProps {
 }
 
 const baseStyles =
-  "w-full max-w-md flex flex-row justify-between items-center p-4 relative bg-white shadow-md rounded rounded-3xl";
+  "w-full max-w-md flex flex-row gap-2 justify-between items-center p-4 relative bg-white shadow-md rounded rounded-3xl";
 
 export const Insight: React.FC<InsightProps> = ({ title, message, icon }) => {
   const variantStyles = clsx(baseStyles);
