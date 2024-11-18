@@ -19,7 +19,7 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
     const [value, setValue] = useState<number | undefined>(defaultValue);
 
     return (
-      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
+      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text relative">
         <label>{labelText}</label>
         <input
           {...rest}
@@ -35,9 +35,10 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
             className,
           )}
         />
+        <div className="absolute top-10 right-3 flex justify-between w-[76px]">
         <Button
           variant="icon"
-          className="absolute top-14 right-20 z-1 border border-black"
+          className="z-1 border border-black"
           icon={faMinus as IconDefinition}
           onClick={() => {
             setValue((prev) => {
@@ -49,7 +50,7 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
         />
         <Button
           variant="icon"
-          className="absolute top-14 right-10 z-1 border border-black"
+          className="z-1 border border-black"
           icon={faPlus as IconDefinition}
           onClick={() => {
             setValue((prev) => {
@@ -59,6 +60,7 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
             })
           }}
         />
+        </div>
         {feedback ? (
           <span className="text-red text-base leading-5">{feedback}</span>
         ) : hintText ? (
