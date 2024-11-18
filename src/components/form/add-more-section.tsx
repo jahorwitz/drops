@@ -45,7 +45,7 @@ export const AddMoreSection = ({ buttonText, className, children, ...rest }: Pro
         </div>
       )
     })}
-  <Button variant="text" className={`p-0 ${className}`} buttonText={buttonText} onClick={() => addChild()} {...rest} />
+    <Button variant="text" className={`p-0 ${className}`} buttonText={buttonText} onClick={() => addChild()} {...rest} />
     </>
   )
 }

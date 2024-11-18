@@ -10,6 +10,9 @@ export const SetDietGoals: React.FC = () =>  {
         <Form.AddMoreSection buttonText="+ Add more">
           <Form.ListTimeInput label="Meal"/>
         </Form.AddMoreSection>
+        <Form.AddMoreSection buttonText="+ Add more">
+          <Form.ListTimeInput label="Snack"/>
+        </Form.AddMoreSection>
       </Form>
     </div>
   )
