@@ -251,12 +251,12 @@ export const DatePicker = () => {
                 required: "Date is required",
                 pattern: {
                   value:
-                    /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d\d$/,
-                  message: "Invalid date format. Use DD.MM.YYYY",
+                    /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/,
+                  message: "Invalid date format. Use MM/DD/YYYY",
                 },
               })}
               labelText="Event Date"
-              hintText="Enter a date in DD.MM.YYYY format"
+              hintText="Enter a date in MM/DD/YYYY format"
               setValue={(name, value) =>
                 field.onChange({ target: { name, value } })
               }
