@@ -19,7 +19,7 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
 
 export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
   ({ labelText, hintText, feedback, className }: Props<FieldValues>) => {
-    const [startDate, setStartDate] = useState<Date | null>(new Date());
+    const [startDate, setStartDate] = useState<Date | null>(null);
 
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
@@ -27,6 +27,7 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
         <DatePickerLib
           selected={startDate}
           dateFormat="MM/dd/yyyy"
+          placeholderText="MM/DD/YYYY"
           onChange={(date) => setStartDate(date)} // Handle `null` correctly
           className={cx(
             `rounded-lg border-black border-[1px] py-5 px-3`,
