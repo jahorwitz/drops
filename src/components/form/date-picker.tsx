@@ -26,9 +26,9 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
         {labelText && <label>{labelText}</label>}
         <DatePickerLib
           selected={startDate}
-          dateFormat="MM/dd/yyyy"
           placeholderText="MM/DD/YYYY"
-          onChange={(date) => setStartDate(date)} // Handle `null` correctly
+          onChange={(date) => setStartDate(date)}
+          popperPlacement="bottom-start"
           className={cx(
             `rounded-lg border-black border-[1px] py-5 px-3`,
             className,
@@ -45,19 +45,3 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
 );
 
 DatePicker.displayName = "DatePicker";
-
-/* 
-
-customInput={
-  <input
-    type="text"
-    {...rest}
-    ref={dateRef}
-    value={selectedDate}
-    name={selectedDate}
-    onChange={handleDateChange}
-    className=
-    inputMode="numeric"
-    placeholder="DD.MM.YYYY"
-  />
-} */

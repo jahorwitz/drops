@@ -9,7 +9,7 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
-  MedicationReminderForm
+  MedicationReminderForm,
 } from "./routes";
 import { client } from "./store";
 
