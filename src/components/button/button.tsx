@@ -33,7 +33,7 @@ export const Button = ({
         variant === "secondary" &&
         `text-black px-10 py-4 leading-5 border-black border rounded-lg hover:opacity-60`,
         variant === "text" &&
-        `text-black opacity-60 py-4 leading-5 hover:opacity-90`,
+        `text-black opacity-60 leading-5 hover:opacity-90`,
         variant === "icon" &&
         `w-8 h-8 opacity-60 rounded-full hover:opacity-90`,
         className,
