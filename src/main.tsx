@@ -12,7 +12,6 @@ import {
   MedicationReminderForm
 } from "./routes";
 import { client } from "./store";
-import { SetDietGoals } from "./routes/onboarding/set-diet-goal-reminders/set-diet-goals";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -32,10 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             path="/onboarding/medication-reminders"
             element={<MedicationReminderForm />}
           />
-          <Route
-            path="/onboarding/diet-goal-reminders"
-            element={<SetDietGoals/>}
-          />
+
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
           <Route path="/login" element={<Login />} />
