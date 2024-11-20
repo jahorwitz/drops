@@ -1,4 +1,4 @@
-import { useStepWizard } from "../Steps";
+import { useStepWizard } from "../../../hooks/useStepWizard";
 
 const Header = () => {
   const { currentStep, totalSteps } = useStepWizard();

@@ -1,5 +1,5 @@
 import React from "react";
-import { useStepWizard } from "./Steps";
+import { useStepWizard } from "../../hooks/useStepWizard";
 
 type StepProps = {
   stepNumber: number;
