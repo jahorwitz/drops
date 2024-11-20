@@ -1,6 +1,5 @@
 import React, {
   createContext,
-  useContext,
   useState,
   ReactNode,
   useCallback,
@@ -14,7 +13,7 @@ type WizardContextType = {
   goToStep: (step: number) => void;
 };
 
-const WizardContext = createContext<WizardContextType | undefined>(undefined);
+export const WizardContext = createContext<WizardContextType | undefined>(undefined);
 
 type WizardProviderProps = {
   children: ReactNode;
@@ -56,12 +55,4 @@ export const Steps: React.FC<WizardProviderProps> = ({
       {children}
     </WizardContext.Provider>
   );
-};
-
-export const useStepWizard = () => {
-  const context = useContext(WizardContext);
-  if (!context) {
-    throw new Error("Step must be used within Steps");
-  }
-  return context;
 };

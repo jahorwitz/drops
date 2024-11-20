@@ -6,7 +6,7 @@ import Step from "./Step";
 
 export const stepWizard: React.FC = () => {
   return (
-    <Steps totalSteps={3}>
+    <Steps totalSteps={stepArray.length}>
       {stepArray.map((step) => {
         return <div>{step}</div>;
       })}
