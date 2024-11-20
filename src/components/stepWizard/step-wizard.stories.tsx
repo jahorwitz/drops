@@ -36,8 +36,8 @@ export const stepWizard: React.FC = () => {
 
   return (
     <Steps totalSteps={stepArray.length}>
-      {stepArray.map((step) => {
-        return <div>{step}</div>;
+      {stepArray.map((step, id) => {
+        return <div key={id}>{step}</div>;
       })}
     </Steps>
   );
