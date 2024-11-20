@@ -4,7 +4,7 @@ import logo from "../../images/Logo.svg";
 import backbutton from "../../images/Backbutton.svg";
 import { Button, Form } from "../../components";
 
-export const Login: React.FC = () => {
+export const Notifications: React.FC = () => {
   interface FormValues {
     email: string;
     password: string;
