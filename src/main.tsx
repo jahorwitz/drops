@@ -31,7 +31,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             path="/onboarding/medication-reminders"
             element={<MedicationReminderForm />}
           />
-
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
           <Route path="/login" element={<Login />} />
