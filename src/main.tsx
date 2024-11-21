@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./global/default.css";
 import {
+  Header,
   GlucoseNotificationPrompt,
   Start,
   Welcome,
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             path="/registration-confirm"
             element={<RegistrationConfirmation />}
           />
+          <Route path="/dashboard" element={<Header />} />
           <Route
             path="/onboarding/glucose-notifications"
             element={<GlucoseNotificationPrompt />}
