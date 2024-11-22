@@ -31,6 +31,7 @@ export default {
         )}, ${theme("colors.darkYellow")})`,
       }),
       fontSize: {
+        "medication-reminder": "64px",
         "welcome-title": "44px",
         "section-header": "32px",
         "section-subtext": "20px",
