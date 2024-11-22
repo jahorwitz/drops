@@ -1,11 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import insights from "../../images/Insights.png";
-import notification from "../../images/Notifications.png";
-import avatar from "../../images/Avatar.png";
-import notificationHover from "../../images/Notifications-hover.png";
-import avatarHover from "../../images/Avatar-hover.png";
-import insightsHover from "../../images/Insights-hover.png";
+import { icons } from "../../utils";
+
 
 export const Header: React.FC = () => {
   function hover(e: React.MouseEvent<HTMLImageElement>, image: string): void {
@@ -18,23 +14,23 @@ export const Header: React.FC = () => {
       <div className="flex gap-4">
         <Link to="/insights">
           <img
-            src={insights}
-            onMouseOver={e => hover(e, insightsHover)} 
-            onMouseOut={e => hover(e, insights)}
+            src={icons.insights}
+            onMouseOver={e => hover(e, icons.insightsHover)} 
+            onMouseOut={e => hover(e, icons.insights)}
           />
         </Link>
         <Link to="/notifications">
          <img
-            src={notification}
-            onMouseOver={e => hover(e, notificationHover)} 
-            onMouseOut={e => hover(e, notification)}
+            src={icons.notification}
+            onMouseOver={e => hover(e, icons.notificationHover)} 
+            onMouseOut={e => hover(e, icons.notification)}
           />        
         </Link>
         <Link to="/settings">
           <img
-            src={avatar}
-            onMouseOver={e => hover(e, avatarHover)} 
-            onMouseOut={e => hover(e, avatar)}
+            src={icons.avatar}
+            onMouseOver={e => hover(e, icons.avatarHover)} 
+            onMouseOut={e => hover(e, icons.avatar)}
           />
         </Link>
       </div>
