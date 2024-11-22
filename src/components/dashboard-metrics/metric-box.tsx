@@ -3,6 +3,7 @@ import glucoseImage from "../../images/metric-image-glucose.svg";
 import activityImage from "../../images/metric-image-activity.svg";
 import dietImage from "../../images/metric-image-diet.svg";
 import moodImage from "../../images/metric-image-mood.svg";
+import { twMerge } from "tailwind-merge";
 
 interface MetricBoxProps {
   variant: string;
@@ -20,7 +21,14 @@ export const MetricBox = ({
 }: MetricBoxProps) => {
   return (
     <div
-      className={`bg-light${boxColor} h-[160px] metric-card box-content rounded-2xl overflow-hidden p-[10px] relative`}
+      className={twMerge(
+        `h-[160px] metric-card box-content rounded-2xl overflow-hidden p-[10px] relative`,
+        boxColor === "Green" && "bg-lightGreen",
+        boxColor === "Blue" && "bg-lightBlue",
+        boxColor === "Pink" && "bg-lightPink",
+        boxColor === "Purple" && "bg-lightPurple",
+        boxColor === "Yellow" && "bg-lightYellow",
+      )}
     >
       <h4 className="font-text text-section-subtext font-medium leading-[24px] mb-2">
         {variant}
