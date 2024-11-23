@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AUTH_TOKEN, setGraphqlHeaders } from "../store";
+import { setGraphqlHeaders } from "../store";
 import { useMutation } from "@apollo/client";
 import { USER_LOGIN } from "../graphql/mutations/users";
 
@@ -37,7 +37,6 @@ export const useAuth = ({
             token: result.sessionToken,
           };
           setCurrentUser(session);
-          localStorage.setItem(AUTH_TOKEN, session.token);
           if (onLoginSuccess) onLoginSuccess({ session });
         })
         .catch((err) => console.error(err));
