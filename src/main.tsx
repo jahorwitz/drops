@@ -9,7 +9,7 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
-  MedicationReminderForm
+  MedicationReminderForm,
 } from "./routes";
 import { client } from "./store";
 
@@ -37,5 +37,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

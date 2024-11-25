@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { setGraphqlHeaders } from '../store';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { setGraphqlHeaders } from "../store";
 
 interface UserSessionData {
   id: string;
@@ -15,16 +15,21 @@ interface UserSessionData {
 
 //TODO: Remove the commented out variables as they become necessary
 const useAuth = (/*{ onLoginSuccess, onLogoutSuccess }: UseAuthProps*/) => {
-  const [currentUser, /*setCurrentUser*/] = useState<UserSessionData | undefined>();
+  const [currentUser /*setCurrentUser*/] = useState<
+    UserSessionData | undefined
+  >();
 
-  const login = useCallback((/*username: string, password: string*/) => {
-    // TODO: Implement login logic
-    // 1) Call API to authenticate user with username/email and password
-    // 2) If successful:
-    //      - save token to localStorage using AUTH_TOKEN key from store/apollo-client.tsx
-    //      - set current user to the session data
-    //      - call onLoginSuccess callback if provided
-  }, []);
+  const login = useCallback(
+    (/*username: string, password: string*/) => {
+      // TODO: Implement login logic
+      // 1) Call API to authenticate user with username/email and password
+      // 2) If successful:
+      //      - save token to localStorage using AUTH_TOKEN key from store/apollo-client.tsx
+      //      - set current user to the session data
+      //      - call onLoginSuccess callback if provided
+    },
+    []
+  );
 
   const logout = useCallback(() => {
     // TODO: Implement logout logic

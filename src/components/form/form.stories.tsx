@@ -223,9 +223,7 @@ export const TimePicker = () => {
 };
 
 export const WithAddMoreSection = () => {
-  const {
-    handleSubmit,
-  } = useForm<TimePicker>();
+  const { handleSubmit } = useForm<TimePicker>();
 
   const onSubmit = (data: TimePicker) => {
     alert(JSON.stringify(data, null, 2));
@@ -234,13 +232,13 @@ export const WithAddMoreSection = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Form.AddMoreSection buttonText="+ Add another reminder">
-        <Form.ListTimeInput label="reminder" varient2Text="Meal"/>      
+        <Form.ListTimeInput label="reminder" varient2Text="Meal" />
       </Form.AddMoreSection>
-      
+
       <Button type="submit">Submit</Button>
     </Form>
-  )
-}
+  );
+};
 
 export const SelectForm = () => {
   const {
