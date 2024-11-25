@@ -30,9 +30,9 @@ interface TimePicker {
   timeValue: string;
 }
 
-/* interface DatePicker {
+interface DatePicker {
   dateValue: string;
-} */
+}
 
 export const WithTextInputs = () => {
   const {
@@ -226,7 +226,7 @@ export const TimePicker = () => {
   );
 };
 
-/* export const DatePicker = () => {
+export const DatePicker = () => {
   const {
     control,
     register,
@@ -268,7 +268,7 @@ export const TimePicker = () => {
       <Button type="submit">Submit</Button>
     </Form>
   );
-}; */
+};
 
 export const WithAddMoreSection = () => {
   const { handleSubmit } = useForm<TimePicker>();
