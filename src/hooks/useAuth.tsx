@@ -42,7 +42,7 @@ const useAuth = ({ /* onLoginSuccess,*/ onLogoutSuccess }: UseAuthProps) => {
         }
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [logoutUser, onLogoutSuccess]);
 
   const isLoggedIn = useMemo(() => !!currentUser, [currentUser]);
 
