@@ -1,8 +1,9 @@
 import { Button } from "../../components";
 import useAuth from "../../hooks/useAuth";
 
-const { logout } = useAuth();
-
 export const Settings: React.FC = () => {
-  return <Button variant="text" buttonText="Log Out" onClick={logout} />;
+  const handleLogoutSuccess = () => console.log("Logged Out");
+  const auth = useAuth({ onLogoutSuccess: handleLogoutSuccess });
+  
+  return <Button variant="text" buttonText="Log Out" onClick={auth.logout} />;
 };
