@@ -10,6 +10,7 @@ import {
   Login,
   RegistrationConfirmation,
   MedicationReminderForm,
+  Settings,
 } from "./routes";
 import { client } from "./store";
 

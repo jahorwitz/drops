@@ -1,53 +1,63 @@
 import { forwardRef, useState } from "react";
 import cx from "classnames";
-import {
-  UseFormRegisterReturn,
-  UseFormSetValue,
-  FieldValues,
-} from "react-hook-form";
 import DatePickerLib from "react-datepicker";
-import { DatePickerProps } from "react-datepicker";
+import type { ReactElement } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
-type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
-  DatePickerProps & {
-    labelText?: string;
-    hintText?: string;
-    feedback?: string;
-    className?: string;
-    selectsRange?: never;
-    selectsMultiple?: never;
-    setValue: UseFormSetValue<T>;
-  };
+type DatePickerFormValues = {
+  dateValue: Date | null;
+};
 
-export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-  ({
-    labelText,
-    hintText,
-    feedback,
-    className,
-    onChange,
-    ...rest
-  }: Props<FieldValues>) => {
-    const [startDate, setStartDate] = useState<Date | null>(null);
+type CustomProps<TFieldValues extends DatePickerFormValues> = {
+  labelText?: string;
+  hintText?: string;
+  feedback?: string;
+  className?: string;
+  name?: keyof TFieldValues & string;
+  value?: Date | null;
+  onChange?: (date: Date | null) => void;
+};
+
+export const DatePicker = forwardRef(
+  <TFieldValues extends DatePickerFormValues>(
+    props: CustomProps<TFieldValues>,
+    ref: React.Ref<DatePickerLib>
+  ): ReactElement => {
+    const {
+      labelText,
+      hintText,
+      feedback,
+      className,
+      onChange,
+      value,
+      ...rest
+    } = props;
+
+    const [startDate, setStartDate] = useState<Date | null>(value || null);
+
+    const handleDateChange = (date: Date | null) => {
+      setStartDate(date);
+      if (onChange) {
+        onChange(date);
+      }
+    };
 
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
         {labelText && <label>{labelText}</label>}
         <DatePickerLib
+          ref={ref}
           selected={startDate}
           placeholderText="MM/DD/YYYY"
-          onChange={(date) => {
-            setStartDate(date);
-            if (date) {
-              onChange?.(date);
-            }
-          }}
+          onChange={handleDateChange}
           popperPlacement="bottom-start"
           className={cx(
             `rounded-lg border-black border-[1px] py-5 px-3`,
             className,
           )}
+          isClearable
+          showPopperArrow={false}
+          dateFormat="MM/dd/yyyy"
           {...rest}
         />
         {feedback ? (
@@ -57,7 +67,7 @@ export const DatePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
         ) : null}
       </div>
     );
-  },
+  }
 );
 
 DatePicker.displayName = "DatePicker";

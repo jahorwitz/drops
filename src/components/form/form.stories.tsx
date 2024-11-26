@@ -1,6 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { Form } from "./form";
 import { Button } from "../button";
+import type { FieldErrors } from "react-hook-form";
 
 export default {
   title: "Form",
@@ -24,14 +25,15 @@ interface WeekdayFormValues {
 
 interface FormValues {
   optionName: string;
+  sex: string;
 }
 
 interface TimePicker {
   timeValue: string;
 }
 
-interface DatePicker {
-  dateValue: string;
+interface DatePickerValues {
+  dateValue: Date | null;
 }
 
 export const WithTextInputs = () => {
@@ -145,8 +147,8 @@ export const WithRadioGroup = () => {
           { value: "two", label: "Option 2" },
           { value: "three", label: "Option 3" },
         ]}
-        feedback={errors}
-        {...register("optionName" as keyof FormValues, {
+        feedback={errors as FieldErrors}
+        {...register("optionName", {
           required: "This field is required",
         })}
       />
@@ -229,12 +231,11 @@ export const TimePicker = () => {
 export const DatePicker = () => {
   const {
     control,
-    register,
     handleSubmit,
     formState: { errors },
-  } = useForm<DatePicker>();
+  } = useForm<DatePickerValues>();
 
-  const onSubmit = (data: DatePicker) => {
+  const onSubmit = (data: DatePickerValues) => {
     alert(JSON.stringify(data, null, 2));
   };
 
@@ -243,26 +244,16 @@ export const DatePicker = () => {
       <Controller
         name="dateValue"
         control={control}
-        render={({ field }) => (
-          <>
-            <Form.DatePicker
-              {...field}
-              {...register("dateValue", {
-                required: "Date is required",
-                pattern: {
-                  value:
-                    /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/,
-                  message: "Invalid date format. Use MM/DD/YYYY",
-                },
-              })}
-              labelText="Event Date"
-              hintText="Enter a date in MM/DD/YYYY format"
-              setValue={(name, value) =>
-                field.onChange({ target: { name, value } })
-              }
-              feedback={errors.dateValue?.message}
-            />
-          </>
+        render={({ field: { onChange, value, ...field } }) => (
+          <Form.DatePicker
+            {...field}
+            value={value}
+            onChange={onChange}
+            labelText="Event Date"
+            hintText="Enter a date in MM/DD/YYYY format"
+            feedback={errors.dateValue?.message}
+            name="dateValue"
+          />
         )}
       />
       <Button type="submit">Submit</Button>
@@ -310,8 +301,8 @@ export const SelectForm = () => {
           { value: "female", label: "Female" },
           { value: "other", label: "Other" },
         ]}
-        feedback={errors}
-        {...register("sex" as keyof FormValues, {
+        feedback={errors as FieldErrors}
+        {...register("sex", {
           required: "This field is required",
         })}
       />
