@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { gql } from "../../__generated__/gql";
 
-export const USER_LOGIN = gql`
+export const USER_LOGIN = gql(`
   mutation AuthenticateUserWithPassword($email: String!, $password: String!) {
     authenticateUserWithPassword(email: $email, password: $password) {
       ... on UserAuthenticationWithPasswordSuccess {
@@ -16,4 +16,4 @@ export const USER_LOGIN = gql`
       }
     }
   }
-`;
+`);
