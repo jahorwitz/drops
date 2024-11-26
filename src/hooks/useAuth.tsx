@@ -1,46 +1,38 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AUTH_TOKEN, setGraphqlHeaders } from "../store";
-import { useMutation} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { USER_LOGIN } from "../graphql/mutations/users";
-
-interface UserSessionData {
-  id: string;
-  name: string;
-  email: string;
-  token: string;
-}
+import { User } from "../__generated__/graphql";
 
 interface UseAuthProps {
-  onLoginSuccess?: (data: { session: UserSessionData }) => void;
+  onLoginSuccess?: (data: { session: User }) => void;
   onLogoutSuccess?: () => void;
 }
 
 export const useAuth = ({
   onLoginSuccess /*, onLogoutSuccess */,
-}: UseAuthProps = {}) => {
-  const [currentUser, setCurrentUser] = useState<UserSessionData | undefined>();
-  const [loadGetUser] = useMutation(USER_LOGIN); 
+}: UseAuthProps) => {
+  const [currentUser, setCurrentUser] = useState<User | undefined>();
+  const [token, setToken] = useState<string | undefined>();
+  const [loadGetUser, { error: loginError }] = useMutation(USER_LOGIN);
 
   const login = useCallback(
     ({ email, password }: { email: string; password: string }) => {
       loadGetUser({
         variables: { email: email, password: password },
-      })
-        .then((res) => {
-          const result = res.data.authenticateUserWithPassword;
-          if (result.message)
-            return alert(JSON.stringify(result.message, null, 2));
-          const session = {
-            id: result.item.id,
-            name: result.item.name,
-            email: result.item.email,
-            token: result.sessionToken,
-          };
-          localStorage.setItem(AUTH_TOKEN, session.token);
-          setCurrentUser(session);
-          if (onLoginSuccess) onLoginSuccess({ session });
-        })
-        .catch((err) => console.error(err));
+        onCompleted: (data) => {
+          if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess') {
+            localStorage.setItem(AUTH_TOKEN, data.authenticateUserWithPassword.sessionToken);
+            setToken(data.authenticateUserWithPassword.sessionToken);
+            setCurrentUser(data.authenticateUserWithPassword.item);
+            if (onLoginSuccess) {
+              onLoginSuccess({ session: data.authenticateUserWithPassword.item });
+            }
+          } else if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordFailure') {
+            throw new Error(data?.authenticateUserWithPassword?.message);
+          }
+        },
+      });
     },
     [loadGetUser, onLoginSuccess],
   );
@@ -57,8 +49,8 @@ export const useAuth = ({
   const isLoggedIn = useMemo(() => !!currentUser, [currentUser]);
 
   useEffect(() => {
-    setGraphqlHeaders(currentUser?.token);
-  }, [currentUser]);
+    setGraphqlHeaders(token);
+  }, [token]);
 
-  return { currentUser, isLoggedIn, login, logout };
+  return { currentUser, isLoggedIn, login, loginError, logout };
 };

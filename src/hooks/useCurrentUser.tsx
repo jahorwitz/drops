@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_CURRENT_USER } from "../graphql/mutations/users";
+import { GET_CURRENT_USER } from "../graphql/queries/users"; 
 
 export const useCurrentUser = () => {
   const { data, loading, error } = useQuery(GET_CURRENT_USER);
