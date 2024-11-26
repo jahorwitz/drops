@@ -52,7 +52,7 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
             <Listbox.Button
               className={cx(
                 "w-full relative border-2 rounded-lg py-5 px-3 focus:outline-none focus:border-blue-500 flex",
-                selected ? "border-[#121212]" : "border-gray-300"
+                selected ? "border-black" : "border-gray-300"
               )}
             >
               <span

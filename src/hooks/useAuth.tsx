@@ -1,34 +1,51 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { setGraphqlHeaders } from "../store";
+import { AUTH_TOKEN, setGraphqlHeaders } from "../store";
+import { useMutation } from "@apollo/client";
+import { USER_LOGIN } from "../graphql/mutations/users";
+import { User } from "../__generated__/graphql";
 
-interface UserSessionData {
-  id: string;
-  name: string;
-  email: string;
-  token: string;
+interface UseAuthProps {
+  onLoginSuccess?: (data: { session: User }) => void;
+  onLogoutSuccess?: () => void;
 }
 
-// interface UseAuthProps {
-//   onLoginSuccess?: (data: { session: UserSessionData }) => void;
-//   onLogoutSuccess?: () => void;
-// }
-
-//TODO: Remove the commented out variables as they become necessary
-const useAuth = (/*{ onLoginSuccess, onLogoutSuccess }: UseAuthProps*/) => {
-  const [currentUser /*setCurrentUser*/] = useState<
-    UserSessionData | undefined
-  >();
+export const useAuth = ({
+  onLoginSuccess /*, onLogoutSuccess */,
+}: UseAuthProps) => {
+  const [currentUser, setCurrentUser] = useState<User | undefined>();
+  const [token, setToken] = useState<string | undefined>();
+  const [loadGetUser, { error: loginError }] = useMutation(USER_LOGIN);
 
   const login = useCallback(
-    (/*username: string, password: string*/) => {
-      // TODO: Implement login logic
-      // 1) Call API to authenticate user with username/email and password
-      // 2) If successful:
-      //      - save token to localStorage using AUTH_TOKEN key from store/apollo-client.tsx
-      //      - set current user to the session data
-      //      - call onLoginSuccess callback if provided
+    ({ email, password }: { email: string; password: string }) => {
+      loadGetUser({
+        variables: { email: email, password: password },
+        onCompleted: (data) => {
+          if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordSuccess"
+          ) {
+            localStorage.setItem(
+              AUTH_TOKEN,
+              data.authenticateUserWithPassword.sessionToken
+            );
+            setToken(data.authenticateUserWithPassword.sessionToken);
+            setCurrentUser(data.authenticateUserWithPassword.item);
+            if (onLoginSuccess) {
+              onLoginSuccess({
+                session: data.authenticateUserWithPassword.item,
+              });
+            }
+          } else if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordFailure"
+          ) {
+            throw new Error(data?.authenticateUserWithPassword?.message);
+          }
+        },
+      });
     },
-    []
+    [loadGetUser, onLoginSuccess]
   );
 
   const logout = useCallback(() => {
@@ -43,10 +60,8 @@ const useAuth = (/*{ onLoginSuccess, onLogoutSuccess }: UseAuthProps*/) => {
   const isLoggedIn = useMemo(() => !!currentUser, [currentUser]);
 
   useEffect(() => {
-    setGraphqlHeaders(currentUser?.token);
-  }, [currentUser]);
+    setGraphqlHeaders(token);
+  }, [token]);
 
-  return { currentUser, isLoggedIn, login, logout };
+  return { currentUser, isLoggedIn, login, loginError, logout };
 };
-
-export default useAuth;
