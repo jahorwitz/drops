@@ -1,6 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { Form } from "./form";
 import { Button } from "../button";
+import type { FieldErrors } from "react-hook-form";
 
 export default {
   title: "Form",
@@ -24,10 +25,15 @@ interface WeekdayFormValues {
 
 interface FormValues {
   optionName: string;
+  sex: string;
 }
 
 interface TimePicker {
   timeValue: string;
+}
+
+interface DatePickerValues {
+  dateValue: Date | null;
 }
 
 export const WithTextInputs = () => {
@@ -141,8 +147,8 @@ export const WithRadioGroup = () => {
           { value: "two", label: "Option 2" },
           { value: "three", label: "Option 3" },
         ]}
-        feedback={errors}
-        {...register("optionName" as keyof FormValues, {
+        feedback={errors as FieldErrors}
+        {...register("optionName", {
           required: "This field is required",
         })}
       />
@@ -222,10 +228,41 @@ export const TimePicker = () => {
   );
 };
 
-export const WithAddMoreSection = () => {
+export const DatePicker = () => {
   const {
+    control,
     handleSubmit,
-  } = useForm<TimePicker>();
+    formState: { errors },
+  } = useForm<DatePickerValues>();
+
+  const onSubmit = (data: DatePickerValues) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <Controller
+        name="dateValue"
+        control={control}
+        render={({ field: { onChange, value, ...field } }) => (
+          <Form.DatePicker
+            {...field}
+            value={value}
+            onChange={onChange}
+            labelText="Event Date"
+            hintText="Enter a date in MM/DD/YYYY format"
+            feedback={errors.dateValue?.message}
+            name="dateValue"
+          />
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
+
+export const WithAddMoreSection = () => {
+  const { handleSubmit } = useForm<TimePicker>();
 
   const onSubmit = (data: TimePicker) => {
     alert(JSON.stringify(data, null, 2));
@@ -234,13 +271,13 @@ export const WithAddMoreSection = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Form.AddMoreSection buttonText="+ Add another reminder">
-        <Form.ListTimeInput label="reminder" varient2Text="Meal"/>      
+        <Form.ListTimeInput label="reminder" varient2Text="Meal" />
       </Form.AddMoreSection>
-      
+
       <Button type="submit">Submit</Button>
     </Form>
-  )
-}
+  );
+};
 
 export const SelectForm = () => {
   const {
@@ -264,8 +301,8 @@ export const SelectForm = () => {
           { value: "female", label: "Female" },
           { value: "other", label: "Other" },
         ]}
-        feedback={errors}
-        {...register("sex" as keyof FormValues, {
+        feedback={errors as FieldErrors}
+        {...register("sex", {
           required: "This field is required",
         })}
       />

@@ -1,7 +1,11 @@
 import { HTMLProps, forwardRef, useRef, useEffect, useState } from "react";
 import cx from "classnames";
-import { UseFormRegisterReturn, UseFormSetValue, FieldValues } from "react-hook-form";
-import IMask from 'imask';
+import {
+  UseFormRegisterReturn,
+  UseFormSetValue,
+  FieldValues,
+} from "react-hook-form";
+import IMask from "imask";
 
 type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   HTMLProps<HTMLInputElement> & {
@@ -100,9 +104,11 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
     const inputClassName =
       "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
     return (
-        <div className="w-full">
-          <label className="text-base leading-[19px] font-text mb-1">{labelText}</label>
-          <div className="h-[76px] bg-gray-100 rounded-lg flex items-center p-2">
+      <div className="w-full">
+        <label className="text-base leading-[19px] font-text mb-1">
+          {labelText}
+        </label>
+        <div className="h-[76px] bg-gray-100 rounded-lg flex items-center p-2">
           <input
             type="text"
             {...rest}
