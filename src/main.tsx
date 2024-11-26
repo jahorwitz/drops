@@ -9,9 +9,11 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
+  AccountCreationForm,
   MedicationReminderForm,
   Settings,
 } from "./routes";
+
 import { client } from "./store";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -24,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             path="/registration-confirm"
             element={<RegistrationConfirmation />}
           />
+          <Route path="/registration" element={<AccountCreationForm />} />
           <Route
             path="/onboarding/glucose-notifications"
             element={<GlucoseNotificationPrompt />}
