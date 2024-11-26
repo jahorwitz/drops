@@ -9,7 +9,7 @@ export const MedicationReminderForm: React.FC = () => {
         Set your medication reminders
       </h2>
       <p className="font-text text-center max-w-[358px] mx-auto mt-4 mb-8">
-        It’s important to be consistent in your medications, and notifications
+        It's important to be consistent in your medications, and notifications
         may help!
       </p>
       <Form className="flex flex-col gap-5 ">
