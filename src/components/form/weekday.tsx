@@ -14,10 +14,10 @@ type Props = UseFormRegisterReturn<string> &
 export const WeekdaySelector = forwardRef<HTMLInputElement, Props>(
   ({ labelText, hintText, feedback, className, ...rest }: Props, ref) => {
     const [currentSelectedDays, setCurrentSelectedDays] = useState<string[]>(
-      [],
+      []
     );
     const [uniqueId] = useState(
-      () => `weekday-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      () => `weekday-${Date.now()}-${Math.floor(Math.random() * 1000)}`
     );
 
     const handleCheck = (day: Weekday) => {
@@ -46,10 +46,11 @@ export const WeekdaySelector = forwardRef<HTMLInputElement, Props>(
               />
               <label
                 htmlFor={`${uniqueId}-${day}`}
-                className={`flex items-center justify-center h-10 w-10 rounded-full border text-sm ${currentSelectedDays.includes(day)
-                  ? "text-white bg-black border-black"
-                  : "text-black/60 border-black/30"
-                  }`}
+                className={`flex items-center justify-center h-10 w-10 rounded-full border text-sm ${
+                  currentSelectedDays.includes(day)
+                    ? "text-white bg-black border-black"
+                    : "text-black/60 border-black/30"
+                }`}
               >
                 {capitalize(shortenWeekday(Weekday[day]))}
               </label>
@@ -63,7 +64,7 @@ export const WeekdaySelector = forwardRef<HTMLInputElement, Props>(
         ) : null}
       </div>
     );
-  },
+  }
 );
 
 WeekdaySelector.displayName = "Weekday";

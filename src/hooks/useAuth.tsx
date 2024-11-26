@@ -21,20 +21,31 @@ export const useAuth = ({
       loadGetUser({
         variables: { email: email, password: password },
         onCompleted: (data) => {
-          if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess') {
-            localStorage.setItem(AUTH_TOKEN, data.authenticateUserWithPassword.sessionToken);
+          if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordSuccess"
+          ) {
+            localStorage.setItem(
+              AUTH_TOKEN,
+              data.authenticateUserWithPassword.sessionToken
+            );
             setToken(data.authenticateUserWithPassword.sessionToken);
             setCurrentUser(data.authenticateUserWithPassword.item);
             if (onLoginSuccess) {
-              onLoginSuccess({ session: data.authenticateUserWithPassword.item });
+              onLoginSuccess({
+                session: data.authenticateUserWithPassword.item,
+              });
             }
-          } else if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordFailure') {
+          } else if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordFailure"
+          ) {
             throw new Error(data?.authenticateUserWithPassword?.message);
           }
         },
       });
     },
-    [loadGetUser, onLoginSuccess],
+    [loadGetUser, onLoginSuccess]
   );
 
   const logout = useCallback(() => {

@@ -14,12 +14,8 @@ interface MyFormValues {
   anEnumField: "one" | "two" | "three";
 }
 
-
 export const Default = () => {
-
-  const {
-    handleSubmit,
-  } = useForm<MyFormValues>();
+  const { handleSubmit } = useForm<MyFormValues>();
   const onSubmit = (data: MyFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
@@ -33,17 +29,21 @@ export const Default = () => {
         onClick={() => openModal("glucose-measurement")}
       />
     );
-  }
+  };
 
   return (
     <ModalProvider>
       <div>
         <ModalTrigger />
-        <Modal modalId="glucose-measurement" title="Add Glucose Measurement" buttonText="Add Measurement" onSubmit={handleSubmit(onSubmit)}>
+        <Modal
+          modalId="glucose-measurement"
+          title="Add Glucose Measurement"
+          buttonText="Add Measurement"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           This is a modal
         </Modal>
       </div>
     </ModalProvider>
   );
 };
-
