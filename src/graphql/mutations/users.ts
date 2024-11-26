@@ -17,3 +17,14 @@ export const USER_LOGIN = gql`
     }
   }
 `;
+
+export const GET_CURRENT_USER = gql`
+  query User {
+    authenticatedItem {
+      ... on User {
+        id
+        name
+      }
+    }
+  }
+`;

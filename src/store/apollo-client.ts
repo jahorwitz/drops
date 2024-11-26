@@ -11,11 +11,12 @@ export const client = new ApolloClient({
 
 export function setGraphqlHeaders(_token: string | undefined) {
     const token = _token ?? localStorage.getItem(AUTH_TOKEN);
+
     const authLink = setContext((_, { headers }) => {
         return {
             headers: {
                 ...headers,
-                authorization: token || null,
+                Authorization: token ? `Bearer ${token}` : "",
             },
         };
     });

@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { icons } from "../../utils";
-
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { setGraphqlHeaders, AUTH_TOKEN } from "../../store";
 
 export const Header: React.FC = () => {
+
+  const { user } = useCurrentUser();
+
   function hover(e: React.MouseEvent<HTMLImageElement>, image: string): void {
     (e.currentTarget as HTMLImageElement).src = image;
   }
 
+  useEffect(() => {
+    setGraphqlHeaders(AUTH_TOKEN);
+  }, [])
+
   return (
     <div className="flex justify-between bg-lightGray px-4 py-5">
-      <h2 className="font-text text-section-header font-medium leading-[32.8px]">Hi, Rachel!</h2>
+      <h2 className="font-text text-section-header font-medium leading-[32.8px]">
+        Hi, {user?.name || "guest"}!
+      </h2>
       <div className="flex gap-4">
         <Link to="/insights">
           <img

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { setGraphqlHeaders } from "../store";
-import { useMutation } from "@apollo/client";
+import { AUTH_TOKEN, setGraphqlHeaders } from "../store";
+import { useMutation} from "@apollo/client";
 import { USER_LOGIN } from "../graphql/mutations/users";
 
 interface UserSessionData {
@@ -17,9 +17,9 @@ interface UseAuthProps {
 
 export const useAuth = ({
   onLoginSuccess /*, onLogoutSuccess */,
-}: UseAuthProps) => {
+}: UseAuthProps = {}) => {
   const [currentUser, setCurrentUser] = useState<UserSessionData | undefined>();
-  const [loadGetUser] = useMutation(USER_LOGIN);
+  const [loadGetUser] = useMutation(USER_LOGIN); 
 
   const login = useCallback(
     ({ email, password }: { email: string; password: string }) => {
@@ -36,6 +36,7 @@ export const useAuth = ({
             email: result.item.email,
             token: result.sessionToken,
           };
+          localStorage.setItem(AUTH_TOKEN, session.token);
           setCurrentUser(session);
           if (onLoginSuccess) onLoginSuccess({ session });
         })
