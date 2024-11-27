@@ -9,6 +9,7 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
+  Settings,
 } from "./routes";
 
 import ProtectedRoute from "./components/protected-route/protected-route";
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/onboarding/glucose-notifications" element={ <ProtectedRoute><GlucoseNotificationPrompt /></ProtectedRoute> } />
           <Route path="/onboarding" element={ <ProtectedRoute><Start /></ProtectedRoute> } />
           <Route path="/login" element={<Login />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
