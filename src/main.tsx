@@ -26,11 +26,39 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
           <Route path="/welcome" element={<Welcome />} />
-          <Route path="/registration-confirm" element={ <ProtectedRoute><RegistrationConfirmation /></ProtectedRoute> } />
-          <Route path="/onboarding/glucose-notifications" element={ <ProtectedRoute><GlucoseNotificationPrompt /></ProtectedRoute> } />
-          <Route path="/onboarding" element={ <ProtectedRoute><Start /></ProtectedRoute> } />
+          <Route
+            path="/registration-confirm"
+            element={
+              <ProtectedRoute>
+                <RegistrationConfirmation />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/onboarding/glucose-notifications"
+            element={
+              <ProtectedRoute>
+                <GlucoseNotificationPrompt />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/onboarding"
+            element={
+              <ProtectedRoute>
+                <Start />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
