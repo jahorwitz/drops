@@ -8,6 +8,9 @@ export const Notifications: React.FC = () => {
         <img src={backbutton} className="w-1 h-2" />
         <p className="text-paragraph-lg text-black leading-5">Back</p>
       </Link>
+      <h2 className="text-section-subtext leading-6 text-black">
+        Notifications
+      </h2>
     </div>
   );
 };
