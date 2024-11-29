@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import logo from "../../images/Logo.svg";
 import backbutton from "../../images/Backbutton.svg";
 import { Button, Form } from "../../components";
+import { useAuth } from "../../hooks/useAuth";
+import { User } from "../../__generated__/graphql";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes as XMarkIcon } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 
 export const Login: React.FC = () => {
   interface FormValues {
@@ -13,11 +18,17 @@ export const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    alert(JSON.stringify(data, null, 2));
+  const handleLoginSuccess = (data: { session: User }) => {
+    alert(JSON.stringify(`Hello ${data.session.name}!`, null, 2));
+  };
+
+  const { login, loginError } = useAuth({ onLoginSuccess: handleLoginSuccess });
+  const onSubmit = (formData: FormValues) => {
+    login(formData);
   };
 
   return (
@@ -39,12 +50,18 @@ export const Login: React.FC = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col max-w-[390px] w-full px-4  mt-8 h-full  max-h-[502px] self-center"
       >
+        {loginError && (
+          <div className="border border-red rounded-md p-2 my-4 flex items-center justify-center gap-2">
+            <FontAwesomeIcon icon={XMarkIcon as IconDefinition} className="text-red text-xl" /> {loginError.message}
+          </div>
+        )}
         <div className="flex flex-col h-full gap-5">
           <Form.TextInput
             labelText="Email"
             placeholder="Enter your email"
             type="text"
             feedback={errors.email?.message}
+            filled={`${!watch("email") ? "filled" : ""}`}
             {...register("email", {
               required: "This field is required",
               pattern: {
@@ -59,6 +76,7 @@ export const Login: React.FC = () => {
             placeholder="Enter your password"
             type="password"
             feedback={errors.password?.message}
+            filled={`${!watch("password") ? "filled" : ""}`}
             {...register("password", {
               required: "This field is required",
               minLength: {
