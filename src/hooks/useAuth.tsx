@@ -4,13 +4,6 @@ import { useMutation } from "@apollo/client";
 import { USER_LOGIN, USER_LOGOUT } from "../graphql/mutations/users";
 import { User } from "../__generated__/graphql";
 
-interface UserSessionData {
-  id: string;
-  name: string;
-  email: string;
-  token: string;
-}
-
 interface UseAuthProps {
   onLoginSuccess?: (data: { session: User }) => void;
   onLogoutSuccess?: () => void;

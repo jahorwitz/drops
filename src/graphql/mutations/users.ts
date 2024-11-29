@@ -18,8 +18,7 @@ export const USER_LOGIN = gql(`
   }
 `);
 
-export const USER_LOGOUT = gql`
-  mutation EndSession {
-    endSessions
-  }
-`;
+export const USER_LOGOUT = gql(`
+  mutation Mutation { 
+  endSession
+  }`);
