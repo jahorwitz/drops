@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AUTH_TOKEN, setGraphqlHeaders } from "../store";
 import { useMutation } from "@apollo/client";
 import { USER_LOGIN, USER_LOGOUT } from "../graphql/mutations/users";
@@ -9,8 +9,7 @@ interface UseAuthProps {
   onLogoutSuccess?: () => void;
 }
 
-export const useAuth = ({
-  onLoginSuccess, onLogoutSuccess,}: UseAuthProps) => {
+export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
   const [currentUser, setCurrentUser] = useState<User | undefined>();
   const [token, setToken] = useState<string | undefined>();
   const [loadGetUser, { error: loginError }] = useMutation(USER_LOGIN);
@@ -21,14 +20,25 @@ export const useAuth = ({
       loadGetUser({
         variables: { email: email, password: password },
         onCompleted: (data) => {
-          if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess') {
-            localStorage.setItem(AUTH_TOKEN, data.authenticateUserWithPassword.sessionToken);
+          if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordSuccess"
+          ) {
+            localStorage.setItem(
+              AUTH_TOKEN,
+              data.authenticateUserWithPassword.sessionToken,
+            );
             setToken(data.authenticateUserWithPassword.sessionToken);
             setCurrentUser(data.authenticateUserWithPassword.item);
             if (onLoginSuccess) {
-              onLoginSuccess({ session: data.authenticateUserWithPassword.item });
+              onLoginSuccess({
+                session: data.authenticateUserWithPassword.item,
+              });
             }
-          } else if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordFailure') {
+          } else if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordFailure"
+          ) {
             throw new Error(data?.authenticateUserWithPassword?.message);
           }
         },
