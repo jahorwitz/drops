@@ -1,4 +1,4 @@
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -9,15 +9,12 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
+  MedicationReminderForm,
   Settings,
 } from "./routes";
+import { client } from "./store";
 
 import ProtectedRoute from "./components/protected-route/protected-route";
-
-const client = new ApolloClient({
-  uri: "http://localhost:8080/api/graphql",
-  cache: new InMemoryCache(),
-});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -31,6 +28,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             element={
               <ProtectedRoute>
                 <RegistrationConfirmation />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/onboarding/medication-reminders"
+            element={
+              <ProtectedRoute>
+                <MedicationReminderForm />
               </ProtectedRoute>
             }
           />
