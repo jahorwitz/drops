@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { icons } from "../../utils";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
-import { setGraphqlHeaders, AUTH_TOKEN } from "../../store";
 
 export const Header: React.FC = () => {
 
@@ -11,10 +10,6 @@ export const Header: React.FC = () => {
   function hover(e: React.MouseEvent<HTMLImageElement>, image: string): void {
     (e.currentTarget as HTMLImageElement).src = image;
   }
-
-  useEffect(() => {
-    setGraphqlHeaders(AUTH_TOKEN);
-  }, [])
 
   return (
     <div className="flex justify-between bg-lightGray px-4 py-5">
