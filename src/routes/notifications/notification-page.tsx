@@ -18,7 +18,7 @@ export const Notifications: React.FC = () => {
       <h2 className="text-paragraph-lg text-black leading-5 opacity-60 pt-7 pl-2.5">
         Today
       </h2>
-      <div className="">
+      <div className="flex flex-col gap-2 px-2.5 pt-3">
         <Notification type="activity" title="Activity" message="Workout" />
         <Notification type="activity" title="Activity" message="Workout" />
         <Notification type="activity" title="Activity" message="Workout" />
@@ -26,7 +26,7 @@ export const Notifications: React.FC = () => {
       <h2 className="text-paragraph-lg text-black leading-5 opacity-60 pt-8 pl-2.5">
         Past
       </h2>
-      <div className="">
+      <div className="flex flex-col gap-2 px-2.5 pt-3">
         <Notification type="activity" title="Activity" message="Workout" />
         <Notification type="activity" title="Activity" message="Workout" />
         <Notification type="activity" title="Activity" message="Workout" />
