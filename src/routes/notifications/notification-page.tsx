@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import backbutton from "../../images/Backbutton.svg";
+import { Notification } from "../../components/notification-group/notification-item";
 
 export const Notifications: React.FC = () => {
   return (
@@ -17,9 +18,19 @@ export const Notifications: React.FC = () => {
       <h2 className="text-paragraph-lg text-black leading-5 opacity-60 pt-7 pl-2.5">
         Today
       </h2>
+      <div className="">
+        <Notification type="activity" title="Activity" message="Workout" />
+        <Notification type="activity" title="Activity" message="Workout" />
+        <Notification type="activity" title="Activity" message="Workout" />
+      </div>
       <h2 className="text-paragraph-lg text-black leading-5 opacity-60 pt-8 pl-2.5">
         Past
       </h2>
+      <div className="">
+        <Notification type="activity" title="Activity" message="Workout" />
+        <Notification type="activity" title="Activity" message="Workout" />
+        <Notification type="activity" title="Activity" message="Workout" />
+      </div>
     </div>
   );
 };
