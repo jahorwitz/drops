@@ -4,6 +4,7 @@ import activityImage from "../../images/metric-image-activity.svg";
 import dietImage from "../../images/metric-image-diet.svg";
 import moodImage from "../../images/metric-image-mood.svg";
 import { twMerge } from "tailwind-merge";
+import { Link } from "react-router-dom";
 
 interface MetricBoxProps {
   variant: string;
@@ -11,18 +12,27 @@ interface MetricBoxProps {
   promptVisible?: boolean;
 }
 
-//TODO: import array of saved medication reminders or the reminder that is coming up next
-const medicationTimes = ["4:30p"];
+//TODO: import data for each box variant to be used in graphs
+const medicationTimes = ["4:21p"];
 
 export const MetricBox = ({
   variant,
   promptVisible = false,
   boxColor = "Pink",
 }: MetricBoxProps) => {
+  //TODO: update route names as they are created
+  const buttonLink =
+    (variant === "Glucose" && "/glucose") ||
+    (variant === "Diet" && "/diet") ||
+    (variant === "Activity" && "/activity") ||
+    (variant === "Mood" && "/mood") ||
+    (variant === "Medication" && "/medication") ||
+    "/dashboard";
+
   return (
     <div
       className={twMerge(
-        `h-[160px] metric-card box-content rounded-2xl overflow-hidden p-[10px] relative`,
+        `h-[160px] metric-card box-content rounded-2xl shadow-sm overflow-hidden p-[10px] relative`,
         boxColor === "Green" && "bg-lightGreen",
         boxColor === "Blue" && "bg-lightBlue",
         boxColor === "Pink" && "bg-lightPink",
@@ -66,22 +76,23 @@ export const MetricBox = ({
         className="absolute left-0 bottom-0"
       ></img>
       <p
-        className={`font-bold text-medication-reminder font-text bg-gradient-to-b from-yellow bg-clip-text text-transparent absolute -bottom-2 left-0 leading-[76.8px] ${
-          variant === "Medication" ? "block" : "hidden"
+        className={`font-bold text-medication-reminder font-text bg-gradient-to-b from-yellow to-[rgba(255,234,122,0.5)] bg-clip-text text-transparent absolute -bottom-2 left-0 leading-[76.8px] ${
+          variant === "Medication" && !promptVisible ? "block" : "hidden"
         }`}
       >
         {medicationTimes[0]}
       </p>
-      <button
+      <Link
+        to={buttonLink}
         className={`absolute bottom-[10px] right-[10px] ${
           variant !== "Medication" ? "block" : "hidden"
         } `}
       >
         <div className="relative flex items-center justify-center w-6 h-6 bg-white rounded-full">
-          <div className="absolute w-3/4 h-[2px] bg-black"></div>
-          <div className="absolute h-3/4 w-[2px] bg-black"></div>
+          <div className="absolute w-1/2 h-[2px] bg-black"></div>
+          <div className="absolute h-1/2 w-[2px] bg-black"></div>
         </div>
-      </button>
+      </Link>
     </div>
   );
 };

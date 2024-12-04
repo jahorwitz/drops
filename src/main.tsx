@@ -9,6 +9,7 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
+  Dashboard,
 } from "./routes";
 import { client } from "./store";
 
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
