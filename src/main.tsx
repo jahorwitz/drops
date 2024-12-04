@@ -25,11 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/welcome" element={<Welcome />} />
           <Route
             path="/registration-confirm"
-            element={
-              <ProtectedRoute>
-                <RegistrationConfirmation />
-              </ProtectedRoute>
-            }
+            element={<RegistrationConfirmation />}
           />
           <Route
             path="/onboarding/medication-reminders"
