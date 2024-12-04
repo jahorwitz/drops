@@ -2,7 +2,14 @@ import { useQuery } from "@apollo/client";
 import { GET_CURRENT_USER } from "../graphql/queries/users"; 
 
 export const useCurrentUser = () => {
-  const { data, loading, error } = useQuery(GET_CURRENT_USER);
+  const whereCondition = {
+    status: {
+      contains: "new"
+    }
+  };
+  const { data, loading, error } = useQuery(GET_CURRENT_USER, {
+    variables: { where: whereCondition },
+  });
 
   if (loading) {
     return { user: null, loading: true, error: null }; // Still fetching
