@@ -9,6 +9,8 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
+  MedicationReminderForm,
+  Settings,
   Dashboard,
 } from "./routes";
 import { client } from "./store";
@@ -27,10 +29,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             path="/onboarding/glucose-notifications"
             element={<GlucoseNotificationPrompt />}
           />
+          <Route
+            path="/onboarding/medication-reminders"
+            element={<MedicationReminderForm />}
+          />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/onboarding" element={<Start />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
