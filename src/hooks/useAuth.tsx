@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { AUTH_TOKEN } from "../store";
 import { useMutation } from "@apollo/client";
-import { USER_LOGIN } from "../graphql/mutations/users";
+import { USER_LOGIN, USER_LOGOUT } from "../graphql/mutations/users";
 import { User } from "../__generated__/graphql";
 
 interface UseAuthProps {
@@ -9,11 +9,10 @@ interface UseAuthProps {
   onLogoutSuccess?: () => void;
 }
 
-export const useAuth = ({
-  onLoginSuccess /*, onLogoutSuccess */,
-}: UseAuthProps) => {
+export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
   const [currentUser, setCurrentUser] = useState<User | undefined>();
   const [loadGetUser, { error: loginError }] = useMutation(USER_LOGIN);
+  const [logoutUser] = useMutation(USER_LOGOUT);
 
   const login = useCallback(
     ({ email, password }: { email: string; password: string }) => {
@@ -24,9 +23,14 @@ export const useAuth = ({
             localStorage.setItem(AUTH_TOKEN, data.authenticateUserWithPassword.sessionToken);
             setCurrentUser(data.authenticateUserWithPassword.item);
             if (onLoginSuccess) {
-              onLoginSuccess({ session: data.authenticateUserWithPassword.item });
+              onLoginSuccess({
+                session: data.authenticateUserWithPassword.item,
+              });
             }
-          } else if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordFailure') {
+          } else if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordFailure"
+          ) {
             throw new Error(data?.authenticateUserWithPassword?.message);
           }
         },
@@ -36,13 +40,16 @@ export const useAuth = ({
   );
 
   const logout = useCallback(() => {
-    // TODO: Implement logout logic
-    // 1) Call API to end the session (see endSession mutation in graphql schema)
-    // 2) If successful:
-    //      - remove token from localStorage using AUTH_TOKEN key from store/apollo-client.tsx
-    //      - set current user to undefined
-    //      - call onLogoutSuccess callback if provided
-  }, []);
+    logoutUser()
+      .then((res) => {
+        if (res) {
+          localStorage.removeItem(AUTH_TOKEN);
+          setCurrentUser(undefined);
+          if (onLogoutSuccess) onLogoutSuccess();
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [logoutUser, onLogoutSuccess]);
 
   const isLoggedIn = useMemo(() => !!currentUser, [currentUser]);
 
