@@ -11,13 +11,13 @@ export const Settings: React.FC = () => {
         variant="text"
         className="opacity-100 hover:opacity-60 text-base max-w-max pt-0"
         buttonText="Log out"
-        onClick={() => alert("Log out")}
+        onClick={auth.logout}
       />
       <Button
         variant="text"
         className="text-red opacity-100 hover:opacity-60 text-base max-w-max"
         buttonText="Delete profile"
-        onClick={auth.logout}
+        onClick={() => alert("Profile deleted")}
       />
     </div>
   );
