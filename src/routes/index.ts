@@ -3,4 +3,4 @@ export * from "./onboarding";
 export * from "./registration";
 export * from "./login";
 export * from "./settings";
-export * from "./bye";
+export * from "./insights";
