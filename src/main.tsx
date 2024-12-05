@@ -11,6 +11,7 @@ import {
   RegistrationConfirmation,
   MedicationReminderForm,
   Settings,
+  Insights,
 } from "./routes";
 import { client } from "./store";
 
@@ -36,6 +37,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/onboarding" element={<Start />} />
           <Route path="/login" element={<Login />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/insights" element={<Insights />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
