@@ -1,6 +1,7 @@
 import { Button } from "../../components"
 import { LogoutButtons } from "./logout-buttons"
 import { SectionWithEdit } from "./section-with-edit"
+import { SectionList } from "./section-list"
 
 export const Settings: React.FC = () => {
   return (
@@ -26,13 +27,14 @@ export const Settings: React.FC = () => {
           onClick={() => alert("Log out")}
         />
       </div>
-        <SectionWithEdit title="Credentials">
+        <SectionWithEdit title="Credentials" link="/settings/credentials-edit">
           <p>Name</p>
           <p>Rachel</p>
           <p>Email</p>
           <p>c@gmail.com</p>
           <p>password</p>
           <p>.......</p>
+          <SectionList list={{Name: "Rachel"}} />
         </SectionWithEdit>
       <LogoutButtons />
     </div>
