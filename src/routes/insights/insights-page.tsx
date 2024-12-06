@@ -14,6 +14,8 @@ export const Insights: React.FC = () => {
       <h1 className="text-section-header leading-[38px] text-black mt-[54px] font-medium mx-4">
         Useful insights <br /> based on your data
       </h1>
+      <div className="flex flex-col gap-2 px-2.5 pt-3">
+      </div>
     </div>
   );
 };
