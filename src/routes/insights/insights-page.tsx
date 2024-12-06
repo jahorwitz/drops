@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import backbutton from "../../images/Backbutton.svg";
+import { Insight } from "../../components/insight-box/insight-box";
 
 export const Insights: React.FC = () => {
   return (
@@ -15,6 +16,14 @@ export const Insights: React.FC = () => {
         Useful insights <br /> based on your data
       </h1>
       <div className="flex flex-col gap-2 px-2.5 pt-3">
+        <Insight
+          title="You need to exercise more!"
+          message="Try walking for at least 1 hour per day"
+        />
+        <Insight
+          title="You need to exercise more!"
+          message="Try walking for at least 1 hour per day"
+        />
       </div>
     </div>
   );
