@@ -13,7 +13,7 @@ export const MetricBoxList: React.FC<MetricBoxListProps> = ({
   metricBoxes,
 }) => {
   return (
-    <div className="grid grid-cols-2 w-[390px] gap-2 bg-lightGray p-4 rounded-lg">
+    <div className="grid grid-cols-2 w-[390px] gap-2 bg-lightGray p-4 rounded-lg mx-auto">
       {metricBoxes.map((box, i) => {
         return (
           <MetricBox
