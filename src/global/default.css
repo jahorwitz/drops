@@ -12,3 +12,9 @@
       system-ui sans-serif;
   }
 }
+
+@layer utilities {
+  .metric-card:last-child:nth-child(odd) {
+    grid-column: span 2;
+  }
+}
