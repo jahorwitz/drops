@@ -28,12 +28,6 @@ export const Settings: React.FC = () => {
         />
       </div>
         <SectionWithEdit title="Credentials" link="/settings/credentials-edit">
-          <p>Name</p>
-          <p>Rachel</p>
-          <p>Email</p>
-          <p>c@gmail.com</p>
-          <p>password</p>
-          <p>.......</p>
           <SectionList list={{Name: "Rachel"}} />
         </SectionWithEdit>
       <LogoutButtons />
