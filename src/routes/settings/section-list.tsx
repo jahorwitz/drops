@@ -9,7 +9,7 @@ export const SectionList = ({list}: Props) => {
   return (
     <>
       {listArr.map(([key, value]) => (
-        <div key={key}>
+        <div className="mb-3" key={key}>
           <p className="font-text text-sm opacity-60">{key}</p>
           <p className="font-text">{value}</p>
         </div>

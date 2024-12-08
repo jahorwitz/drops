@@ -13,7 +13,7 @@ export const SectionWithEdit = ({title, children, link}: Props) => {
     <div className="bg-white w-[370px] rounded-2xl">
       <div className="m-3 mb-5">
         <div className="flex justify-between">
-          <h2 className="text-section-subtext font-text">{title}</h2>
+          <h2 className="text-section-subtext font-text mb-4">{title}</h2>
           <Link to={link}>
           <img className="hover:opacity-60" src={editIcon} />
           </Link>
