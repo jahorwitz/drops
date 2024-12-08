@@ -1,13 +1,17 @@
 import { Button } from "../../components"
+import { useAuth } from "../../hooks/useAuth";
 
 export const LogoutButtons: React.FC = () => {
+  const handleLogoutSuccess = () => console.log("Logged Out");
+  const auth = useAuth({ onLogoutSuccess: handleLogoutSuccess });
+
   return (
     <>
       <Button
         variant="text"
         className="opacity-100 hover:opacity-60 text-base max-w-max pt-0"
         buttonText="Log out"
-        onClick={() => alert("Log out")}
+        onClick={() => auth.logout}
       />
       <Button
         variant="text"

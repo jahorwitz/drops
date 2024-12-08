@@ -2,8 +2,13 @@ import { Button } from "../../components"
 import { LogoutButtons } from "./logout-buttons"
 import { SectionWithEdit } from "./section-with-edit"
 import { SectionList } from "./section-list"
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 export const Settings: React.FC = () => {
+  const { user }= useCurrentUser();
+  // created a standin password since retrieving the hashed password would be useless to the user as well a potential security threat
+  const credentials = {Name: user.name, Email: user.email, Password: "..............."}
+  
   return (
     <div className="flex flex-col bg-lightGray items-center pb-11">
       <Button
@@ -28,9 +33,9 @@ export const Settings: React.FC = () => {
         />
       </div>
         <SectionWithEdit title="Credentials" link="/settings/credentials-edit">
-          <SectionList list={{Name: "Rachel"}} />
+          <SectionList list={credentials} />
         </SectionWithEdit>
       <LogoutButtons />
     </div>
-  )
-}
+  );
+};
