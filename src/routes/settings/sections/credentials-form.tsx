@@ -3,7 +3,11 @@ import { Button, Form } from "../../../components";
 import { SectionWithEdit } from "../section-with-edit";
 import ExitIcon from "../../../images/Close-Icon.png";
 
-export const CredentialsForm: React.FC = () => {
+type Props = {
+  toggleForm: () => void;
+}
+
+export const CredentialsForm = ({toggleForm} : Props) => {
   interface FormValues {
     name: string;
     email: string;
@@ -22,7 +26,7 @@ export const CredentialsForm: React.FC = () => {
   };
   
   return (
-    <SectionWithEdit title="Credentials" link="/settings/main" icon={ExitIcon}>
+    <SectionWithEdit title="Credentials" toggleForm={toggleForm} icon={ExitIcon}>
       <Form
         onSubmit={handleSubmit(onSubmit)}
 
