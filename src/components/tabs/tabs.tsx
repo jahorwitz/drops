@@ -3,7 +3,7 @@ import { Tab } from "@headlessui/react";
 
 type TabItem = {
   label: string;
-  content: React.ReactNode; // or JSX.Element, depending on your needs
+  content: React.ReactNode; // or JSX.Element
 };
 
 type TabsProps = {
