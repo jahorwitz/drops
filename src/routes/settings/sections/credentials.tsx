@@ -19,7 +19,7 @@ export const Credentials: React.FC = () => {
   return (
     <div>
       {credentialsFormOpen? (
-          <CredentialsForm toggleForm={toggleForm} />
+          <CredentialsForm toggleForm={toggleForm} defaultValues={credentials} />
         ) : (
           <SectionWithEdit 
             title="Credentials" 

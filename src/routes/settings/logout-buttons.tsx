@@ -9,7 +9,7 @@ export const LogoutButtons: React.FC = () => {
     <>
       <Button
         variant="text"
-        className="opacity-100 hover:opacity-60 text-base max-w-max pt-0"
+        className="opacity-100 hover:opacity-60 text-base max-w-max pt-0 mt-[60px]"
         buttonText="Log out"
         onClick={() => auth.logout}
       />
