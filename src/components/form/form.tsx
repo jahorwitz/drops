@@ -7,6 +7,7 @@ import { NumericInput } from "./numeric-input";
 import { SelectForm } from "./select-form";
 import { AddMoreSection } from "./add-more-section";
 import { ListTimeInput } from "./list-time-input";
+import CompactTimePicker from "./compact-time-picker";
 
 type Props = {
   className?: string;
@@ -30,3 +31,4 @@ Form.RadioGroup = RadioGroup;
 Form.SelectForm = SelectForm;
 Form.ListTimeInput = ListTimeInput;
 Form.AddMoreSection = AddMoreSection;
+Form.CompactTimePicker = CompactTimePicker;
