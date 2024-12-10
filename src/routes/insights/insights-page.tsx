@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import backbutton from "../../images/Backbutton.svg";
 import { Insight } from "../../components/insight-box/insight-box";
+import { HiLightBulb } from "react-icons/hi";
 
 export const Insights: React.FC = () => {
   return (
@@ -15,14 +16,26 @@ export const Insights: React.FC = () => {
       <h1 className="text-section-header leading-[38px] text-black mt-[54px] font-medium mx-4">
         Useful insights <br /> based on your data
       </h1>
-      <div className="flex flex-col gap-2 px-2.5 pt-3">
+      <div className="flex flex-col gap-2 px-2.5 pt-5">
         <Insight
           title="You need to exercise more!"
           message="Try walking for at least 1 hour per day"
+          icon={<HiLightBulb className="w-10 h-10 fill-yellow" />}
         />
         <Insight
-          title="You need to exercise more!"
+          title="Fill your diet goals"
           message="Try walking for at least 1 hour per day"
+          icon={<HiLightBulb className="w-10 h-10 fill-yellow" />}
+        />
+        <Insight
+          title="Fill your diet goals"
+          message="Try walking for at least 1 hour per day"
+          icon={<HiLightBulb className="w-10 h-10 fill-yellow" />}
+        />
+        <Insight
+          title="Fill your diet goals"
+          message="Try walking for at least 1 hour per day"
+          icon={<HiLightBulb className="w-10 h-10 fill-yellow" />}
         />
       </div>
     </div>
