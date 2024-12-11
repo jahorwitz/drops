@@ -6,16 +6,34 @@ const oneDay = 24 * 60 * 60 * 1000;
 const dayBefore = new Date(now.getTime() - oneDay).toISOString();
 const dayAfter = new Date(now.getTime() + oneDay).toISOString();
 
-export const NOTIFICATIONS = gql(`query Notifications {
+export const CURRENT_NOTIFICATIONS = gql(`query NewNotifications {
     notifications(
       where: {
-        status: { in: ["new", "archived"] },
+        status: { equals: "new" },
         notificationTime: {
-          "${dayBefore}",
+          "${now}",
           "${dayAfter}",
         }
       },
       orderBy: [{ notificationTime: asc }]
+    ) {
+      notificationTime
+      status
+      type
+      description
+    }
+  }`);
+
+export const PAST_NOTIFICATIONS = gql(`query OldNotifications {
+    notifications(
+      where: {
+        status: { equals: "archived" },
+        notificationTime: {
+          "${dayBefore}",
+          "${now}",
+        }
+      },
+      orderBy: [{ notificationTime: desc }]
     ) {
       notificationTime
       status
