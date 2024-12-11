@@ -27,6 +27,7 @@ export const Settings: React.FC = () => {
         />
       </div>
        <Credentials />
+       {/* <HealthData /> */}
       <LogoutButtons />
     </div>
   );
