@@ -1,4 +1,4 @@
-import { gql } from "../../__generated__/gql";
+import { gql } from "@apollo/client";
 
 const now = new Date();
 const oneDay = 24 * 60 * 60 * 1000;
@@ -6,15 +6,16 @@ const oneDay = 24 * 60 * 60 * 1000;
 const dayBefore = new Date(now.getTime() - oneDay).toISOString();
 const dayAfter = new Date(now.getTime() + oneDay).toISOString();
 
-export const CURRENT_NOTIFICATIONS = gql(`query NewNotifications {
+export const CURRENT_NOTIFICATIONS = gql`
+  query NewNotifications {
     notifications(
       where: {
         status: { equals: "new" },
         notificationTime: {
-          "${now}",
-          "${dayAfter}",
+          gte: "${now.toISOString()}"
+          lte: "${dayAfter}"
         }
-      },
+      }
       orderBy: [{ notificationTime: asc }]
     ) {
       notificationTime
@@ -22,17 +23,19 @@ export const CURRENT_NOTIFICATIONS = gql(`query NewNotifications {
       type
       description
     }
-  }`);
+  }
+`;
 
-export const PAST_NOTIFICATIONS = gql(`query OldNotifications {
+export const PAST_NOTIFICATIONS = gql`
+  query OldNotifications {
     notifications(
       where: {
         status: { equals: "archived" },
         notificationTime: {
-          "${dayBefore}",
-          "${now}",
+          gte: "${dayBefore}"
+          lte: "${now.toISOString()}"
         }
-      },
+      }
       orderBy: [{ notificationTime: desc }]
     ) {
       notificationTime
@@ -40,4 +43,5 @@ export const PAST_NOTIFICATIONS = gql(`query OldNotifications {
       type
       description
     }
-  }`);
+  }
+`;
