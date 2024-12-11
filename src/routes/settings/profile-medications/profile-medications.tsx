@@ -1,5 +1,5 @@
 import { faPencil, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "../../components";
+import { Button } from "../../../components";
 
 const medications = [
   {
