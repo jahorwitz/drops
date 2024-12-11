@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Tab } from "@headlessui/react";
 
-type TabItem = {
+export type TabItem = {
   label: string;
   content: React.ReactNode; // or JSX.Element
 };
 
-type TabsProps = {
+export type TabsProps = {
   tabs: TabItem[];
 };
 
@@ -19,12 +19,12 @@ function Tabs({ tabs }: TabsProps) {
       onChange={setSelectedIndex}
       defaultIndex={0}
     >
-      <Tab.List className="mb-[20px] max-w-[354px] w-full h-[40px] flex">
+      <Tab.List className="mb-5 max-w-[354px] w-full h-10 flex">
         {tabs.map((tab, index) => (
           <Tab
             key={index}
             className={({ selected }) =>
-              `text-base outline-none font-sans font-normal leading-[19px] p-2.5 border-b-2 w-[50%] ${
+              `text-base outline-none font-rubik text-[#121212] font-normal leading-5 p-2.5 border-b-2 w-1/2 ${
                 selected ? "border-black" : "opacity-30"
               }`
             }

@@ -1,26 +1,33 @@
+import { Meta, StoryFn } from "@storybook/react";
 import Tabs from "./tabs";
+import { TabsProps } from "./tabs";
 
 export default {
-  title: "Components/Tabs", // This will show up in Storybook's sidebar
-  component: Tabs, // The component you want to document
+  title: "Components/Tabs",
+  component: Tabs,
+  argTypes: {
+    tabs: {
+      control: "object",
+      description: "Array of tabs with labels and content",
+    },
+  },
+} as Meta;
+
+const Template: StoryFn<TabsProps> = (args: TabsProps) => <Tabs {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+  tabs: [
+    { label: "Tab One", content: "Content for Tab One" },
+    { label: "Tab Two", content: "Content for Tab Two" },
+  ],
 };
 
-export const Default = () => {
-  // Here’s a simple example of the tabs data you might pass in, you can also just pass the component directly:
-  const exampleTabs = [
-    { label: "Tab One", content: <div>Content of Tab One</div> },
-    { label: "Tab Two", content: <div>Content of Tab Two</div> },
-  ];
-
-  return <Tabs tabs={exampleTabs} />;
-};
-
-export const ThreeTabs = () => {
-  const exampleTabs = [
-    { label: "Overview", content: <div>This is the Overview</div> },
-    { label: "Details", content: <div>These are the Details</div> },
-    { label: "Settings", content: <div>Here are the Settings</div> },
-  ];
-
-  return <Tabs tabs={exampleTabs} />;
+export const ThreeTabs = Template.bind({});
+ThreeTabs.args = {
+  tabs: [
+    { label: "Overview", content: "Overview content goes here" },
+    { label: "Details", content: "Detailed content goes here" },
+    { label: "Settings", content: "Settings content goes here" },
+  ],
 };
