@@ -100,7 +100,7 @@ export const Notifications: React.FC = () => {
             />
           ))
         ) : (
-          <p className="text-sm text-gray-500">No archived notifications.</p>
+          <p className="text-sm text-gray-500">No past notifications.</p>
         )}
       </div>
     </div>
