@@ -24,7 +24,7 @@ function Tabs({ tabs }: TabsProps) {
           <Tab
             key={index}
             className={({ selected }) =>
-              `text-base outline-none font-rubik text-[#121212] font-normal leading-5 p-2.5 border-b-2 w-1/2 ${
+              `text-base outline-none font-rubik text-black font-normal leading-5 p-2.5 border-b-2 w-1/2 ${
                 selected ? "border-black" : "opacity-30"
               }`
             }
