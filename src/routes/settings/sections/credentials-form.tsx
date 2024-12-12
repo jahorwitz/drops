@@ -40,7 +40,7 @@ export const CredentialsForm = ({toggleForm, defaultValues, onSuccess,} : Props)
 
   const onSubmit = async (formData: FormValues) => {
     const { name, email, oldPassword, newPassword } = formData;
-
+    const oldEmail = defaultValues.email;
     const updateData: Record<string, string> = {
       name,
       email,
@@ -51,13 +51,13 @@ export const CredentialsForm = ({toggleForm, defaultValues, onSuccess,} : Props)
     }
 
     try {
-      const isAuthorized = await handleAuthorization(defaultValues.email, oldPassword);
+      const isAuthorized = await handleAuthorization(oldEmail, oldPassword);
       if (!isAuthorized) {
         alert('Incorrect old password. Please try again.');
         return;
       }
 
-      const response = await handleUpdate(defaultValues.email, updateData);
+      const response = await handleUpdate(oldEmail, updateData);
       const updatedUser = response?.data?.updateUser;
 
       if (updatedUser?.name && updatedUser.email) {
