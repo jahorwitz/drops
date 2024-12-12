@@ -12,9 +12,10 @@ interface DefaultValues {
 type Props = {
   toggleForm: () => void;
   defaultValues: DefaultValues;
+  onSuccess: (updatedUser: { name: string; email: string }) => void;
 }
 
-export const CredentialsForm = ({toggleForm, defaultValues} : Props) => {
+export const CredentialsForm = ({toggleForm, defaultValues, onSuccess,} : Props) => {
   interface FormValues {
     name: string;
     email: string;
@@ -30,12 +31,16 @@ export const CredentialsForm = ({toggleForm, defaultValues} : Props) => {
     formState: { errors, isValid },
   } = useForm<FormValues>({
     defaultValues,
+    mode: "onChange",
   });
 
-  const { handleUpdate } = useUserUpdate();
+  const newPassword = watch("newPassword");
+  
+  const { handleUpdate, handleAuthorization } = useUserUpdate();
 
   const onSubmit = async (formData: FormValues) => {
-    const { name, email, newPassword } = formData;
+    const { name, email, oldPassword, newPassword } = formData;
+
     const updateData: Record<string, string> = {
       name,
       email,
@@ -46,12 +51,22 @@ export const CredentialsForm = ({toggleForm, defaultValues} : Props) => {
     }
 
     try {
-    await handleUpdate(defaultValues.email, updateData);
+      const isAuthorized = await handleAuthorization(defaultValues.email, oldPassword);
+      if (!isAuthorized) {
+        alert('Incorrect old password. Please try again.');
+        return;
+      }
 
-    toggleForm();
-  } catch (error) {
-    console.error('Failed to update credentials:', error);
-  }
+      const response = await handleUpdate(defaultValues.email, updateData);
+      const updatedUser = response?.data?.updateUser;
+
+      if (updatedUser?.name && updatedUser.email) {
+        onSuccess({ name: updatedUser.name, email: updatedUser.email });
+        toggleForm();
+      }
+    } catch (error) {
+      console.error('Failed to update credentials:', error);
+    }
   };
   
   return (
@@ -92,6 +107,7 @@ export const CredentialsForm = ({toggleForm, defaultValues} : Props) => {
           feedback={errors.oldPassword?.message}
           filled={`${!watch("oldPassword") ? "filled" : ""}`}
           {...register("oldPassword", {
+            required: "This field is required",
             minLength: {
               value: 8,
               message: "Password must be at least 8 characters long",
@@ -113,11 +129,13 @@ export const CredentialsForm = ({toggleForm, defaultValues} : Props) => {
         />
         <Form.TextInput
           labelText="Confirm new password"
-          placeholder="Enter your Confirm your new password"
+          placeholder="Confirm your new password"
           type="password"
           feedback={errors.confirmedPassword?.message}
           filled={`${!watch("confirmedPassword") ? "filled" : ""}`}
           {...register("confirmedPassword", {
+            validate: (value) =>
+              value === newPassword || "Passwords do not match",
             minLength: {
               value: 8,
               message: "Password must be at least 8 characters long",

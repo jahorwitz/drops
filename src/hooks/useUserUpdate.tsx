@@ -1,8 +1,23 @@
 import { useMutation } from '@apollo/client';
-import { USER_UPDATE } from '../graphql/mutations/users';
+import { USER_UPDATE, USER_LOGIN } from '../graphql/mutations/users';
 
 export const useUserUpdate = () => {
-  const [ updateUser ] = useMutation(USER_UPDATE)
+  const [ authorizeUser ] = useMutation(USER_LOGIN);
+  const [ updateUser ] = useMutation(USER_UPDATE);
+
+  const handleAuthorization = async (email: string, password: string) => {
+    try {
+      const response = await authorizeUser({
+        variables: { email, password },
+      });
+      if (response.data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess') {
+        return true;
+      }
+    } catch (err) {
+      console.error('Authorization failed:', err);
+    }
+    return false;
+  }
   
   const handleUpdate = async (currentEmail: string, data: object) => {
     const variables = {
@@ -14,7 +29,6 @@ export const useUserUpdate = () => {
 
     try {
       const response = await updateUser({ variables });
-      console.log('Updated user:', response?.data?.updateUser);
       return response;
     } catch (err) {
       console.error('Error updating user:', err);
@@ -22,5 +36,5 @@ export const useUserUpdate = () => {
     }
   };
 
-  return { handleUpdate }
+  return { handleUpdate, handleAuthorization }
 }
