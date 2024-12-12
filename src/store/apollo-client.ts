@@ -3,15 +3,9 @@ import { setContext } from '@apollo/client/link/context';
 
 export const AUTH_TOKEN = '__drops_token';
 const httpLink = new HttpLink({ uri: 'http://localhost:8080/api/graphql' });
-
-export const client = new ApolloClient({
-    link: httpLink,
-    cache: new InMemoryCache(),
-});
-
-export function setGraphqlHeaders(_token: string | undefined) {
-    const token = _token ?? localStorage.getItem(AUTH_TOKEN);
-    const authLink = setContext((_, { headers }) => {
+   
+const authLink = setContext((_, { headers }) => {
+      const token = localStorage.getItem(AUTH_TOKEN);
         return {
             headers: {
                 ...headers,
@@ -20,5 +14,9 @@ export function setGraphqlHeaders(_token: string | undefined) {
         };
     });
 
-    client.setLink(authLink.concat(httpLink));
-}
+const link = authLink.concat(httpLink);
+
+export const client = new ApolloClient({
+    link,
+    cache: new InMemoryCache(),
+});
