@@ -21,7 +21,7 @@ type CustomProps<TFieldValues extends DatePickerFormValues> = {
 export const DatePicker = forwardRef(
   <TFieldValues extends DatePickerFormValues>(
     props: CustomProps<TFieldValues>,
-    ref: React.Ref<DatePickerLib>
+    ref: React.Ref<DatePickerLib>,
   ): ReactElement => {
     const {
       labelText,
@@ -55,7 +55,6 @@ export const DatePicker = forwardRef(
             `rounded-lg border-black border-[1px] py-5 px-3`,
             className,
           )}
-          isClearable
           showPopperArrow={false}
           dateFormat="MM/dd/yyyy"
           {...rest}
@@ -67,7 +66,7 @@ export const DatePicker = forwardRef(
         ) : null}
       </div>
     );
-  }
+  },
 );
 
 DatePicker.displayName = "DatePicker";
