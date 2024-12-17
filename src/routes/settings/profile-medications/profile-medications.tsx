@@ -1,6 +1,6 @@
 import { faPencil, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { Button, Modal } from "../../../components";
-import { useForm } from "react-hook-form";
+import { Button, Form, Modal } from "../../../components";
+import { Controller, useForm } from "react-hook-form";
 import useModal from "../../../components/modal/useModalHook";
 
 const medications = [
@@ -15,15 +15,20 @@ const medications = [
 ];
 
 interface MyFormValues {
-  myTextField: string;
-  anotherTextField: string;
-  anEnumField: "one" | "two" | "three";
+  nameAndDosage: string;
+  medicationTime: string;
 }
 
 export const ProfileMedications: React.FC = () => {
   const { openModal } = useModal();
 
-  const { handleSubmit } = useForm<MyFormValues>();
+  const {
+    handleSubmit,
+    register,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<MyFormValues>();
   const onSubmit = (data: MyFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
@@ -55,10 +60,64 @@ export const ProfileMedications: React.FC = () => {
           </div>
         );
       })}
-      <button className="font-text font-medium">+ Add medication</button>
+      <Button
+        variant="text"
+        buttonText="+ Add Medication"
+        onClick={() => {
+          openModal("profile-medications-add");
+        }}
+      />
       <Modal
         modalId="profile-medications-edit"
         title="Editing medication"
+        buttonText="Save"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <Form.TextInput
+            labelText="Name & dosage"
+            hintText="Must be at least 5 characters long"
+            feedback={errors.nameAndDosage?.message}
+            filled={`${!watch("nameAndDosage") ? "filled" : ""}`}
+            {...register("nameAndDosage", {
+              required: "This field is required",
+              minLength: {
+                value: 5,
+                message: "This field must be at least 5 characters long",
+              },
+            })}
+          />
+          <Controller
+            name="medicationTime"
+            control={control}
+            render={({ field }) => (
+              <>
+                <Form.AddMoreSection buttonText="+ Add reminder">
+                  <Form.TimePicker
+                    {...field}
+                    {...register("medicationTime", {
+                      required: "Time value is required",
+                      pattern: {
+                        value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
+                        message: "Invalid time format. Please use hh:mm:AM/PM",
+                      },
+                    })}
+                    labelText="Reminder 1"
+                    hintText="Choose a time"
+                    setValue={(name, value) =>
+                      field.onChange({ target: { name, value } })
+                    }
+                    feedback={errors.medicationTime?.message}
+                  />
+                </Form.AddMoreSection>
+              </>
+            )}
+          />
+        </Form>
+      </Modal>
+      <Modal
+        modalId="profile-medications-add"
+        title="New medication"
         buttonText="Save"
         onSubmit={handleSubmit(onSubmit)}
       >
