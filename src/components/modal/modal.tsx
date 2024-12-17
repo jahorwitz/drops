@@ -55,7 +55,6 @@ export const Modal = ({ title, modalId, children, buttonText, onSubmit }: modalP
     <Transition show={currentModal === modalId} appear={true}>
       <Dialog open={currentModal === modalId} onClose={closeModal}>
         <Transition.Child
-          appear={true}
           enter="transition-opacity linear duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-50"
@@ -66,7 +65,6 @@ export const Modal = ({ title, modalId, children, buttonText, onSubmit }: modalP
           <div className="fixed inset-0 bg-black/50" />
         </Transition.Child>
         <Transition.Child
-          appear={true}
           enter="transition transform duration-300"
           enterFrom="translate-y-full"
           enterTo="translate-y-0"
