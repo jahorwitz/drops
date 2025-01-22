@@ -14,6 +14,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  mutation AuthenticateUserWithPassword($email: String!, $password: String!) {\n    authenticateUserWithPassword(email: $email, password: $password) {\n      ... on UserAuthenticationWithPasswordSuccess {\n        sessionToken\n        item {\n          id\n          name\n          email\n        }\n      }\n      ... on UserAuthenticationWithPasswordFailure {\n        message\n      }\n    }\n  }\n": types.AuthenticateUserWithPasswordDocument,
+    "\n  mutation Mutation { \n    endSession\n  }": types.MutationDocument,
+    "\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      name\n      email\n    }\n  }\n": types.UpdateUserDocument,
+    "\n  query User($where: NotificationWhereInput!) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n": types.UserDocument,
 };
 
 /**
@@ -34,6 +37,18 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation AuthenticateUserWithPassword($email: String!, $password: String!) {\n    authenticateUserWithPassword(email: $email, password: $password) {\n      ... on UserAuthenticationWithPasswordSuccess {\n        sessionToken\n        item {\n          id\n          name\n          email\n        }\n      }\n      ... on UserAuthenticationWithPasswordFailure {\n        message\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation AuthenticateUserWithPassword($email: String!, $password: String!) {\n    authenticateUserWithPassword(email: $email, password: $password) {\n      ... on UserAuthenticationWithPasswordSuccess {\n        sessionToken\n        item {\n          id\n          name\n          email\n        }\n      }\n      ... on UserAuthenticationWithPasswordFailure {\n        message\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation Mutation { \n    endSession\n  }"): (typeof documents)["\n  mutation Mutation { \n    endSession\n  }"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      name\n      email\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      name\n      email\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query User($where: NotificationWhereInput!) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"): (typeof documents)["\n  query User($where: NotificationWhereInput!) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

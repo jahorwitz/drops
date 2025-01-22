@@ -11,6 +11,7 @@ import {
   RegistrationConfirmation,
   MedicationReminderForm,
   Settings,
+  Insights,
 } from "./routes";
 import { client } from "./store";
 
@@ -60,6 +61,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </ProtectedRoute>
             }
           />
+          <Route path="/insights" element={<ProtectedRoute>
+            <Insights />
+          </ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
