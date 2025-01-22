@@ -6,6 +6,7 @@ export const GET_CURRENT_USER = gql(`
     authenticatedItem {
       ... on User {
         name
+        email
         notificationsCount(where: $where)
       }
     }

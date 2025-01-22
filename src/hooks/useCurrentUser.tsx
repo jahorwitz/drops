@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
 import { GET_CURRENT_USER } from "../graphql/queries/users"; 
 
 export const useCurrentUser = () => {
@@ -10,6 +11,14 @@ export const useCurrentUser = () => {
   const { data, loading, error } = useQuery(GET_CURRENT_USER, {
     variables: { where: whereCondition },
   });
+
+  const [user, setUser] = useState(data?.authenticatedItem || null);
+
+  useEffect(() => {
+    if (data?.authenticatedItem) {
+      setUser(data.authenticatedItem);
+    }
+  }, [data]);
 
   if (loading) {
     return { user: null, loading: true, error: null }; // Still fetching
@@ -26,7 +35,8 @@ export const useCurrentUser = () => {
   }
 
   return {
-    user: data?.authenticatedItem,
+    user,
+    setUser,
     loading,
     error,
   };
