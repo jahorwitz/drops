@@ -17,3 +17,17 @@ export const USER_LOGIN = gql(`
     }
   }
 `);
+
+export const USER_LOGOUT = gql(`
+  mutation Mutation { 
+    endSession
+  }`);
+
+export const USER_UPDATE = gql(`
+  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
+    updateUser(where: $where, data: $data) {
+      name
+      email
+    }
+  }
+`);

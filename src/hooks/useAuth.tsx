@@ -1,20 +1,20 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { AUTH_TOKEN, setGraphqlHeaders } from "../store";
-import { useMutation } from "@apollo/client";
-import { USER_LOGIN } from "../graphql/mutations/users";
+import { useCallback } from "react";
+import { AUTH_TOKEN } from "../store";
+import { useMutation, useQuery } from "@apollo/client";
+import { USER_LOGIN, USER_LOGOUT } from "../graphql/mutations/users";
 import { User } from "../__generated__/graphql";
+import { GET_CURRENT_USER } from "../graphql/queries/users";
+import { client, setGraphqlHeaders } from "../store";
 
 interface UseAuthProps {
   onLoginSuccess?: (data: { session: User }) => void;
   onLogoutSuccess?: () => void;
 }
 
-export const useAuth = ({
-  onLoginSuccess /*, onLogoutSuccess */,
-}: UseAuthProps) => {
-  const [currentUser, setCurrentUser] = useState<User | undefined>();
-  const [token, setToken] = useState<string | undefined>();
+export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
   const [loadGetUser, { error: loginError }] = useMutation(USER_LOGIN);
+  const { data: currentUserData, loading } = useQuery(GET_CURRENT_USER);
+  const [logoutUser] = useMutation(USER_LOGOUT);
 
   const login = useCallback(
     ({ email, password }: { email: string; password: string }) => {
@@ -23,34 +23,41 @@ export const useAuth = ({
         onCompleted: (data) => {
           if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess') {
             localStorage.setItem(AUTH_TOKEN, data.authenticateUserWithPassword.sessionToken);
-            setToken(data.authenticateUserWithPassword.sessionToken);
-            setCurrentUser(data.authenticateUserWithPassword.item);
+            setGraphqlHeaders(data.authenticateUserWithPassword.sessionToken);
+            client.refetchQueries({
+              include: [GET_CURRENT_USER],
+            });
             if (onLoginSuccess) {
-              onLoginSuccess({ session: data.authenticateUserWithPassword.item });
+              onLoginSuccess({
+                session: data.authenticateUserWithPassword.item,
+              });
             }
-          } else if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordFailure') {
+          } else if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordFailure"
+          ) {
             throw new Error(data?.authenticateUserWithPassword?.message);
           }
         },
       });
     },
-    [loadGetUser, onLoginSuccess],
+    [loadGetUser, onLoginSuccess]
   );
 
   const logout = useCallback(() => {
-    // TODO: Implement logout logic
-    // 1) Call API to end the session (see endSession mutation in graphql schema)
-    // 2) If successful:
-    //      - remove token from localStorage using AUTH_TOKEN key from store/apollo-client.tsx
-    //      - set current user to undefined
-    //      - call onLogoutSuccess callback if provided
-  }, []);
+    logoutUser()
+      .then((res) => {
+        if (res) {
+          localStorage.removeItem(AUTH_TOKEN);
+          setGraphqlHeaders(undefined);
+          client.refetchQueries({
+            include: [GET_CURRENT_USER],
+          });
+          if (onLogoutSuccess) onLogoutSuccess();
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [logoutUser, onLogoutSuccess]);
 
-  const isLoggedIn = useMemo(() => !!currentUser, [currentUser]);
-
-  useEffect(() => {
-    setGraphqlHeaders(token);
-  }, [token]);
-
-  return { currentUser, isLoggedIn, login, loginError, logout };
+  return { currentUser: currentUserData?.authenticatedItem, login, loginError, logout, loading };
 };
