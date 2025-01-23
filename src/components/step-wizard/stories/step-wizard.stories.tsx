@@ -1,10 +1,10 @@
 import React, { ReactNode } from "react";
 
-import { Steps } from "./Steps";
-import Step from "./Step";
+import { Steps } from "../steps";
+import Step from "../step";
 
-import Header from "./example usage/header";
-import Footer from "./example usage/footer";
+import Header from "./header";
+import Footer from "./footer";
 
 export const stepWizard: React.FC = () => {
   //Mock Array that would be sent to a stepWizard. The goal is to only send an array of <Step /> components inside a <Steps /> component.
