@@ -26,13 +26,9 @@ export const Welcome: React.FC = () => {
           </h2>
 
           <div className="w-[346px] flex flex-col items-center gap-y-3 font-text text-section-subtext font-normal leading-[24px] text-center">
-            <p>
-              Track glucose, diet, activity, medication & mood
-            </p>
+            <p>Track glucose, diet, activity, medication & mood</p>
             <p>Get useful insights</p>
-            <p>
-              Easily share data with medical specialists
-            </p>
+            <p>Easily share data with medical specialists</p>
           </div>
         </div>
 
@@ -50,7 +46,6 @@ export const Welcome: React.FC = () => {
               className="w-[358px] h-[60px] rounded-tl-8 max-w-full"
               variant="secondary"
               buttonText="Log In"
-              onClick={() => alert("Login button")}
             />
           </Link>
         </div>

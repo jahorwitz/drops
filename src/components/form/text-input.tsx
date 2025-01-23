@@ -33,6 +33,6 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
         ) : null}
       </div>
     );
-  },
+  }
 );
 TextInput.displayName = "TextInput";
