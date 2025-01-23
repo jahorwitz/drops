@@ -4,8 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { USER_LOGIN, USER_LOGOUT } from "../graphql/mutations/users";
 import { User } from "../__generated__/graphql";
 import { GET_CURRENT_USER } from "../graphql/queries/users";
-import { client, httpLink } from "../store";
-import { setContext } from '@apollo/client/link/context';
+import { client, setGraphqlHeaders } from "../store";
 
 interface UseAuthProps {
   onLoginSuccess?: (data: { session: User }) => void;
@@ -24,13 +23,7 @@ export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
         onCompleted: (data) => {
           if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess') {
             localStorage.setItem(AUTH_TOKEN, data.authenticateUserWithPassword.sessionToken);
-            const newAuthLink = setContext((_, { headers }) => ({
-              headers: {
-                ...headers,
-                authorization: data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess' ? data.authenticateUserWithPassword.sessionToken : null,
-              },
-            }));
-            client.setLink(newAuthLink.concat(httpLink));
+            setGraphqlHeaders(data.authenticateUserWithPassword.sessionToken);
             client.refetchQueries({
               include: [GET_CURRENT_USER],
             });
@@ -48,7 +41,7 @@ export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
         },
       });
     },
-    [loadGetUser, onLoginSuccess],
+    [loadGetUser, onLoginSuccess]
   );
 
   const logout = useCallback(() => {
@@ -56,13 +49,7 @@ export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
       .then((res) => {
         if (res) {
           localStorage.removeItem(AUTH_TOKEN);
-          const newAuthLink = setContext((_, { headers }) => ({
-            headers: {
-              ...headers,
-              authorization: null,
-            },
-          }));
-          client.setLink(newAuthLink.concat(httpLink));
+          setGraphqlHeaders(undefined);
           client.refetchQueries({
             include: [GET_CURRENT_USER],
           });

@@ -53,7 +53,11 @@ export const Login: React.FC = () => {
       >
         {loginError && (
           <div className="border border-red rounded-md p-2 my-4 flex items-center justify-center gap-2">
-            <FontAwesomeIcon icon={XMarkIcon as IconDefinition} className="text-red text-xl" /> {loginError.message}
+            <FontAwesomeIcon
+              icon={XMarkIcon as IconDefinition}
+              className="text-red text-xl"
+            />{" "}
+            {loginError.message}
           </div>
         )}
         <div className="flex flex-col h-full gap-5">

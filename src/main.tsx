@@ -70,5 +70,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

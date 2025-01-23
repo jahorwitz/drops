@@ -1,4 +1,10 @@
-import { MouseEventHandler, ReactNode, useState, createContext, PropsWithChildren } from "react";
+import {
+  MouseEventHandler,
+  ReactNode,
+  useState,
+  createContext,
+  PropsWithChildren,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "../button/button";
 import { faX } from "@fortawesome/free-solid-svg-icons";
@@ -14,8 +20,8 @@ type ModalContextType = {
 
 export const ModalContext = createContext<ModalContextType>({
   currentModal: "",
-  openModal: () => { },
-  closeModal: () => { },
+  openModal: () => {},
+  closeModal: () => {},
 });
 
 export const ModalProvider = ({ children }: PropsWithChildren) => {
@@ -23,7 +29,6 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
 
   const openModal = (modalId: string) => {
     setCurrentModal(modalId);
-
   };
 
   const closeModal = () => {
@@ -35,7 +40,7 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
       {children}
     </ModalContext.Provider>
   );
-}
+};
 
 /* Modal Component */
 type modalProps = {
@@ -43,12 +48,18 @@ type modalProps = {
   title?: string;
   buttonText?: string;
   children?: ReactNode;
-  onSubmit?: MouseEventHandler
-  isOpen?: boolean
-  onClose?: () => void
+  onSubmit?: MouseEventHandler;
+  isOpen?: boolean;
+  onClose?: () => void;
 };
 
-export const Modal = ({ title, modalId, children, buttonText, onSubmit }: modalProps) => {
+export const Modal = ({
+  title,
+  modalId,
+  children,
+  buttonText,
+  onSubmit,
+}: modalProps) => {
   const { currentModal, closeModal } = useModal();
 
   return (

@@ -153,6 +153,6 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
         ) : null}
       </div>
     );
-  },
+  }
 );
 TimePicker.displayName = "TimePicker";
