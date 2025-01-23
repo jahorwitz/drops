@@ -12,10 +12,9 @@ interface DefaultValues {
 type Props = {
   toggleForm: () => void;
   defaultValues: DefaultValues;
-  onSuccess: (updatedUser: { name: string; email: string }) => void;
 }
 
-export const CredentialsForm = ({toggleForm, defaultValues, onSuccess,} : Props) => {
+export const CredentialsForm = ({ toggleForm, defaultValues }: Props) => {
   interface FormValues {
     name: string;
     email: string;
@@ -35,7 +34,7 @@ export const CredentialsForm = ({toggleForm, defaultValues, onSuccess,} : Props)
   });
 
   const newPassword = watch("newPassword");
-  
+
   const { handleUpdate, handleAuthorization } = useUserUpdate();
 
   const onSubmit = async (formData: FormValues) => {
@@ -61,14 +60,13 @@ export const CredentialsForm = ({toggleForm, defaultValues, onSuccess,} : Props)
       const updatedUser = response?.data?.updateUser;
 
       if (updatedUser?.name && updatedUser.email) {
-        onSuccess({ name: updatedUser.name, email: updatedUser.email });
         toggleForm();
       }
     } catch (error) {
       console.error('Failed to update credentials:', error);
     }
   };
-  
+
   return (
     <SectionWithEdit title="Credentials" toggleForm={toggleForm} icon={ExitIcon}>
       <Form

@@ -1,9 +1,12 @@
 import { useMutation } from '@apollo/client';
 import { USER_UPDATE, USER_LOGIN } from '../graphql/mutations/users';
+import { GET_CURRENT_USER } from '../graphql/queries/users';
 
 export const useUserUpdate = () => {
-  const [ authorizeUser ] = useMutation(USER_LOGIN);
-  const [ updateUser ] = useMutation(USER_UPDATE);
+  const [authorizeUser] = useMutation(USER_LOGIN);
+  const [updateUser] = useMutation(USER_UPDATE, {
+    refetchQueries: [{ query: GET_CURRENT_USER }],
+  });
 
   const handleAuthorization = async (email: string, password: string) => {
     try {
@@ -18,7 +21,7 @@ export const useUserUpdate = () => {
     }
     return false;
   }
-  
+
   const handleUpdate = async (currentEmail: string, data: object) => {
     const variables = {
       where: {
