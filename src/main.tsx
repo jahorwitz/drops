@@ -9,10 +9,15 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
+  AccountCreationForm,
   MedicationReminderForm,
   Settings,
+  Insights,
 } from "./routes";
+
 import { client } from "./store";
+
+import ProtectedRoute from "./components/protected-route/protected-route";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -20,22 +25,48 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
+          <Route path="/welcome" element={<Welcome />} />
           <Route
             path="/registration-confirm"
             element={<RegistrationConfirmation />}
           />
-          <Route
-            path="/onboarding/glucose-notifications"
-            element={<GlucoseNotificationPrompt />}
-          />
+          <Route path="/registration" element={<AccountCreationForm />} />
           <Route
             path="/onboarding/medication-reminders"
-            element={<MedicationReminderForm />}
+            element={
+              <ProtectedRoute>
+                <MedicationReminderForm />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/onboarding" element={<Start />} />
+          <Route
+            path="/onboarding/glucose-notifications"
+            element={
+              <ProtectedRoute>
+                <GlucoseNotificationPrompt />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/onboarding"
+            element={
+              <ProtectedRoute>
+                <Start />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/insights" element={<ProtectedRoute>
+            <Insights />
+          </ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>

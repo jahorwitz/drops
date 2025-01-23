@@ -1,10 +1,9 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/Logo.svg";
 import backbutton from "../../images/Backbutton.svg";
 import { Button, Form } from "../../components";
 import { useAuth } from "../../hooks/useAuth";
-import { User } from "../../__generated__/graphql";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes as XMarkIcon } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
@@ -15,6 +14,8 @@ export const Login: React.FC = () => {
     password: string;
   }
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -22,8 +23,8 @@ export const Login: React.FC = () => {
     formState: { errors, isValid },
   } = useForm<FormValues>();
 
-  const handleLoginSuccess = (data: { session: User }) => {
-    alert(JSON.stringify(`Hello ${data.session.name}!`, null, 2));
+  const handleLoginSuccess = () => {
+    navigate("/");
   };
 
   const { login, loginError } = useAuth({ onLoginSuccess: handleLoginSuccess });
