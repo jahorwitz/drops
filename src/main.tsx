@@ -9,10 +9,12 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
+  AccountCreationForm,
   MedicationReminderForm,
   Settings,
   Insights,
 } from "./routes";
+
 import { client } from "./store";
 
 import ProtectedRoute from "./components/protected-route/protected-route";
@@ -28,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             path="/registration-confirm"
             element={<RegistrationConfirmation />}
           />
+          <Route path="/registration" element={<AccountCreationForm />} />
           <Route
             path="/onboarding/medication-reminders"
             element={
