@@ -2,7 +2,7 @@ import { Button } from "../../components"
 import { LogoutButtons } from "./logout-buttons"
 import { Credentials } from "./sections/credentials";
 
-export const Settings: React.FC = () => {  
+export const Settings: React.FC = () => {
   return (
     <div className="flex flex-col bg-lightGray items-center pb-11">
       <Button
@@ -26,8 +26,8 @@ export const Settings: React.FC = () => {
           onClick={() => alert("Goals & reminders")}
         />
       </div>
-       <Credentials />
-       {/* <HealthData /> */}
+      <Credentials />
+      {/* <HealthData /> */}
       <LogoutButtons />
     </div>
   );

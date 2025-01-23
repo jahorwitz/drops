@@ -1,8 +1,11 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback } from "react";
 import { AUTH_TOKEN } from "../store";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { USER_LOGIN, USER_LOGOUT } from "../graphql/mutations/users";
 import { User } from "../__generated__/graphql";
+import { GET_CURRENT_USER } from "../graphql/queries/users";
+import { client, httpLink } from "../store";
+import { setContext } from '@apollo/client/link/context';
 
 interface UseAuthProps {
   onLoginSuccess?: (data: { session: User }) => void;
@@ -10,8 +13,8 @@ interface UseAuthProps {
 }
 
 export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
-  const [currentUser, setCurrentUser] = useState<User | undefined>();
   const [loadGetUser, { error: loginError }] = useMutation(USER_LOGIN);
+  const { data: currentUserData, loading } = useQuery(GET_CURRENT_USER);
   const [logoutUser] = useMutation(USER_LOGOUT);
 
   const login = useCallback(
@@ -21,7 +24,16 @@ export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
         onCompleted: (data) => {
           if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess') {
             localStorage.setItem(AUTH_TOKEN, data.authenticateUserWithPassword.sessionToken);
-            setCurrentUser(data.authenticateUserWithPassword.item);
+            const newAuthLink = setContext((_, { headers }) => ({
+              headers: {
+                ...headers,
+                authorization: data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess' ? data.authenticateUserWithPassword.sessionToken : null,
+              },
+            }));
+            client.setLink(newAuthLink.concat(httpLink));
+            client.refetchQueries({
+              include: [GET_CURRENT_USER],
+            });
             if (onLoginSuccess) {
               onLoginSuccess({
                 session: data.authenticateUserWithPassword.item,
@@ -44,14 +56,21 @@ export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
       .then((res) => {
         if (res) {
           localStorage.removeItem(AUTH_TOKEN);
-          setCurrentUser(undefined);
+          const newAuthLink = setContext((_, { headers }) => ({
+            headers: {
+              ...headers,
+              authorization: null,
+            },
+          }));
+          client.setLink(newAuthLink.concat(httpLink));
+          client.refetchQueries({
+            include: [GET_CURRENT_USER],
+          });
           if (onLogoutSuccess) onLogoutSuccess();
         }
       })
       .catch((err) => console.error(err));
   }, [logoutUser, onLogoutSuccess]);
 
-  const isLoggedIn = useMemo(() => !!currentUser, [currentUser]);
-
-  return { currentUser, isLoggedIn, login, loginError, logout };
+  return { currentUser: currentUserData?.authenticatedItem, login, loginError, logout, loading };
 };

@@ -50,7 +50,6 @@ export const Welcome: React.FC = () => {
               className="w-[358px] h-[60px] rounded-tl-8 max-w-full"
               variant="secondary"
               buttonText="Log In"
-              onClick={() => alert("Login button")}
             />
           </Link>
         </div>
