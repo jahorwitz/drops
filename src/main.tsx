@@ -12,6 +12,7 @@ import {
   AccountCreationForm,
   MedicationReminderForm,
   Settings,
+  Notifications,
   Insights,
 } from "./routes";
 
@@ -64,6 +65,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </ProtectedRoute>
             }
           />
+          <Route path="/notifications" element={<ProtectedRoute>
+            <Notifications />
+          </ProtectedRoute>} />
           <Route path="/insights" element={<ProtectedRoute>
             <Insights />
           </ProtectedRoute>} />
