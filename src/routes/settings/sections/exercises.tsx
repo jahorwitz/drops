@@ -1,16 +1,16 @@
 import { Form } from "../../../components";
-import { useQuery } from "@apollo/client";
-import { GET_ACTIVITIES } from "../../../graphql/queries/activities";
-import { GET_CURRENT_USER } from "../../../graphql/queries/users";
+// import { useQuery } from "@apollo/client";
+// import { GET_ACTIVITIES } from "../../../graphql/queries/activities";
+// import { GET_CURRENT_USER } from "../../../graphql/queries/users";
 
 export default function Exercises() {
-  const { data: currentUserData } = useQuery(GET_CURRENT_USER);
-  const userId = currentUserData?.authenticatedItem.id;
-  const { data } = useQuery(GET_ACTIVITIES, {
-    variables: { userId },
-  });
+  // const { data: currentUserData } = useQuery(GET_CURRENT_USER);
+  // const userId = currentUserData?.authenticatedItem.id;
+  // const { data } = useQuery(GET_ACTIVITIES, {
+  //   variables: { userId },
+  // });
 
-  //need to specify "activity" type and shape
+  //need to specify "activity" type and shape v
 
   // if (data?.activities) {
   //   data.activities.map((activity: any) => {
