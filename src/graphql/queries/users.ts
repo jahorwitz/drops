@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 
-
 export const GET_CURRENT_USER = gql(`
   query User($where: NotificationWhereInput) {
     authenticatedItem {
       ... on User {
         name
         email
+        id
         notificationsCount(where: $where)
       }
     }

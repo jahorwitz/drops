@@ -1,9 +1,22 @@
 import { Form } from "../../../components";
-import { useAuth } from "../../../hooks/useAuth";
+import { useQuery } from "@apollo/client";
+import { GET_ACTIVITIES } from "../../../graphql/queries/activities";
+import { GET_CURRENT_USER } from "../../../graphql/queries/users";
 
 export default function Exercises() {
-  const user = useAuth({});
-  console.log(user);
+  const { data: currentUserData } = useQuery(GET_CURRENT_USER);
+  const userId = currentUserData?.authenticatedItem.id;
+  const { data } = useQuery(GET_ACTIVITIES, {
+    variables: { userId },
+  });
+
+  //need to specify "activity" type and shape
+
+  // if (data?.activities) {
+  //   data.activities.map((activity: any) => {
+  //     console.log(activity);
+  //   });
+  // }
 
   return (
     <div className="bg-gray-300 h-screen">
