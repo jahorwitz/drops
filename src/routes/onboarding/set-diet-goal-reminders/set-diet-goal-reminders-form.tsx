@@ -10,8 +10,8 @@ interface Props {
 }
 
 const inputName = "Meal| Snack"
-//What is the functionality of the onChange?
-//Seems Like the # Meal|Snacks should correlate with the DietGoalsForm
+//Where does the onChange go?
+//add edit Button to add Meal name || or Meal name input is needed
 
 export const SetDietGoalsForm: React.FC<Props> = ({index}) => {
     return (
