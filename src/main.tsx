@@ -16,6 +16,7 @@ import {
   Notifications,
   Insights,
 } from "./routes";
+import GoalsAndReminders from "./routes/onboarding/set-goals-and-reminders/GoalsAndReminders";
 
 import { client } from "./store";
 
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
           <Route path="/welcome" element={<Welcome />} />
+          <Route path="/goals" element={<GoalsAndReminders />} />
           <Route
             path="/registration-confirm"
             element={<RegistrationConfirmation />}
@@ -66,15 +68,30 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </ProtectedRoute>
             }
           />
-          <Route path="/dashboard" element={<ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>} />
-          <Route path="/notifications" element={<ProtectedRoute>
-            <Notifications />
-          </ProtectedRoute>} />
-          <Route path="/insights" element={<ProtectedRoute>
-            <Insights />
-          </ProtectedRoute>} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/insights"
+            element={
+              <ProtectedRoute>
+                <Insights />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
