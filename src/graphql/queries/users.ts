@@ -12,3 +12,17 @@ export const GET_CURRENT_USER = gql(`
     }
   }
 `);
+
+export const GET_CURRENT_USER_HEALTH = gql(`
+  query AuthenticatedItem {
+    authenticatedItem {
+      ... on User {
+        dateOfBirth
+        diabetesType
+        height
+        sex
+        weight
+      }
+    }
+  }
+`)

@@ -1,6 +1,7 @@
 import { Button } from "../../components"
 import { LogoutButtons } from "./logout-buttons"
 import { Credentials } from "./sections/credentials";
+import { HealthData } from "./sections/health-data";
 
 export const Settings: React.FC = () => {
   return (
@@ -27,7 +28,7 @@ export const Settings: React.FC = () => {
         />
       </div>
       <Credentials />
-      {/* <HealthData /> */}
+      <HealthData />
       <LogoutButtons />
     </div>
   );
