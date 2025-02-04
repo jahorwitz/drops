@@ -1,6 +1,6 @@
 import React from "react";
 import {Form} from "../../../components";
-// import { DietGoalsForm } from "./diet-goals-form";
+
 
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
 }
 
 const inputName = "Meal| Snack"
-//Where does the onChange go?
-//add edit Button to add Meal name || or Meal name input is needed
+//  Form already has onChange implemented, may need another onChange for name input
+//add edit Button to add Meal name input popup || or Meal name input is needed
 
 export const SetDietGoalsForm: React.FC<Props> = ({index}) => {
     return (
