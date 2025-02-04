@@ -30,9 +30,11 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
     hintText,
     options,
     feedback,
+    value,
     onChange,
   }: Props<FieldValues>) => {
-    const [selected, setSelected] = useState<Option | undefined>();
+    const initialSelected = options.find((option) => option.value === value);
+    const [selected, setSelected] = useState<Option | undefined>(initialSelected);
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text z-10">
         <label

@@ -11,6 +11,7 @@ interface DefaultValues {
   height: string;
   sex: string;
   diabetesType: string;
+  email: string;
 }
 
 type Props = {
@@ -85,7 +86,7 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
         />
         <Form.TextInput
           labelText="Height (ft)"
-          placeholder="Enter your height"
+          placeholder={`Enter your height in ft'in"`}
           type="text"
           feedback={errors.height?.message}
           filled={`${!watch("height") ? "filled" : ""}`}
@@ -93,13 +94,14 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
         />
         <Form.SelectForm
         labelText="Sex"
+        placeholder="Select one"
         hintText="Select one option"
         options={[
           { value: "male", label: "Male" },
           { value: "female", label: "Female" },
           { value: "other", label: "Other" },
         ]}
-        defaultValue={defaultValues.sex} 
+        value={defaultValues.sex} 
         feedback={errors as FieldErrors}
         {...register("sex", {
           required: "This field is required",
@@ -119,6 +121,7 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
             required: "This field is required",
           })}
         />
+        <p className="font-text opacity-60">Your data is needed to provide correct pieces of advice</p>
         <Button
           type="submit"
           buttonText="Update health data"
