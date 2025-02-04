@@ -16,7 +16,7 @@ export const SectionList = ({list}: Props) => {
       {listArr.map(([key, value]) => (
         <div className="mb-3" key={key}>
           <p className="font-text text-sm opacity-60">{splitCamelCase(key)}</p>
-          <p className="font-text">{value}</p>
+          <p className="font-text">{value? (value) : ("?")}</p>
         </div>
       ))}
       

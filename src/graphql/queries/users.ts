@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 
-
 export const GET_CURRENT_USER = gql(`
   query User($where: NotificationWhereInput) {
     authenticatedItem {
@@ -8,15 +7,6 @@ export const GET_CURRENT_USER = gql(`
         name
         email
         notificationsCount(where: $where)
-      }
-    }
-  }
-`);
-
-export const GET_CURRENT_USER_HEALTH = gql(`
-  query AuthenticatedItem {
-    authenticatedItem {
-      ... on User {
         dateOfBirth
         diabetesType
         height
@@ -25,4 +15,4 @@ export const GET_CURRENT_USER_HEALTH = gql(`
       }
     }
   }
-`)
+`);
