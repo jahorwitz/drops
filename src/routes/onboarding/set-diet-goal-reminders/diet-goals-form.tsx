@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Form } from "../../components";
+import { Form } from "../../../components";
 
 export const DietGoalsForm: React.FC = () => {
   interface FormValues {
