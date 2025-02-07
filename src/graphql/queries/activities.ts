@@ -6,9 +6,9 @@ export const GET_ACTIVITIES = gql`
       id
       name
       reminder
-      unitOfMeasure
       duration
       daysOfWeek
+      time
     }
   }
 `;

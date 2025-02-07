@@ -16,7 +16,10 @@ const documents = {
     "\n  mutation AuthenticateUserWithPassword($email: String!, $password: String!) {\n    authenticateUserWithPassword(email: $email, password: $password) {\n      ... on UserAuthenticationWithPasswordSuccess {\n        sessionToken\n        item {\n          id\n          name\n          email\n        }\n      }\n      ... on UserAuthenticationWithPasswordFailure {\n        message\n      }\n    }\n  }\n": types.AuthenticateUserWithPasswordDocument,
     "\n  mutation Mutation { \n    endSession\n  }": types.MutationDocument,
     "\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      name\n      email\n    }\n  }\n": types.UpdateUserDocument,
-    "\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n": types.UserDocument,
+    "\n  query Activities($userId: ID!) {\n    activities(where: { user: { id: { equals: $userId } } }) {\n      id\n      name\n      reminder\n      unitOfMeasure\n      duration\n      daysOfWeek\n    }\n  }\n": types.ActivitiesDocument,
+    "\n  query NewNotifications {\n    notifications(\n      where: {\n        status: { equals: \"new\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: asc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n": types.NewNotificationsDocument,
+    "\n  query OldNotifications {\n    notifications(\n      where: {\n        status: { equals: \"archived\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: desc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n": types.OldNotificationsDocument,
+    "\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        id\n        notificationsCount(where: $where)\n      }\n    }\n  }\n": types.UserDocument,
 };
 
 /**
@@ -48,7 +51,19 @@ export function gql(source: "\n  mutation UpdateUser($where: UserWhereUniqueInpu
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"): (typeof documents)["\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query Activities($userId: ID!) {\n    activities(where: { user: { id: { equals: $userId } } }) {\n      id\n      name\n      reminder\n      unitOfMeasure\n      duration\n      daysOfWeek\n    }\n  }\n"): (typeof documents)["\n  query Activities($userId: ID!) {\n    activities(where: { user: { id: { equals: $userId } } }) {\n      id\n      name\n      reminder\n      unitOfMeasure\n      duration\n      daysOfWeek\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query NewNotifications {\n    notifications(\n      where: {\n        status: { equals: \"new\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: asc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n"): (typeof documents)["\n  query NewNotifications {\n    notifications(\n      where: {\n        status: { equals: \"new\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: asc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query OldNotifications {\n    notifications(\n      where: {\n        status: { equals: \"archived\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: desc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n"): (typeof documents)["\n  query OldNotifications {\n    notifications(\n      where: {\n        status: { equals: \"archived\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: desc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        id\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"): (typeof documents)["\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        id\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
