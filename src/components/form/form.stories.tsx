@@ -2,7 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Form } from "./form";
 import { Button } from "../button";
 import type { FieldErrors } from "react-hook-form";
-
+//import { useEffect, useState } from "react";
 export default {
   title: "Form",
   component: Form,
@@ -42,7 +42,7 @@ export const WithTextInputs = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<MyFormValues>();
+  } = useForm<MyFormValues>(); //
   const onSubmit = (data: MyFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };

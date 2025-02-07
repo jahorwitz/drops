@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+//import { Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
 interface ProtectedRouteProps {
@@ -7,15 +7,15 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { currentUser, loading } = useAuth({});
-
+  const { loading } = useAuth({});
+  // const { currentUser, loading } = useAuth({});
   if (loading) {
     return null;
   }
 
-  if (!currentUser) {
-    return <Navigate to="/welcome" replace />;
-  }
+  // if (!currentUser) {
+  //   return <Navigate to="/welcome" replace />;
+  // }
 
   return <>{children}</>;
 };
