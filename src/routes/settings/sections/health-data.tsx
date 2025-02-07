@@ -10,6 +10,15 @@ export const HealthData: React.FC = () => {
   const { currentUser } = useAuth({});
   const { dateOfBirth, weight, height, sex, diabetesType, currentEmail } = currentUser;
 
+  const formatDate = (isoDate: string): string => {
+    if (!isoDate) return "";
+    const date = new Date(isoDate);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  };
+
   const formatString = (input: string): string => {
     if (!input) return input;
   
@@ -22,7 +31,7 @@ export const HealthData: React.FC = () => {
     return formatted;
   } 
 
-  const healthData = { dateOfBirth: dateOfBirth, weight: `${weight} lbs`, height: `${Math.floor(height / 12)}'${height % 12}"`, sex: formatString(sex), diabetesType: formatString(diabetesType[0])};
+  const healthData = { dateOfBirth: formatDate(dateOfBirth), weight: `${weight} lbs`, height: `${Math.floor(height / 12)}'${height % 12}"`, sex: formatString(sex), diabetesType: formatString(diabetesType[0])};
 
   const toggleForm = () => {
     sethealthDataFormOpen(!healthDataFormOpen);
