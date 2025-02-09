@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "../../../components";
-import { MedicationSection } from "./medication-section";
+import { MedicationForm } from "../../../components/form/medication-form";
+import { Button } from "../../../components";
 
 export const MedicationReminderForm: React.FC = () => {
   return (
@@ -14,8 +15,9 @@ export const MedicationReminderForm: React.FC = () => {
       </p>
       <Form className="flex flex-col gap-5 ">
         <Form.AddMoreSection buttonText="+ Add another medication">
-          <MedicationSection />
+          <MedicationForm title="Medication" isModal={false} buttonText="Save notifications" label="Medication name & amount"/>
         </Form.AddMoreSection>
+              <Button variant="primary" type="submit" buttonText="Save notifications" className="mx-auto min-w-[315px] max-w-[400px] w-full"/>
       </Form>
     </div>
   );

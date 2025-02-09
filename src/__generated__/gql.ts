@@ -13,10 +13,16 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  mutation AddMedication(\n    $name: String!\n    $amount: Int!\n    $unitOfMeasure: String!\n    $time: String!\n    $id: ID!\n  ) {\n    createMedication(\n      data: {\n        name: $name\n        amount: $amount\n        unitOfMeasure: $unitOfMeasure\n        time: $time\n        user: { connect: { id: $id } }\n      }\n    ) {\n      id\n      name\n      amount\n      unitOfMeasure\n      time\n    }\n  }\n": types.AddMedicationDocument,
+    "\n  mutation UpdateMedication(\n    $id: ID!\n    $name: String\n    $amount: Int\n    $unitOfMeasure: String\n    $time: String\n  ) {\n    updateMedication(\n      where: { id: $id }\n      data: {\n        name: $name\n        amount: $amount\n        unitOfMeasure: $unitOfMeasure\n        time: $time\n      }\n    ) {\n      id\n      name\n      amount\n      unitOfMeasure\n      time\n    }\n  }\n": types.UpdateMedicationDocument,
+    "\n  mutation DeleteMedication($id: ID!) {\n    deleteMedication(where: { id: $id }) {\n      id\n    }\n  }\n": types.DeleteMedicationDocument,
     "\n  mutation AuthenticateUserWithPassword($email: String!, $password: String!) {\n    authenticateUserWithPassword(email: $email, password: $password) {\n      ... on UserAuthenticationWithPasswordSuccess {\n        sessionToken\n        item {\n          id\n          name\n          email\n        }\n      }\n      ... on UserAuthenticationWithPasswordFailure {\n        message\n      }\n    }\n  }\n": types.AuthenticateUserWithPasswordDocument,
     "\n  mutation Mutation { \n    endSession\n  }": types.MutationDocument,
     "\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      name\n      email\n    }\n  }\n": types.UpdateUserDocument,
-    "\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n": types.UserDocument,
+    "\n  query GetMedications($where: MedicationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        medications(where: $where) {\n          id\n          name\n          amount\n          unitOfMeasure\n          time\n        }\n      }\n    }\n  }\n": types.GetMedicationsDocument,
+    "\n  query NewNotifications {\n    notifications(\n      where: {\n        status: { equals: \"new\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: asc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n": types.NewNotificationsDocument,
+    "\n  query OldNotifications {\n    notifications(\n      where: {\n        status: { equals: \"archived\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: desc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n": types.OldNotificationsDocument,
+    "\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n": types.UserDocument,
 };
 
 /**
@@ -36,6 +42,18 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  mutation AddMedication(\n    $name: String!\n    $amount: Int!\n    $unitOfMeasure: String!\n    $time: String!\n    $id: ID!\n  ) {\n    createMedication(\n      data: {\n        name: $name\n        amount: $amount\n        unitOfMeasure: $unitOfMeasure\n        time: $time\n        user: { connect: { id: $id } }\n      }\n    ) {\n      id\n      name\n      amount\n      unitOfMeasure\n      time\n    }\n  }\n"): (typeof documents)["\n  mutation AddMedication(\n    $name: String!\n    $amount: Int!\n    $unitOfMeasure: String!\n    $time: String!\n    $id: ID!\n  ) {\n    createMedication(\n      data: {\n        name: $name\n        amount: $amount\n        unitOfMeasure: $unitOfMeasure\n        time: $time\n        user: { connect: { id: $id } }\n      }\n    ) {\n      id\n      name\n      amount\n      unitOfMeasure\n      time\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation UpdateMedication(\n    $id: ID!\n    $name: String\n    $amount: Int\n    $unitOfMeasure: String\n    $time: String\n  ) {\n    updateMedication(\n      where: { id: $id }\n      data: {\n        name: $name\n        amount: $amount\n        unitOfMeasure: $unitOfMeasure\n        time: $time\n      }\n    ) {\n      id\n      name\n      amount\n      unitOfMeasure\n      time\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateMedication(\n    $id: ID!\n    $name: String\n    $amount: Int\n    $unitOfMeasure: String\n    $time: String\n  ) {\n    updateMedication(\n      where: { id: $id }\n      data: {\n        name: $name\n        amount: $amount\n        unitOfMeasure: $unitOfMeasure\n        time: $time\n      }\n    ) {\n      id\n      name\n      amount\n      unitOfMeasure\n      time\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation DeleteMedication($id: ID!) {\n    deleteMedication(where: { id: $id }) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteMedication($id: ID!) {\n    deleteMedication(where: { id: $id }) {\n      id\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  mutation AuthenticateUserWithPassword($email: String!, $password: String!) {\n    authenticateUserWithPassword(email: $email, password: $password) {\n      ... on UserAuthenticationWithPasswordSuccess {\n        sessionToken\n        item {\n          id\n          name\n          email\n        }\n      }\n      ... on UserAuthenticationWithPasswordFailure {\n        message\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation AuthenticateUserWithPassword($email: String!, $password: String!) {\n    authenticateUserWithPassword(email: $email, password: $password) {\n      ... on UserAuthenticationWithPasswordSuccess {\n        sessionToken\n        item {\n          id\n          name\n          email\n        }\n      }\n      ... on UserAuthenticationWithPasswordFailure {\n        message\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -48,7 +66,19 @@ export function gql(source: "\n  mutation UpdateUser($where: UserWhereUniqueInpu
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"): (typeof documents)["\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query GetMedications($where: MedicationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        medications(where: $where) {\n          id\n          name\n          amount\n          unitOfMeasure\n          time\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetMedications($where: MedicationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        medications(where: $where) {\n          id\n          name\n          amount\n          unitOfMeasure\n          time\n        }\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query NewNotifications {\n    notifications(\n      where: {\n        status: { equals: \"new\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: asc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n"): (typeof documents)["\n  query NewNotifications {\n    notifications(\n      where: {\n        status: { equals: \"new\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: asc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query OldNotifications {\n    notifications(\n      where: {\n        status: { equals: \"archived\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: desc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n"): (typeof documents)["\n  query OldNotifications {\n    notifications(\n      where: {\n        status: { equals: \"archived\" },\n        notificationTime: {\n          gte: \"\"\n          lte: \"\"\n        }\n      }\n      orderBy: [{ notificationTime: desc }]\n    ) {\n      notificationTime\n      status\n      type\n      description\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"): (typeof documents)["\n  query User($where: NotificationWhereInput) {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        email\n        notificationsCount(where: $where)\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
