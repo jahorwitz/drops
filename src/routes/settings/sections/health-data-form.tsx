@@ -138,9 +138,7 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
         ]}
         value={defaultValues.sex} 
         feedback={errors as FieldErrors}
-        {...register("sex", {
-          required: "This field is required",
-        })}
+        {...register("sex")}
       />
         <Form.RadioGroup
           labelText="Choose your diabetes type"
