@@ -20,6 +20,7 @@ import {
 import { client } from "./store";
 
 import ProtectedRoute from "./components/protected-route/protected-route";
+import { GlucoseSugarRange } from "./routes/onboarding/glucose-sugar-range";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -57,6 +58,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/onboarding/glucose-levels"
+            element={
+              <ProtectedRoute>
+                <GlucoseSugarRange onChange={() => {}} />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route
             path="/settings"
@@ -66,15 +75,30 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </ProtectedRoute>
             }
           />
-          <Route path="/dashboard" element={<ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>} />
-          <Route path="/notifications" element={<ProtectedRoute>
-            <Notifications />
-          </ProtectedRoute>} />
-          <Route path="/insights" element={<ProtectedRoute>
-            <Insights />
-          </ProtectedRoute>} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/insights"
+            element={
+              <ProtectedRoute>
+                <Insights />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
