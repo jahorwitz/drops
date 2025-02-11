@@ -1,8 +1,10 @@
-import { Button } from "../../components"
-import { LogoutButtons } from "./logout-buttons"
+import { Button } from "../../components";
+import { LogoutButtons } from "./logout-buttons";
 import { Credentials } from "./sections/credentials";
+import { useNavigate } from "react-router-dom";
 
 export const Settings: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col bg-lightGray items-center pb-11">
       <Button
@@ -23,7 +25,7 @@ export const Settings: React.FC = () => {
           variant="text"
           className="active:opacity-100 border-b-[1px] border-black border-opacity-30 text-base w-[177px] p-0"
           buttonText="Goals & reminders"
-          onClick={() => alert("Goals & reminders")}
+          onClick={() => navigate("/settings/goals-and-reminders")}
         />
       </div>
       <Credentials />

@@ -16,7 +16,7 @@ import {
   Notifications,
   Insights,
 } from "./routes";
-import GoalsAndReminders from "./routes/onboarding/set-goals-and-reminders/GoalsAndReminders";
+import GoalsAndReminders from "../src/routes/settings/goals-and-reminders/GoalsAndReminders";
 
 import { client } from "./store";
 
@@ -29,7 +29,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<div>Home Route</div>} />
           <Route path="/welcome" element={<Welcome />} />
-          <Route path="/goals" element={<GoalsAndReminders />} />
           <Route
             path="/registration-confirm"
             element={<RegistrationConfirmation />}
@@ -65,6 +64,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             element={
               <ProtectedRoute>
                 <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings/goals-and-reminders"
+            element={
+              <ProtectedRoute>
+                <GoalsAndReminders />
               </ProtectedRoute>
             }
           />

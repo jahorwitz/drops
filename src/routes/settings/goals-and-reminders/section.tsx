@@ -1,8 +1,7 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import editIcon from "../../../images/Edit-Icon.png";
+import deleteIcon from "../../../images/Delete-Icon.png";
+import closeIcon from "../../../images/Close-Icon.png";
 
 interface SectionProps {
   title: string;
@@ -33,9 +32,9 @@ const Section: React.FC<SectionProps> = ({
   isEditing,
 }) => {
   return (
-    <section className="flex flex-col gap-1 bg-white mx-auto min-w-[315px] max-w-[400px] px-4 py-3 w-full rounded-[12px] mb-4">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold">{title}</h2>
+    <section className="flex flex-col gap-1 bg-white mx-auto max-w-[370px] px-3 py-3 w-full rounded-[12px] mb-4">
+      <div className="flex justify-between items-center mb-2">
+        <h2 className="text-lg font-bold">{title}</h2>
 
         {singleEditButton && onEdit && (
           <button
@@ -43,20 +42,22 @@ const Section: React.FC<SectionProps> = ({
             className="text-blue-500 hover:text-blue-700"
             onClick={() => onEdit()}
           >
-            <FontAwesomeIcon
-              icon={isEditing ? (faTimes as IconProp) : (faEdit as IconProp)}
-            />
+            {isEditing ? (
+              <img src={closeIcon} alt="Edit" className="w-[32px] h-[32px]" />
+            ) : (
+              <img src={editIcon} alt="Edit" className="w-[32px] h-[32px]" />
+            )}
           </button>
         )}
       </div>
 
       <div className="space-y-1">
         {data.map((item, index) => (
-          <div key={index} className="p-3 rounded-md">
-            <div className="text-sm text-gray-600 mb-1">{item.description}</div>
+          <div key={index} className="p-1 rounded-md">
+            <div className="text-sm text-gray-600">{item.description}</div>
 
             <div className="items-center justify-between">
-              <span>{item.measurement}</span>
+              <span className="text-black">{item.measurement}</span>
               {!singleEditButton && showDeleteButtons && onDelete && (
                 <div className="flex gap-2">
                   <button
@@ -64,14 +65,22 @@ const Section: React.FC<SectionProps> = ({
                     className="text-blue-500 hover:text-blue-700"
                     onClick={() => onEdit && onEdit(index)}
                   >
-                    <FontAwesomeIcon icon={faEdit as IconProp} />
+                    <img
+                      src={editIcon}
+                      alt="Edit"
+                      className="w-[32px] h-[32px]"
+                    />
                   </button>
                   <button
                     type="button"
                     className="text-red-500 hover:text-red-700"
                     onClick={() => onDelete(index)}
                   >
-                    <FontAwesomeIcon icon={faTrashCan as IconProp} />
+                    <img
+                      src={deleteIcon}
+                      alt="Edit"
+                      className="w-[32px] h-[32px]"
+                    />
                   </button>
                 </div>
               )}
@@ -85,7 +94,7 @@ const Section: React.FC<SectionProps> = ({
         (typeof addButtonText === "string" ? (
           <button
             type="button"
-            className="text-blue-500 hover:underline mt-3"
+            className="font-semibold text-blue-500 hover:underline mt-3"
             onClick={onAdd}
           >
             {addButtonText}

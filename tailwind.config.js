@@ -29,7 +29,7 @@ export default {
       },
       backgroundImage: (theme) => ({
         "gradient-welcome": `linear-gradient(to bottom, ${theme(
-          "colors.lightYellow",
+          "colors.lightYellow"
         )}, ${theme("colors.darkYellow")})`,
       }),
       fontSize: {
