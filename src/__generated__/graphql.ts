@@ -21,23 +21,33 @@ export type Scalars = {
 
 export type Activity = {
   __typename?: 'Activity';
-  amount?: Maybe<Scalars['Int']['output']>;
-  endTime?: Maybe<Scalars['DateTime']['output']>;
+  daysOfWeek?: Maybe<Array<ActivityDaysOfWeekType>>;
+  duration?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
-  startTime?: Maybe<Scalars['DateTime']['output']>;
-  unitOfMeasure?: Maybe<Scalars['String']['output']>;
+  reminder?: Maybe<Array<ActivityReminderType>>;
+  time?: Maybe<Scalars['DateTime']['output']>;
   user?: Maybe<User>;
 };
 
 export type ActivityCreateInput = {
-  amount?: InputMaybe<Scalars['Int']['input']>;
-  endTime?: InputMaybe<Scalars['DateTime']['input']>;
+  daysOfWeek?: InputMaybe<Array<ActivityDaysOfWeekType>>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  startTime?: InputMaybe<Scalars['DateTime']['input']>;
-  unitOfMeasure?: InputMaybe<Scalars['String']['input']>;
+  reminder?: InputMaybe<Array<ActivityReminderType>>;
+  time?: InputMaybe<Scalars['DateTime']['input']>;
   user?: InputMaybe<UserRelateToOneForCreateInput>;
 };
+
+export enum ActivityDaysOfWeekType {
+  Fri = 'Fri',
+  Mon = 'Mon',
+  Sat = 'Sat',
+  Sun = 'Sun',
+  Thu = 'Thu',
+  Tue = 'Tue',
+  Wed = 'Wed'
+}
 
 export type ActivityManyRelationFilter = {
   every?: InputMaybe<ActivityWhereInput>;
@@ -46,12 +56,10 @@ export type ActivityManyRelationFilter = {
 };
 
 export type ActivityOrderByInput = {
-  amount?: InputMaybe<OrderDirection>;
-  endTime?: InputMaybe<OrderDirection>;
+  duration?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
-  startTime?: InputMaybe<OrderDirection>;
-  unitOfMeasure?: InputMaybe<OrderDirection>;
+  time?: InputMaybe<OrderDirection>;
 };
 
 export type ActivityRelateToManyForCreateInput = {
@@ -66,17 +74,26 @@ export type ActivityRelateToManyForUpdateInput = {
   set?: InputMaybe<Array<ActivityWhereUniqueInput>>;
 };
 
+export enum ActivityReminderType {
+  '1hBefore' = '_1hBefore',
+  '2hBefore' = '_2hBefore',
+  '3hBefore' = '_3hBefore',
+  '15mbefore' = '_15mbefore',
+  '30mBefore' = '_30mBefore',
+  AtStartTime = 'atStartTime'
+}
+
 export type ActivityUpdateArgs = {
   data: ActivityUpdateInput;
   where: ActivityWhereUniqueInput;
 };
 
 export type ActivityUpdateInput = {
-  amount?: InputMaybe<Scalars['Int']['input']>;
-  endTime?: InputMaybe<Scalars['DateTime']['input']>;
+  daysOfWeek?: InputMaybe<Array<ActivityDaysOfWeekType>>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  startTime?: InputMaybe<Scalars['DateTime']['input']>;
-  unitOfMeasure?: InputMaybe<Scalars['String']['input']>;
+  reminder?: InputMaybe<Array<ActivityReminderType>>;
+  time?: InputMaybe<Scalars['DateTime']['input']>;
   user?: InputMaybe<UserRelateToOneForUpdateInput>;
 };
 
@@ -84,12 +101,10 @@ export type ActivityWhereInput = {
   AND?: InputMaybe<Array<ActivityWhereInput>>;
   NOT?: InputMaybe<Array<ActivityWhereInput>>;
   OR?: InputMaybe<Array<ActivityWhereInput>>;
-  amount?: InputMaybe<IntNullableFilter>;
-  endTime?: InputMaybe<DateTimeNullableFilter>;
+  duration?: InputMaybe<IntNullableFilter>;
   id?: InputMaybe<IdFilter>;
   name?: InputMaybe<StringFilter>;
-  startTime?: InputMaybe<DateTimeFilter>;
-  unitOfMeasure?: InputMaybe<StringFilter>;
+  time?: InputMaybe<DateTimeNullableFilter>;
   user?: InputMaybe<UserWhereInput>;
 };
 
@@ -1131,15 +1146,33 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', name?: string | null, email?: string | null } | null };
 
+export type AuthenticatedItemQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AuthenticatedItemQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', activities?: Array<{ __typename?: 'Activity', daysOfWeek?: Array<ActivityDaysOfWeekType> | null, duration?: number | null, id: string, name?: string | null, reminder?: Array<ActivityReminderType> | null, time?: any | null }> | null } | null };
+
+export type NewNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewNotificationsQuery = { __typename?: 'Query', notifications?: Array<{ __typename?: 'Notification', notificationTime?: any | null, status?: string | null, type?: NotificationTypeType | null, description?: string | null }> | null };
+
+export type OldNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OldNotificationsQuery = { __typename?: 'Query', notifications?: Array<{ __typename?: 'Notification', notificationTime?: any | null, status?: string | null, type?: NotificationTypeType | null, description?: string | null }> | null };
+
 export type UserQueryVariables = Exact<{
   where?: InputMaybe<NotificationWhereInput>;
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', name?: string | null, email?: string | null, notificationsCount?: number | null } | null };
+export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', name?: string | null, email?: string | null, id: string, notificationsCount?: number | null } | null };
 
 
 export const AuthenticateUserWithPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AuthenticateUserWithPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticateUserWithPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionToken"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordFailure"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>;
 export const MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Mutation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endSession"}}]}}]} as unknown as DocumentNode<MutationMutation, MutationMutationVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
-export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"NotificationWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"notificationsCount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}]}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
+export const AuthenticatedItemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AuthenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activities"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"daysOfWeek"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"reminder"}},{"kind":"Field","name":{"kind":"Name","value":"time"}}]}}]}}]}}]}}]} as unknown as DocumentNode<AuthenticatedItemQuery, AuthenticatedItemQueryVariables>;
+export const NewNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"NewNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"new","block":false}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"notificationTime"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gte"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"lte"},"value":{"kind":"StringValue","value":"","block":false}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"notificationTime"},"value":{"kind":"EnumValue","value":"asc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationTime"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<NewNotificationsQuery, NewNotificationsQueryVariables>;
+export const OldNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"OldNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"archived","block":false}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"notificationTime"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gte"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"lte"},"value":{"kind":"StringValue","value":"","block":false}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"notificationTime"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationTime"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<OldNotificationsQuery, OldNotificationsQueryVariables>;
+export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"NotificationWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"notificationsCount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}]}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;

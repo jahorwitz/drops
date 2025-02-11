@@ -1,14 +1,18 @@
 import { gql } from "@apollo/client";
 
-export const GET_ACTIVITIES = gql`
-  query Activities($userId: ID!) {
-    activities(where: { user: { id: { equals: $userId } } }) {
-      id
-      name
-      reminder
-      duration
-      daysOfWeek
-      time
+export const GET_USER_ACTIVITIES = gql`
+  query AuthenticatedItem {
+    authenticatedItem {
+      ... on User {
+        activities {
+          daysOfWeek
+          duration
+          id
+          name
+          reminder
+          time
+        }
+      }
     }
   }
 `;
