@@ -32,16 +32,6 @@ export const GlucoseSugarRange = ({ onChange = () => {} }: Props) => {
   const fastingMax = watch("fastingMax");
   const postprandialMin = watch("postprandialMin");
   const postprandialMax = watch("postprandialMax");
-  //   const [min, setMin] = useState("");
-  //   const [max, setMax] = useState("");
-
-  //   const handleMinChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //     setMin(e.target.value);
-  //   };
-
-  //   const handleMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //     setMax(e.target.value);
-  //   };
 
   useEffect(() => {
     onChange({
@@ -58,9 +48,9 @@ export const GlucoseSugarRange = ({ onChange = () => {} }: Props) => {
   return (
     <div className="flex flex-col max-w-screen-md bg-lightPink relative overflow-hidden m-auto pt-[15.5px] pr-[10px] pl-[10px] pb-[32px] h-screen">
       <h2 className="font-text text-section-header font-medium leading-[38.4px] text-center max-w-[358px] mx-auto mb-[20px]">
-        First, lest’s set your desired glucose levels
+        First, let’s set your desired glucose levels
       </h2>
-      <p className=" flex flex-col items-center gap-5 font-text text-section-subtext font-normal leading-[16px] text-center text-black/60 text-[16px]">
+      <p className=" flex flex-col items-center gap-5 font-text text-section-subtext font-normal leading-[16px] text-center text-black/60 leading-[19.2px] text-paragraph-lg">
         We’ve selected these ranges based on general healthcare recommendations
       </p>
       <Form>
@@ -133,33 +123,6 @@ export const GlucoseSugarRange = ({ onChange = () => {} }: Props) => {
           </div>
         </div>
       </Form>
-      {/* <form
-        action=""
-        className="w-full gap-5 bg-white pt-[16px] pr-[12px] pb-[16px] pl-[12px] rounded-lg flex flex-col my-19"
-      >
-        <label htmlFor="" className="text-left">
-          {title}
-        </label>
-        <div className="flex leading-[16px] gap-[12px]">
-          <label className="text-[16px] Minleading-[16px]">
-            Min. value (in Mg/Dl)
-            <input
-              id="min"
-              value={minValue}
-              className="Minleading-[16px] max-w-[167px]  h-[60px] border border-black text-center rounded-[8px]"
-            />
-          </label>
-          <label className="text-[16px] Minleading-[16px]">
-            Max. value (in Mg/Dl)
-            <input
-              id="max"
-              value={maxValue}
-              className="Minleading-[16px] max-w-[167px]  h-[60px] border-[1px] border-black text-center rounded-[8px]"
-            />
-          </label>
-        </div>
-      </form> */}
     </div>
   );
 };
-/* Fasting blood sugar range */
