@@ -25,8 +25,8 @@ export const AccountDetailForm: React.FC = () => {
     };
   
     return (
-       <div className="pl-4 pr-4 bg-[#F5F5F5]">
-      <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 bg-white">
+       <div className="pl-4 pr-4">
+      <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 bg-lightGrey">
       <Form.RadioGroup 
           labelText="Choose your diabetes type"
           hintText="Select one option"
