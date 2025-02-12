@@ -1,16 +1,14 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, FieldErrors } from "react-hook-form";
 import { Form } from "../../components/form";
 
 interface FormValues {
   diabetesType: string;
-  dateOfBirth: string;
+  dateValue: Date | null;
   weight: string;
   height: string;
   sex: string;
-    
 }
-
 
 
 export const AccountDetailForm: React.FC = () => {
