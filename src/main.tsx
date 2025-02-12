@@ -15,6 +15,7 @@ import {
   Dashboard,
   Notifications,
   Insights,
+  AccountDetailForm,
 } from "./routes";
 
 import { client } from "./store";
@@ -33,6 +34,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             element={<RegistrationConfirmation />}
           />
           <Route path="/registration" element={<AccountCreationForm />} />
+          <Route path="/registration-details" element={<AccountDetailForm />} />
           <Route
             path="/onboarding/medication-reminders"
             element={
