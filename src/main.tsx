@@ -20,13 +20,14 @@ import {
 import { client } from "./store";
 
 import ProtectedRoute from "./components/protected-route/protected-route";
+import { HomeRedirect } from "./components/protected-route/home-redirect";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<div>Home Route</div>} />
+          <Route path="/" element={<HomeRedirect />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route
             path="/registration-confirm"
