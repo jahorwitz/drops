@@ -2,8 +2,8 @@ import { useNavigate } from "react-router";
 import { Button } from "../../components";
 import { LogoutButtons } from "./logout-buttons";
 import { Tabber } from "../../components/tabs/tabber";
-import { GoalsReminders } from "./sections/goals-reminders";
-import { Credentials } from "./sections/credentials";
+import { GoalsReminders } from "./goals-reminders/goals-reminders";
+import { MainInfo } from "./main-info/main-info";
 
 export const Settings: React.FC = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export const Settings: React.FC = () => {
 
       <Tabber
         tabs={["Main info", "Goals & reminders"]}
-        panels={[<Credentials />, <GoalsReminders />]}
+        panels={[<MainInfo />, <GoalsReminders />]}
       />
       <LogoutButtons />
     </div>
