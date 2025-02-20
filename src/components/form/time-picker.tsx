@@ -1,4 +1,4 @@
-import { HTMLProps, forwardRef, useRef, useEffect, useState } from "react";
+import { HTMLProps, useRef, useEffect, useState } from "react";
 import cx from "classnames";
 import {
   UseFormRegisterReturn,
@@ -16,15 +16,15 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     setValue: UseFormSetValue<T>;
   };
 
-export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-  ({
+  // Remove ref for disuse 
+  export const TimePicker = <T extends FieldValues>({
     labelText,
     hintText,
     feedback,
     className,
     setValue,
     ...rest
-  }: Props<FieldValues>) => {
+  }: Props<T>) => {
     const [hour, setHour] = useState<string>("");
     const [minute, setMinute] = useState<string>("");
     const [period, setPeriod] = useState<string>("AM");
@@ -154,5 +154,5 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
       </div>
     );
   }
-);
+
 TimePicker.displayName = "TimePicker";

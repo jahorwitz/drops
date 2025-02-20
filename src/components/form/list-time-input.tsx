@@ -10,10 +10,11 @@ interface Props {
   label: string;
   varient2Text?: string;
   parentIndex?: number;
-  control: Control<FormData>;
-  errors: FieldErrors<FormData>;
+  control?: Control<FormData>;
+  errors?: FieldErrors<FormData>;
   fieldName?: string;
 }
+
 
 export const ListTimeInput: React.FC<Props> = ({
   index,

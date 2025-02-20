@@ -52,7 +52,11 @@ export const MedicationSection: React.FC<Props> = ({
         })}
       />
       <Form.AddMoreSection buttonText="+ Add more reminders">
-        <Form.ListTimeInput label="Reminder" parentIndex={index} />
+        <Form.ListTimeInput
+          label="Reminder"
+          parentIndex={index}
+          errors={errors}
+        />
       </Form.AddMoreSection>
     </div>
   );

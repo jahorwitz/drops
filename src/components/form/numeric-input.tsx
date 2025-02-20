@@ -25,8 +25,7 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
       name,
       onChange,
       ...rest
-    }: Props,
-    ref
+    }, ref
   ) => {
     const [value, setValue] = useState<number | undefined>(defaultValue);
 
