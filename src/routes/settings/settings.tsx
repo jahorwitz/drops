@@ -1,8 +1,13 @@
+import { useNavigate } from "react-router";
 import { Button } from "../../components"
 import { LogoutButtons } from "./logout-buttons"
 import { Credentials } from "./sections/credentials";
+import { GoalsReminders } from "./sections/goals-reminders";
 
 export const Settings: React.FC = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col bg-lightGray items-center pb-11">
       <Button
@@ -17,7 +22,7 @@ export const Settings: React.FC = () => {
           variant="text"
           className="active:opacity-100 border-b-[1px] border-black border-opacity-30 text-base w-[177px] p-0"
           buttonText="Main info"
-          onClick={() => alert("Main info")}
+          onClick={() => navigate("/settings")}
         />
         <Button
           variant="text"
@@ -27,6 +32,7 @@ export const Settings: React.FC = () => {
         />
       </div>
       <Credentials />
+       <GoalsReminders /> 
       {/* <HealthData /> */}
       <LogoutButtons />
     </div>
