@@ -1,7 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import cx from "classnames";
-import { Fragment, HTMLProps, forwardRef, useState } from "react";
+import { Fragment, HTMLProps, useState } from "react";
 import {
   FieldErrors,
   FieldValues,
@@ -22,7 +22,7 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     feedback?: FieldErrors<T>;
   };
 
-export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
+export const SelectForm = 
   ({
     name,
     labelText,
@@ -122,6 +122,5 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
       </div>
     );
   }
-);
 
 SelectForm.displayName = "SelectForm";

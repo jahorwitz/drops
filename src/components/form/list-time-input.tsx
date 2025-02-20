@@ -1,6 +1,5 @@
 import React from "react";
-import { Controller } from "react-hook-form";
-import { useForm } from "react-hook-form";
+import { Controller, Control, FieldErrors, useForm } from "react-hook-form";
 import { Form, Button } from "..";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
@@ -11,7 +10,11 @@ interface Props {
   label: string;
   varient2Text?: string;
   parentIndex?: number;
+  control?: Control<FormData>;
+  errors?: FieldErrors<FormData>;
+  fieldName?: string;
 }
+
 
 export const ListTimeInput: React.FC<Props> = ({
   index,

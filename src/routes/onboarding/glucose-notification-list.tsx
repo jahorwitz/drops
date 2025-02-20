@@ -15,7 +15,7 @@ export const GlucoseNotificationList: React.FC<Props> = ({ index }) => {
         </h2>
         <div className="w-full gap-5 bg-white p-4 rounded-lg flex flex-col">
           <Form.AddMoreSection buttonText="+ Add more" className="p-[0]">
-            <Form.ListTimeInput label="Reminder" parentIndex={index} />
+            <Form.ListTimeInput label="Reminder" parentIndex={index}/>
           </Form.AddMoreSection>
         </div>
       </div>

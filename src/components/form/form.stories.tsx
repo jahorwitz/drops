@@ -268,10 +268,11 @@ export const WithAddMoreSection = () => {
     alert(JSON.stringify(data, null, 2));
   };
 
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Form.AddMoreSection buttonText="+ Add another reminder">
-        <Form.ListTimeInput label="reminder" varient2Text="Meal" />
+        <Form.ListTimeInput label="reminder" varient2Text="Meal"/>
       </Form.AddMoreSection>
 
       <Button type="submit">Submit</Button>

@@ -27,7 +27,7 @@ export const RadioGroup = forwardRef<HTMLInputElement, Props<FieldValues>>(
       options,
       feedback,
       ...rest
-    }: Props<FieldValues>,
+    },
     ref
   ) => {
     return (

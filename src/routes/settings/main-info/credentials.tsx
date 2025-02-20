@@ -1,5 +1,5 @@
 import editIcon from "../../../images/Edit-Icon.png"
-import { CredentialsForm } from "./credentials-form";
+import { CredentialsForm } from "../main-info/credentials-form";
 import { SectionWithEdit } from "../section-with-edit";
 import { SectionList } from "../section-list";
 import { useState } from "react";
