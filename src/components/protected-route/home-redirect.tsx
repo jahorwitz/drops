@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { LoadingCircle } from "../loading";
 
 export const HomeRedirect: React.FC = () => {
   const { currentUser, loading } = useAuth({});
@@ -23,9 +24,10 @@ export const HomeRedirect: React.FC = () => {
     }
   }, [currentUser, navigate, loading]);
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (currentUser) {
+    console.log("hello");
+    return <LoadingCircle />;
   }
 
-  return null;
+  return <LoadingCircle />
 };
