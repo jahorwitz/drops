@@ -1,23 +1,31 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
 export const HomeRedirect: React.FC = () => {
   const { currentUser, loading } = useAuth({});
-  const hasCompletedRegistration = true;
-  const hasCompletedOnboarding = true;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (!currentUser) {
+      console.log("Redirecting to /welcome");
+      navigate("/welcome", { replace: true });
+    } else if (!currentUser.isRegistrationComplete) {
+      navigate("/registration", { replace: true });
+    } else if (!currentUser.isOnboardingComplete) {
+      navigate("/onboarding", { replace: true });
+    } else {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [currentUser, navigate, loading]);
 
   if (loading) {
-    return null;
+    return <div>Loading...</div>;
   }
 
-  if (!currentUser) {
-    return <Navigate to="/welcome" replace />;
-  } else if (!hasCompletedRegistration) {
-    return <Navigate to="/registration" replace />;
-  } else if (!hasCompletedOnboarding) {
-    return <Navigate to="/onboarding" replace />;
-  } else {
-    return <Navigate to="/dashboard" replace />;
-  }
+  return null;
 };
