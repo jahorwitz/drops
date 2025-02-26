@@ -9,6 +9,8 @@ export const USER_LOGIN = gql(`
           id
           name
           email
+          isOnboardingComplete
+          isRegistrationComplete
         }
       }
       ... on UserAuthenticationWithPasswordFailure {

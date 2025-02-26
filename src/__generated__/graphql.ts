@@ -99,6 +99,11 @@ export type ActivityWhereUniqueInput = {
 
 export type AuthenticatedItem = User;
 
+export type BooleanFilter = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not?: InputMaybe<BooleanFilter>;
+};
+
 export type CreateInitialUserInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -938,6 +943,8 @@ export type User = {
   goalsCount?: Maybe<Scalars['Int']['output']>;
   height?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
+  isOnboardingComplete?: Maybe<Scalars['Boolean']['output']>;
+  isRegistrationComplete?: Maybe<Scalars['Boolean']['output']>;
   lastLoginDate?: Maybe<Scalars['DateTime']['output']>;
   medications?: Maybe<Array<Medication>>;
   medicationsCount?: Maybe<Scalars['Int']['output']>;
@@ -1026,6 +1033,8 @@ export type UserCreateInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   goals?: InputMaybe<GoalRelateToManyForCreateInput>;
   height?: InputMaybe<Scalars['Int']['input']>;
+  isOnboardingComplete?: InputMaybe<Scalars['Boolean']['input']>;
+  isRegistrationComplete?: InputMaybe<Scalars['Boolean']['input']>;
   lastLoginDate?: InputMaybe<Scalars['DateTime']['input']>;
   medications?: InputMaybe<MedicationRelateToManyForCreateInput>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1047,6 +1056,8 @@ export type UserOrderByInput = {
   email?: InputMaybe<OrderDirection>;
   height?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
+  isOnboardingComplete?: InputMaybe<OrderDirection>;
+  isRegistrationComplete?: InputMaybe<OrderDirection>;
   lastLoginDate?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
   sex?: InputMaybe<OrderDirection>;
@@ -1077,6 +1088,8 @@ export type UserUpdateInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   goals?: InputMaybe<GoalRelateToManyForUpdateInput>;
   height?: InputMaybe<Scalars['Int']['input']>;
+  isOnboardingComplete?: InputMaybe<Scalars['Boolean']['input']>;
+  isRegistrationComplete?: InputMaybe<Scalars['Boolean']['input']>;
   lastLoginDate?: InputMaybe<Scalars['DateTime']['input']>;
   medications?: InputMaybe<MedicationRelateToManyForUpdateInput>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1097,6 +1110,8 @@ export type UserWhereInput = {
   goals?: InputMaybe<GoalManyRelationFilter>;
   height?: InputMaybe<IntNullableFilter>;
   id?: InputMaybe<IdFilter>;
+  isOnboardingComplete?: InputMaybe<BooleanFilter>;
+  isRegistrationComplete?: InputMaybe<BooleanFilter>;
   lastLoginDate?: InputMaybe<DateTimeNullableFilter>;
   medications?: InputMaybe<MedicationManyRelationFilter>;
   name?: InputMaybe<StringFilter>;
@@ -1116,7 +1131,7 @@ export type AuthenticateUserWithPasswordMutationVariables = Exact<{
 }>;
 
 
-export type AuthenticateUserWithPasswordMutation = { __typename?: 'Mutation', authenticateUserWithPassword?: { __typename?: 'UserAuthenticationWithPasswordFailure', message: string } | { __typename?: 'UserAuthenticationWithPasswordSuccess', sessionToken: string, item: { __typename?: 'User', id: string, name?: string | null, email?: string | null } } | null };
+export type AuthenticateUserWithPasswordMutation = { __typename?: 'Mutation', authenticateUserWithPassword?: { __typename?: 'UserAuthenticationWithPasswordFailure', message: string } | { __typename?: 'UserAuthenticationWithPasswordSuccess', sessionToken: string, item: { __typename?: 'User', id: string, name?: string | null, email?: string | null, isOnboardingComplete?: boolean | null, isRegistrationComplete?: boolean | null } } | null };
 
 export type MutationMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -1131,6 +1146,16 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', name?: string | null, email?: string | null } | null };
 
+export type NewNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewNotificationsQuery = { __typename?: 'Query', notifications?: Array<{ __typename?: 'Notification', notificationTime?: any | null, status?: string | null, type?: NotificationTypeType | null, description?: string | null }> | null };
+
+export type OldNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OldNotificationsQuery = { __typename?: 'Query', notifications?: Array<{ __typename?: 'Notification', notificationTime?: any | null, status?: string | null, type?: NotificationTypeType | null, description?: string | null }> | null };
+
 export type UserQueryVariables = Exact<{
   where?: InputMaybe<NotificationWhereInput>;
 }>;
@@ -1139,7 +1164,9 @@ export type UserQueryVariables = Exact<{
 export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', name?: string | null, email?: string | null, notificationsCount?: number | null } | null };
 
 
-export const AuthenticateUserWithPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AuthenticateUserWithPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticateUserWithPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionToken"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordFailure"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>;
+export const AuthenticateUserWithPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AuthenticateUserWithPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticateUserWithPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionToken"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isOnboardingComplete"}},{"kind":"Field","name":{"kind":"Name","value":"isRegistrationComplete"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordFailure"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>;
 export const MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Mutation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endSession"}}]}}]} as unknown as DocumentNode<MutationMutation, MutationMutationVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
+export const NewNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"NewNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"new","block":false}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"notificationTime"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gte"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"lte"},"value":{"kind":"StringValue","value":"","block":false}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"notificationTime"},"value":{"kind":"EnumValue","value":"asc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationTime"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<NewNotificationsQuery, NewNotificationsQueryVariables>;
+export const OldNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"OldNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"equals"},"value":{"kind":"StringValue","value":"archived","block":false}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"notificationTime"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"gte"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"lte"},"value":{"kind":"StringValue","value":"","block":false}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"notificationTime"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationTime"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<OldNotificationsQuery, OldNotificationsQueryVariables>;
 export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"NotificationWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"notificationsCount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}]}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;

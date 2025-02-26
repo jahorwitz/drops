@@ -7,6 +7,8 @@ export const GET_CURRENT_USER = gql(`
       ... on User {
         name
         email
+        isOnboardingComplete
+        isRegistrationComplete
         notificationsCount(where: $where)
       }
     }
