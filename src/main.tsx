@@ -16,7 +16,7 @@ import {
   Notifications,
   Insights,
 } from "./routes";
-
+import RemindersPage from "./routes/onboarding/activity";
 import { client } from "./store";
 
 import ProtectedRoute from "./components/protected-route/protected-route";
@@ -66,15 +66,39 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </ProtectedRoute>
             }
           />
-          <Route path="/dashboard" element={<ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>} />
-          <Route path="/notifications" element={<ProtectedRoute>
-            <Notifications />
-          </ProtectedRoute>} />
-          <Route path="/insights" element={<ProtectedRoute>
-            <Insights />
-          </ProtectedRoute>} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/activity"
+            element={
+              <ProtectedRoute>
+                <RemindersPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/insights"
+            element={
+              <ProtectedRoute>
+                <Insights />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>

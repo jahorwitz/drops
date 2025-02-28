@@ -23,15 +23,18 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   };
 
 export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
-  ({
-    name,
-    labelText,
-    placeholder,
-    hintText,
-    options,
-    feedback,
-    onChange,
-  }: Props<FieldValues>) => {
+  (
+    {
+      name,
+      labelText,
+      placeholder,
+      hintText,
+      options,
+      feedback,
+      onChange,
+    }: Props<FieldValues>,
+    ref
+  ) => {
     const [selected, setSelected] = useState<Option | undefined>();
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text z-10">

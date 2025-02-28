@@ -13,9 +13,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return null;
   }
 
-  if (!currentUser) {
-    return <Navigate to="/welcome" replace />;
-  }
+  // if (!currentUser) {
+  //   return <Navigate to="/welcome" replace />;
+  // }
 
   return <>{children}</>;
 };

@@ -17,14 +17,17 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   };
 
 export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-  ({
-    labelText,
-    hintText,
-    feedback,
-    className,
-    setValue,
-    ...rest
-  }: Props<FieldValues>) => {
+  (
+    {
+      labelText,
+      hintText,
+      feedback,
+      className,
+      setValue,
+      ...rest
+    }: Props<FieldValues>,
+    ref
+  ) => {
     const [hour, setHour] = useState<string>("");
     const [minute, setMinute] = useState<string>("");
     const [period, setPeriod] = useState<string>("AM");
