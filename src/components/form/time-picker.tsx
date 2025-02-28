@@ -25,8 +25,8 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
       className,
       setValue,
       ...rest
-    }: Props<FieldValues>,
-    ref
+    }: Props<FieldValues>
+    //ref
   ) => {
     const [hour, setHour] = useState<string>("");
     const [minute, setMinute] = useState<string>("");

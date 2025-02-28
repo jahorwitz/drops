@@ -1,5 +1,3 @@
-import React from "react";
-import clsx from "clsx";
 import ReminderItem from "../../components/reminder-item";
 import { gql, useQuery } from "@apollo/client";
 //
@@ -45,6 +43,7 @@ const RemindersPage = () => {
   console.log(reminders);
   // You'll need to implement the query and mutation
   const handleReminderClick = (id: string) => {
+    console.log(id);
     // Update the reminder status
   };
 

@@ -1,4 +1,3 @@
-import { Notification } from "./notification-group/notification-item";
 import CheckBoxChecked from "../images/CheckBox-Checked.svg";
 import CheckBoxUnchecked from "../images/CheckBox-Unchecked.svg";
 
@@ -15,7 +14,7 @@ export default function ReminderItem({
   id,
   time,
   text,
-  onClick,
+  onClick = () => {},
   className,
   completed,
 }: ReminderProps) {
@@ -32,7 +31,7 @@ export default function ReminderItem({
           className="ml-auto"
           src={completed ? CheckBoxChecked : CheckBoxUnchecked}
           alt=""
-          onClick={onClick}
+          onClick={() => onClick(id)}
         />
       </div>
     </div>

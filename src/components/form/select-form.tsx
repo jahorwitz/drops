@@ -32,8 +32,8 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
       options,
       feedback,
       onChange,
-    }: Props<FieldValues>,
-    ref
+    }: Props<FieldValues>
+    //ref
   ) => {
     const [selected, setSelected] = useState<Option | undefined>();
     return (
