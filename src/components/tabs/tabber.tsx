@@ -19,7 +19,7 @@ export const Tabber: React.FC<TabberProps> = ({ tabs, panels }) => {
           <Tab
             key={index}
             className={({ selected }) =>
-              `text-black border-black text-base w-[177px] p-0 border-b-[1px] ${
+              `text-blacktext-base w-[177px] p-0 border-b-[1px] border-b-black focus:outline-none focus:ring-0 ${
                 selected
                   ? "font-bold border-b-[2px]"
                   : "border-opacity-30 text-opacity-60"
