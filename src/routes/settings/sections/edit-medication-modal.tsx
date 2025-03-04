@@ -25,12 +25,12 @@ export const EditMedicationModal: React.FC<{
     },
   });
 
-  const handleUpdate = async (formData: {
+  const handleUpdate = async (MedicationFormValues: {
     medicationInfo: string;
     time?: string;
   }) => {
     const regex = /^(.+?)\s+(\d+)\s*([a-zA-Z]+)$/;
-    const match = formData.medicationInfo.match(regex);
+    const match = MedicationFormValues.medicationInfo.match(regex);
     if (!match) {
       alert("Invalid format. Please enter as 'MedicationName 800mg'");
       return;
@@ -44,7 +44,7 @@ export const EditMedicationModal: React.FC<{
         name,
         amount,
         unitOfMeasure,
-        time: formData.time || "",
+        time: MedicationFormValues.time || "",
       },
     });
   };

@@ -28,8 +28,8 @@ export const Login: React.FC = () => {
   };
 
   const { login, loginError } = useAuth({ onLoginSuccess: handleLoginSuccess });
-  const onSubmit = (formData: FormValues) => {
-    login(formData);
+  const onSubmit = (MedicationFormValues: FormValues) => {
+    login(MedicationFormValues);
   };
 
   return (

@@ -4,7 +4,7 @@ import { RemindersWithEdit } from "./reminders-with-edit";
 import editIcon from "../../../images/Edit-Icon.png";
 import trashIcon from "../../../images/Trash-Icon.svg";
 import { GET_MEDICATIONS } from "../../../graphql/queries/medications";
-import { DELETE_MEDICATION} from "../../../graphql/mutations/medications";
+import { DELETE_MEDICATION } from "../../../graphql/mutations/medications";
 import { AddMedicationModal } from "./add-medication-modal";
 import { EditMedicationModal } from "./edit-medication-modal";
 
@@ -26,7 +26,7 @@ export const Medications: React.FC = () => {
   const medications = data?.authenticatedItem?.medications || [];
 
   const [deleteMedication] = useMutation(DELETE_MEDICATION, {
-    onCompleted: () => refetch(), 
+    onCompleted: () => refetch(),
   });
 
   const openEditModal = (medication: Medication) => {
@@ -45,13 +45,16 @@ export const Medications: React.FC = () => {
 
   return (
     <div>
-      <RemindersWithEdit title="Medications" toggleForm={openAddMedicationModal} icon={editIcon}>
+      <RemindersWithEdit title="Medications">
         {loading && <p>Loading medications...</p>}
         {error && <p>Error loading medications: {error.message}</p>}
 
         <ul>
           {medications?.map((med: Medication) => (
-            <li key={med.id} className="flex justify-between items-center pb-2 mb-2">
+            <li
+              key={med.id}
+              className="flex justify-between items-center pb-2 mb-2"
+            >
               <div>
                 <p className="font-semibold">{med.name}</p>
                 <p className="text-sm text-gray-500">Reminder: {med.time}</p>
@@ -63,7 +66,7 @@ export const Medications: React.FC = () => {
                   alt="Edit"
                   onClick={() => openEditModal(med)}
                 />
-                        <img
+                <img
                   className="h-8 cursor-pointer hover:opacity-60"
                   src={trashIcon}
                   alt="Delete"
@@ -73,17 +76,22 @@ export const Medications: React.FC = () => {
             </li>
           ))}
         </ul>
-        <button onClick={openAddMedicationModal} className="bg-blue-500 text-black px-4 py-2 rounded-lg font-bold text-center w-full">
-         + Add Medication
+        <button
+          onClick={openAddMedicationModal}
+          className="bg-blue-500 text-black px-4 py-2 rounded-lg font-bold text-center w-full"
+        >
+          + Add Medication
         </button>
       </RemindersWithEdit>
 
-      {isAddModalOpen && <AddMedicationModal onClose={() => setIsAddModalOpen(false)} />}
+      {isAddModalOpen && (
+        <AddMedicationModal onClose={() => setIsAddModalOpen(false)} />
+      )}
       {isEditModalOpen && selectedMedication && (
-        <EditMedicationModal 
-          medication={selectedMedication} 
-          onClose={() => setIsEditModalOpen(false)} 
-          handleDelete={handleDelete} 
+        <EditMedicationModal
+          medication={selectedMedication}
+          onClose={() => setIsEditModalOpen(false)}
+          handleDelete={handleDelete}
         />
       )}
     </div>

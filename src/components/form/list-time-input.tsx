@@ -1,17 +1,17 @@
 import React from "react";
-import { Controller } from "react-hook-form";
+import { Controller, Control, FieldErrors, FieldValues } from "react-hook-form";
 import { Form, Button } from "..";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
-interface Props {
+interface Props<TFieldValues extends FieldValues = FieldValues> {
   index?: number;
   onDelete?: (index: number) => void;
   elementId?: number;
   label: string;
   varient2Text?: string;
   parentIndex?: number;
-  control: any;
-  errors: any;
+  control: Control<TFieldValues>;
+  errors: FieldErrors<TFieldValues>;
   fieldName?: string;
 }
 
@@ -51,7 +51,11 @@ export const ListTimeInput: React.FC<Props> = ({
             setValue={(name, value) =>
               field.onChange({ target: { name, value } })
             }
-            feedback={errors[inputName]?.message}
+            feedback={
+              typeof errors[inputName]?.message === "string"
+                ? errors[inputName]?.message
+                : undefined
+            }
           />
         )}
       />

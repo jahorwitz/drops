@@ -20,7 +20,7 @@ export const AddMedicationModal: React.FC<{ onClose: () => void }> = ({
   });
 
   // onSubmit handler for adding a medication.
-  const handleAdd = async (formData: {
+  const handleAdd = async (MedicationFormValues: {
     medicationInfo: string;
     time?: string;
   }) => {
@@ -31,7 +31,7 @@ export const AddMedicationModal: React.FC<{ onClose: () => void }> = ({
     // Expect input format: "<name> <amount><unit>"
     // Example: "Ibuprofen 800mg"
     const regex = /^(.+?)\s+(\d+)\s*([a-zA-Z]+)$/;
-    const match = formData.medicationInfo.match(regex);
+    const match = MedicationFormValues.medicationInfo.match(regex);
     if (!match) {
       alert(
         "Invalid format. Please enter as 'MedicationName dosage(amount and unit)'"
@@ -42,7 +42,9 @@ export const AddMedicationModal: React.FC<{ onClose: () => void }> = ({
     const amount = parseInt(match[2], 10);
     const unitOfMeasure = match[3].trim();
     const time =
-      formData.time && formData.time.trim() !== "" ? formData.time : "9:00 AM";
+      MedicationFormValues.time && MedicationFormValues.time.trim() !== ""
+        ? MedicationFormValues.time
+        : "9:00 AM";
 
     await addMedication({
       variables: {
@@ -55,7 +57,7 @@ export const AddMedicationModal: React.FC<{ onClose: () => void }> = ({
     });
   };
   if (!currentUser || !currentUser.id) {
-    return null; 
+    return null;
   }
 
   console.log("Current User:", currentUser);

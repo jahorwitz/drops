@@ -12,7 +12,7 @@ interface DefaultValues {
 type Props = {
   toggleForm: () => void;
   defaultValues: DefaultValues;
-}
+};
 
 export const CredentialsForm = ({ toggleForm, defaultValues }: Props) => {
   interface FormValues {
@@ -37,22 +37,22 @@ export const CredentialsForm = ({ toggleForm, defaultValues }: Props) => {
 
   const { handleUpdate, handleAuthorization } = useUserUpdate();
 
-  const onSubmit = async (formData: FormValues) => {
-    const { name, email, oldPassword, newPassword } = formData;
+  const onSubmit = async (MedicationFormValues: FormValues) => {
+    const { name, email, oldPassword, newPassword } = MedicationFormValues;
     const oldEmail = defaultValues.email;
     const updateData: Record<string, string> = {
       name,
       email,
-    }
+    };
 
     if (newPassword) {
-      updateData.password = newPassword
+      updateData.password = newPassword;
     }
 
     try {
       const isAuthorized = await handleAuthorization(oldEmail, oldPassword);
       if (!isAuthorized) {
-        alert('Incorrect old password. Please try again.');
+        alert("Incorrect old password. Please try again.");
         return;
       }
 
@@ -63,16 +63,17 @@ export const CredentialsForm = ({ toggleForm, defaultValues }: Props) => {
         toggleForm();
       }
     } catch (error) {
-      console.error('Failed to update credentials:', error);
+      console.error("Failed to update credentials:", error);
     }
   };
 
   return (
-    <SectionWithEdit title="Credentials" toggleForm={toggleForm} icon={ExitIcon}>
-      <Form
-        className="flex flex-col gap-3"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <SectionWithEdit
+      title="Credentials"
+      toggleForm={toggleForm}
+      icon={ExitIcon}
+    >
+      <Form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
         <Form.TextInput
           labelText="Name"
           placeholder="Enter your name"
@@ -149,6 +150,5 @@ export const CredentialsForm = ({ toggleForm, defaultValues }: Props) => {
         />
       </Form>
     </SectionWithEdit>
-
-  )
-}
+  );
+};

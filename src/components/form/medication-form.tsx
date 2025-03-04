@@ -4,7 +4,7 @@ import { Form, Button } from "../../components";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import closeIcon from "../../images/Close-Icon.png";
 
-interface FormData {
+interface MedicationFormValues {
   medicationInfo: string;
   time?: string;
 }
@@ -23,7 +23,7 @@ interface Props {
   };
   buttonText?: string;
   onClose?: () => void;
-  onSubmit?: (data: FormData) => void;
+  onSubmit?: (data: MedicationFormValues) => void;
   label: string;
 }
 
@@ -45,7 +45,7 @@ export const MedicationForm: React.FC<Props> = ({
     unregister,
     control,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<MedicationFormValues>({
     defaultValues: {
       medicationInfo: medication
         ? `${medication.name} ${medication.amount}${medication.unitOfMeasure}`
@@ -101,9 +101,9 @@ export const MedicationForm: React.FC<Props> = ({
             parentIndex={index}
             onDelete={onDelete}
             elementId={elementId}
-            control={control} 
-            errors={errors} 
-            fieldName="time" 
+            control={control}
+            errors={errors}
+            fieldName="time"
           />
         </Form.AddMoreSection>
         {isModal && (
