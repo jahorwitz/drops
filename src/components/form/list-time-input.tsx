@@ -10,8 +10,8 @@ interface Props<TFieldValues extends FieldValues = FieldValues> {
   label: string;
   varient2Text?: string;
   parentIndex?: number;
-  control: Control<TFieldValues>;
-  errors: FieldErrors<TFieldValues>;
+  control?: Control<TFieldValues>;
+  errors?: FieldErrors<TFieldValues>;
   fieldName?: string;
 }
 
