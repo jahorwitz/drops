@@ -15,17 +15,19 @@ interface Props<TFieldValues extends FieldValues = FieldValues> {
   fieldName?: string;
 }
 
-export const ListTimeInput: React.FC<Props> = ({
-  index,
-  onDelete,
-  elementId,
-  label,
-  varient2Text,
-  parentIndex,
-  control,
-  errors,
-  fieldName,
-}) => {
+export function ListTimeInput<TFieldValues extends FieldValues = FieldValues>(
+  {
+    index,
+    onDelete,
+    elementId,
+    label,
+    varient2Text,
+    parentIndex,
+    control,
+    errors,
+    fieldName,
+  }: Props<TFieldValues>
+) {
   const inputName = fieldName || `reminder${parentIndex}-${index}`;
 
   return (
@@ -52,7 +54,7 @@ export const ListTimeInput: React.FC<Props> = ({
               field.onChange({ target: { name, value } })
             }
             feedback={
-              typeof errors[inputName]?.message === "string"
+              errors && inputName in errors && typeof errors[inputName]?.message === "string"
                 ? errors[inputName]?.message
                 : undefined
             }

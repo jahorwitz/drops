@@ -96,7 +96,7 @@ export const MedicationForm: React.FC<Props> = ({
           })}
         />
         <Form.AddMoreSection buttonText="+ Add more reminders">
-          <Form.ListTimeInput
+          <Form.ListTimeInput<MedicationFormValues>
             label="Reminder"
             parentIndex={index}
             onDelete={onDelete}

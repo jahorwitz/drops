@@ -17,7 +17,7 @@ interface Medication {
 }
 
 export const Medications: React.FC = () => {
-  const [selectedMedication, setSelectedMedication] = useState({});
+  const [selectedMedication, setSelectedMedication] = useState<Medication | undefined>(undefined);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -35,7 +35,7 @@ export const Medications: React.FC = () => {
   };
 
   const openAddMedicationModal = () => {
-    setSelectedMedication({});
+    setSelectedMedication(undefined);
     setIsAddModalOpen(true);
   };
 
@@ -91,7 +91,6 @@ export const Medications: React.FC = () => {
         <EditMedicationModal
           medication={selectedMedication}
           onClose={() => setIsEditModalOpen(false)}
-          handleDelete={handleDelete}
         />
       )}
     </div>
