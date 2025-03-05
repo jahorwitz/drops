@@ -8,7 +8,7 @@ import { useAuth } from "../../../hooks/useAuth";
 export const HealthData: React.FC = () => {
   const [healthDataFormOpen, sethealthDataFormOpen] = useState(false);
   const { currentUser } = useAuth({});
-  const { dateOfBirth, weight, height, sex, diabetesType, currentEmail } = currentUser;
+  const { dateOfBirth, weight, height, sex, diabetesType, email } = currentUser;
 
   const formatDate = (isoDate: string): string => {
     if (!isoDate) return "";
@@ -40,7 +40,7 @@ export const HealthData: React.FC = () => {
   return (
     <div className="mt-3">
       {healthDataFormOpen ? (
-        <HealthDataForm toggleForm={toggleForm} defaultValues={{...healthData, weight: weight, sex: sex, diabetesType: diabetesType[0], email: currentEmail}} />
+        <HealthDataForm toggleForm={toggleForm} defaultValues={{...healthData, weight: weight, sex: sex, diabetesType: diabetesType[0], email: email}} />
       ) : (
         <SectionWithEdit
           title="Health data"

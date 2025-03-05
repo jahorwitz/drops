@@ -86,7 +86,7 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   }
 
   try {
-    const response = await handleUpdate("paul@gmail.com", updateData);
+    const response = await handleUpdate(defaultValues.email, updateData);
     const updatedUser = response?.data?.updateUser;
 
     if (updatedUser) {
