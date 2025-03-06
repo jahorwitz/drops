@@ -17,6 +17,8 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
     { name, labelText, hintText, feedback, className, setValue, ...rest },
     ref
   ) => {
+    const fieldName = name ?? "timeValue";
+
     const [hour, setHour] = useState<string>("");
     const [minute, setMinute] = useState<string>("");
     const [period, setPeriod] = useState<string>("AM");
@@ -61,7 +63,7 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
     };
 
     useEffect(() => {
-      setValue(name, `${hour}:${minute}:${period}`, {
+      setValue(fieldName, `${hour}:${minute}:${period}`, {
         shouldValidate: true,
         shouldDirty: true,
         shouldTouch: true,
