@@ -1,3 +1,4 @@
+import React, {forwardRef} from "react";
 import {
   Controller,
   Control,
@@ -20,23 +21,29 @@ interface Props<TFieldValues extends FieldValues = FieldValues> {
   fieldName?: string;
 }
 
-export function ListTimeInput<TFieldValues extends FieldValues = FieldValues>({
-  index,
-  onDelete,
-  elementId,
-  label,
-  varient2Text,
-  parentIndex,
-  control,
-  errors,
-  fieldName,
-}: Props<TFieldValues>) {
+export const ListTimeInput = forwardRef<
+  HTMLDivElement,
+  Props<FieldValues>
+>(function ListTimeInput(
+  {
+    index,
+    onDelete,
+    elementId,
+    label,
+    varient2Text,
+    parentIndex,
+    control,
+    errors,
+    fieldName,
+  },
+  ref
+) {
   const inputName = fieldName || `reminder${parentIndex}-${index}`;
 
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <Controller
-        name={inputName as Path<TFieldValues>}
+        name={inputName as Path<FieldValues>}
         control={control}
         rules={{
           required: "Time value is required",
@@ -78,4 +85,4 @@ export function ListTimeInput<TFieldValues extends FieldValues = FieldValues>({
       />
     </div>
   );
-}
+});
