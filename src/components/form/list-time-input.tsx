@@ -1,5 +1,10 @@
-import React from "react";
-import { Controller, Control, FieldErrors, FieldValues } from "react-hook-form";
+import {
+  Controller,
+  Control,
+  FieldErrors,
+  FieldValues,
+  Path,
+} from "react-hook-form";
 import { Form, Button } from "..";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
@@ -15,25 +20,23 @@ interface Props<TFieldValues extends FieldValues = FieldValues> {
   fieldName?: string;
 }
 
-export function ListTimeInput<TFieldValues extends FieldValues = FieldValues>(
-  {
-    index,
-    onDelete,
-    elementId,
-    label,
-    varient2Text,
-    parentIndex,
-    control,
-    errors,
-    fieldName,
-  }: Props<TFieldValues>
-) {
+export function ListTimeInput<TFieldValues extends FieldValues = FieldValues>({
+  index,
+  onDelete,
+  elementId,
+  label,
+  varient2Text,
+  parentIndex,
+  control,
+  errors,
+  fieldName,
+}: Props<TFieldValues>) {
   const inputName = fieldName || `reminder${parentIndex}-${index}`;
 
   return (
     <div className="relative">
       <Controller
-        name={inputName}
+        name={inputName as Path<TFieldValues>}
         control={control}
         rules={{
           required: "Time value is required",
@@ -54,7 +57,9 @@ export function ListTimeInput<TFieldValues extends FieldValues = FieldValues>(
               field.onChange({ target: { name, value } })
             }
             feedback={
-              errors && inputName in errors && typeof errors[inputName]?.message === "string"
+              errors &&
+              inputName in errors &&
+              typeof errors[inputName]?.message === "string"
                 ? errors[inputName]?.message
                 : undefined
             }
@@ -73,4 +78,4 @@ export function ListTimeInput<TFieldValues extends FieldValues = FieldValues>(
       />
     </div>
   );
-};
+}

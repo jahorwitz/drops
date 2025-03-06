@@ -19,17 +19,7 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   };
 
 export const RadioGroup = forwardRef<HTMLInputElement, Props<FieldValues>>(
-  (
-    {
-      name,
-      labelText,
-      hintText,
-      options,
-      feedback,
-      ...rest
-    }: Props<FieldValues>,
-    ref
-  ) => {
+  ({ name, labelText, hintText, options, feedback, ...rest }, ref) => {
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
         <label>{labelText}</label>

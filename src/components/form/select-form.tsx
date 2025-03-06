@@ -14,7 +14,7 @@ type Option = {
 };
 
 type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
-  HTMLProps<HTMLInputElement> & {
+  HTMLProps<HTMLButtonElement> & {
     labelText?: string;
     placeholder?: string;
     hintText?: string;
@@ -22,16 +22,11 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
     feedback?: FieldErrors<T>;
   };
 
-export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
-  ({
-    name,
-    labelText,
-    placeholder,
-    hintText,
-    options,
-    feedback,
-    onChange,
-  }: Props<FieldValues>) => {
+export const SelectForm = forwardRef<HTMLButtonElement, Props<FieldValues>>(
+  (
+    { name, labelText, placeholder, hintText, options, feedback, onChange },
+    ref
+  ) => {
     const [selected, setSelected] = useState<Option | undefined>();
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text z-10">
@@ -50,6 +45,7 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
         >
           <div className="relative">
             <Listbox.Button
+              ref={ref}
               className={cx(
                 "w-full relative border-2 rounded-lg py-5 px-3 focus:outline-none focus:border-blue-500 flex",
                 selected ? "border-black" : "border-gray-300"

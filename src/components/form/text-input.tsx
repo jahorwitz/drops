@@ -12,7 +12,7 @@ type Props = UseFormRegisterReturn<string> &
   };
 
 export const TextInput = forwardRef<HTMLInputElement, Props>(
-  ({ labelText, hintText, feedback, filled, ...rest }: Props, ref) => {
+  ({ labelText, hintText, feedback, filled, ...rest }, ref) => {
     const textInputClass = cx({
       "rounded-lg": true,
       "border-[1px]": true,

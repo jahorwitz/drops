@@ -12,7 +12,7 @@ type Props = UseFormRegisterReturn<string> &
   };
 
 export const WeekdaySelector = forwardRef<HTMLInputElement, Props>(
-  ({ labelText, hintText, feedback, className, ...rest }: Props, ref) => {
+  ({ labelText, hintText, feedback, className, ...rest }, ref) => {
     const [currentSelectedDays, setCurrentSelectedDays] = useState<string[]>(
       []
     );
