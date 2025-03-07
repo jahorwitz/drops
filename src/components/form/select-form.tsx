@@ -32,11 +32,12 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
     feedback,
     value,
     onChange,
+    className,
   }: Props<FieldValues>) => {
     const initialSelected = options.find((option) => option.value === value);
     const [selected, setSelected] = useState<Option | undefined>(initialSelected);
     return (
-      <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text z-10">
+      <div className={cx("flex flex-col gap-1 leading-5 text-base font-normal font-text z-10", className)}>
         <label
           htmlFor={name}
           className="text-base leading-[19px] font-text mb-1"

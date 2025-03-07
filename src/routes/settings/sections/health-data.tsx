@@ -31,7 +31,17 @@ export const HealthData: React.FC = () => {
     return formatted;
   } 
 
-  const healthData = { dateOfBirth: formatDate(dateOfBirth), weight: `${weight} lbs`, height: `${Math.floor(height / 12)}'${height % 12}"`, sex: formatString(sex), diabetesType: formatString(diabetesType[0])};
+  const formatWeight = (weight : number) => {
+    if (!weight) return "";
+    return `${weight} lbs`
+  }
+
+  const formatHeight = (height : number) => {
+    if (!height) return "";
+    return `${Math.floor(height / 12)}'${height % 12}"`
+  }
+
+  const healthData = { dateOfBirth: formatDate(dateOfBirth), weight: formatWeight(weight), height: formatHeight(height), sex: formatString(sex), diabetesType: formatString(diabetesType[0])};
 
   const toggleForm = () => {
     sethealthDataFormOpen(!healthDataFormOpen);
@@ -40,7 +50,7 @@ export const HealthData: React.FC = () => {
   return (
     <div className="mt-3">
       {healthDataFormOpen ? (
-        <HealthDataForm toggleForm={toggleForm} defaultValues={{...healthData, weight: weight, sex: sex, diabetesType: diabetesType[0], email: email}} />
+        <HealthDataForm toggleForm={toggleForm} defaultValues={{...healthData, weight: weight, feet: Math.floor(height / 12), inches: height % 12, sex: sex, diabetesType: diabetesType[0], email: email}} />
       ) : (
         <SectionWithEdit
           title="Health data"

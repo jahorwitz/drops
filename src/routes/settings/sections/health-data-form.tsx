@@ -8,7 +8,8 @@ import ExitIcon from "../../../images/Close-Icon.png";
 interface DefaultValues {
   dateOfBirth?: string;
   weight: string;
-  height: string;
+  feet: number;
+  inches: number;
   sex: string;
   diabetesType: string;
   email: string;
@@ -23,7 +24,8 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   interface FormValues {
     dateOfBirth: string;
     weight: string;
-    height: string;
+    feet: number;
+    inches: number;
     sex: string;
     diabetesType: string;
   }
@@ -43,7 +45,7 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   const { handleUpdate } = useUserUpdate();
 
   const onSubmit = async (formData: FormValues) => {
-    const { dateOfBirth, weight, height, sex, diabetesType } = formData;
+    const { dateOfBirth, weight, feet, inches, sex, diabetesType } = formData;
 
     const updateData: Record<string, string | number> = { sex, diabetesType };
 
@@ -56,17 +58,15 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   }
 
   // Process height (if provided)
-  if (height.trim()) {
-    const heightMatch = height.match(/^(\d+)'\s*(\d*)"?$/);
-    if (heightMatch) {
-      const feet = parseInt(heightMatch[1], 10);
-      const inches = heightMatch[2] ? parseInt(heightMatch[2], 10) : 0;
-      updateData.height = feet * 12 + inches;
-      clearErrors("height"); // Clear error if the format is correct
-    } else {
-      setError("height", { type: "manual", message: "Invalid height format. Use ft'in or ft'in\"" });
-      return; // Prevent submission if height is invalid
-    }
+  if (feet && inches) {
+    const feetValue = feet ? parseInt(feet as unknown as string, 10) : 0;
+    const inchesValue = inches ? parseInt(inches as unknown as string, 10) : 0;
+
+    updateData.height = feetValue * 12 + inchesValue;
+    clearErrors("feet");
+  } else {
+    setError("feet", { type: "manual", message: "Please select a valid height." });
+    return;
   }
 
    // Process dateOfBirth (if provided)
@@ -97,6 +97,13 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   }
 };
 
+const makeSelectRange = (range: number, unit: string) => {
+  return Array.from({ length: range + 1 }, (_, i) => ({
+    value: i.toString(),
+    label: i.toString() + unit, 
+  }));
+}
+
   return (
     <SectionWithEdit title="Health data" toggleForm={toggleForm} icon={ExitIcon}>
       <Form
@@ -119,14 +126,29 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
           filled={`${!watch("weight") ? "filled" : ""}`}
           {...register("weight")}
         />
-        <Form.TextInput
-          labelText="Height (ft)"
-          placeholder={`Enter your height in ft'in"`}
-          type="text"
-          feedback={errors.height?.message}
-          filled={`${!watch("height") ? "filled" : ""}`}
-          {...register("height")}
-        />
+        <h3 className="font-text border-b-2 border-opacity-100">Height</h3>
+        <div className="z-20 flex justify-around w-full gap-4">
+          <Form.SelectForm
+            labelText="Feet"
+            placeholder="Select one"
+            hintText="Select one option"
+            options={makeSelectRange(8, "'")}
+            value={defaultValues.feet.toString()} 
+            feedback={errors as FieldErrors}
+            {...register("feet")}
+            className="flex-grow basis-1/2 min-w-[30px]"
+          />
+          <Form.SelectForm
+            labelText="Inch"
+            placeholder="Select one"
+            hintText="Select one option"
+            options={makeSelectRange(11, '"')}
+            value={defaultValues.inches.toString()} 
+            feedback={errors as FieldErrors}
+            {...register("inches")}
+            className="flex-grow basis-1/2 min-w-[30px]"
+          />
+        </div>
         <Form.SelectForm
         labelText="Sex"
         placeholder="Select one"
