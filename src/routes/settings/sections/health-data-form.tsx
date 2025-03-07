@@ -1,8 +1,8 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller  } from "react-hook-form";
 import { Button, Form } from "../../../components";
 import { SectionWithEdit } from "../section-with-edit";
 import { useUserUpdate } from "../../../hooks/useUserUpdate";
-import type { FieldErrors } from "react-hook-form";
+import type { FieldErrors} from "react-hook-form";
 import ExitIcon from "../../../images/Close-Icon.png";
 
 interface DefaultValues {
@@ -33,6 +33,7 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   const {
     register,
     handleSubmit,
+    control,
     watch,
     setError,
     clearErrors,
@@ -47,7 +48,7 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   const onSubmit = async (formData: FormValues) => {
     const { dateOfBirth, weight, feet, inches, sex, diabetesType } = formData;
 
-    const updateData: Record<string, string | number> = { sex, diabetesType };
+    const updateData: Record<string, string | number> = { dateOfBirth, sex, diabetesType };
 
   // Process weight (if provided)
   if (weight && typeof weight === "string" && weight.trim()) {
@@ -67,22 +68,6 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   } else {
     setError("feet", { type: "manual", message: "Please select a valid height." });
     return;
-  }
-
-   // Process dateOfBirth (if provided)
-   if (dateOfBirth.trim()) {
-    const dobMatch = dateOfBirth.match(/^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/);
-    
-    if (dobMatch) {
-      // Convert dateOfBirth to YYYY-MM-DD format (string)
-      const [month, day, year] = dateOfBirth.split("/");
-      const formattedDate = new Date(`${year}-${month}-${day}T00:00:00.000Z`).toISOString();
-      updateData.dateOfBirth = formattedDate;
-      clearErrors("dateOfBirth");
-    } else {
-      setError("dateOfBirth", { type: "manual", message: "Invalid date format. Use MM/DD/YYYY" });
-      return;
-    }
   }
 
   try {
@@ -110,14 +95,23 @@ const makeSelectRange = (range: number, unit: string) => {
         className="flex flex-col gap-3"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Form.TextInput
-          labelText="Date of birth"
-          placeholder="Enter your date of birth"
-          type="text"
-          feedback={errors.dateOfBirth?.message}
-          filled={`${!watch("dateOfBirth") ? "filled" : ""}`}
-          {...register("dateOfBirth")}
-        />
+        <div className="z-40">
+          <Controller
+            name="dateOfBirth"
+            control={control}
+            render={({ field: { onChange, value, ...field } }) => (
+              <Form.DatePicker
+                {...field}
+                value={value ? new Date(value) : null}
+                onChange={onChange}
+                labelText="Event Date"
+                hintText="Enter a date in MM/DD/YYYY format"
+                feedback={errors.dateOfBirth?.message}
+                name="dateValue"
+              />
+            )}
+          />
+        </div>
         <Form.TextInput
           labelText="Weight (lbs)"
           placeholder="Enter your weight"

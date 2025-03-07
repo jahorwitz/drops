@@ -50,7 +50,7 @@ export const HealthData: React.FC = () => {
   return (
     <div className="mt-3">
       {healthDataFormOpen ? (
-        <HealthDataForm toggleForm={toggleForm} defaultValues={{...healthData, weight: weight, feet: Math.floor(height / 12), inches: height % 12, sex: sex, diabetesType: diabetesType[0], email: email}} />
+        <HealthDataForm toggleForm={toggleForm} defaultValues={{dateOfBirth, weight: weight, feet: Math.floor(height / 12), inches: height % 12, sex: sex, diabetesType: diabetesType[0], email: email}} />
       ) : (
         <SectionWithEdit
           title="Health data"
