@@ -1,10 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "../../components";
+import { ListTimeInput } from "./list-time-input";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import closeIcon from "../../images/Close-Icon.png";
 
-interface MedicationFormValues {
+export interface MedicationFormValues {
   medicationInfo: string;
   time?: string;
 }
@@ -96,7 +97,7 @@ export const MedicationForm: React.FC<Props> = ({
           })}
         />
         <Form.AddMoreSection buttonText="+ Add more reminders">
-          <Form.ListTimeInput
+          <ListTimeInput<MedicationFormValues>
             label="Reminder"
             parentIndex={index}
             onDelete={onDelete}

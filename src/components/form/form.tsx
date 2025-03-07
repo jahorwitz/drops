@@ -7,7 +7,7 @@ import { NumericInput } from "./numeric-input";
 import { SelectForm } from "./select-form";
 import { DatePicker } from "./date-picker";
 import { AddMoreSection } from "./add-more-section";
-import { ListTimeInput } from "./list-time-input";
+import { ForwardedListTimeInput } from "./list-time-input";
 
 type Props = {
   className?: string;
@@ -30,5 +30,5 @@ Form.Weekday = WeekdaySelector;
 Form.RadioGroup = RadioGroup;
 Form.SelectForm = SelectForm;
 Form.DatePicker = DatePicker;
-Form.ListTimeInput = ListTimeInput;
+Form.ListTimeInput = ForwardedListTimeInput;
 Form.AddMoreSection = AddMoreSection;

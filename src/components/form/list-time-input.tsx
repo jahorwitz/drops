@@ -1,4 +1,4 @@
-import React, {forwardRef} from "react";
+import React, { forwardRef } from "react";
 import {
   Controller,
   Control,
@@ -21,11 +21,11 @@ interface Props<TFieldValues extends FieldValues = FieldValues> {
   fieldName?: string;
 }
 
-export const ListTimeInput = forwardRef<
-  HTMLDivElement,
-  Props<FieldValues>
->(function ListTimeInput(
-  {
+// This is a type-safe wrapper that preserves the generic type parameter
+export function ListTimeInput<TFieldValues extends FieldValues = FieldValues>(
+  props: Props<TFieldValues> & { ref?: React.Ref<HTMLDivElement> }
+) {
+  const {
     index,
     onDelete,
     elementId,
@@ -35,15 +35,15 @@ export const ListTimeInput = forwardRef<
     control,
     errors,
     fieldName,
-  },
-  ref
-) {
+    ref,
+  } = props;
+
   const inputName = fieldName || `reminder${parentIndex}-${index}`;
 
   return (
     <div className="relative" ref={ref}>
       <Controller
-        name={inputName as Path<FieldValues>}
+        name={inputName as Path<TFieldValues>}
         control={control}
         rules={{
           required: "Time value is required",
@@ -85,4 +85,14 @@ export const ListTimeInput = forwardRef<
       />
     </div>
   );
-});
+}
+
+// For backward compatibility with existing code that uses forwardRef
+export const ForwardedListTimeInput = forwardRef(
+  function ForwardedListTimeInput(
+    props: Props<FieldValues>,
+    ref: React.Ref<HTMLDivElement>
+  ) {
+    return <ListTimeInput {...props} ref={ref} />;
+  }
+);

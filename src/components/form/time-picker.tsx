@@ -13,10 +13,7 @@ type Props<T extends FieldValues> = {
 };
 
 export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
-  (
-    { name, labelText, hintText, feedback, className, setValue, ...rest },
-    ref
-  ) => {
+  ({ name, labelText, hintText, feedback, className, setValue, ...rest }) => {
     const fieldName = name ?? "timeValue";
 
     const [hour, setHour] = useState<string>("");
