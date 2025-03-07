@@ -68,7 +68,7 @@ export const TimePicker = forwardRef<HTMLInputElement, Props<FieldValues>>(
         shouldDirty: true,
         shouldTouch: true,
       });
-    }, [hour, minute, period, setValue]);
+    }, [fieldName, hour, minute, period, setValue]);
 
     const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;

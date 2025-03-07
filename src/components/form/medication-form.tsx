@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { Form, Button } from "../../components";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import closeIcon from "../../images/Close-Icon.png";
-import { ListTimeInput } from "./list-time-input";
 
 interface MedicationFormValues {
   medicationInfo: string;
@@ -107,7 +106,7 @@ export const MedicationForm: React.FC<Props> = ({
             fieldName="time"
           />
         </Form.AddMoreSection>
-        
+
         {isModal && (
           <Button
             variant="primary"
