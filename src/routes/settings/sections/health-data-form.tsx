@@ -24,8 +24,8 @@ export const HealthDataForm = ({ toggleForm, defaultValues }: Props) => {
   interface FormValues {
     dateOfBirth: string;
     weight: string;
-    feet: number;
-    inches: number;
+    feet?: number | null;
+    inches?: number | null;
     sex: string;
     diabetesType: string;
   }
@@ -120,24 +120,22 @@ const makeSelectRange = (range: number, unit: string) => {
           filled={`${!watch("weight") ? "filled" : ""}`}
           {...register("weight")}
         />
-        <h3 className="font-text border-b-2 border-opacity-100">Height</h3>
-        <div className="z-20 flex justify-around w-full gap-4">
+        <div className="z-20 flex justify-around w-full gap-4 items-end">
           <Form.SelectForm
-            labelText="Feet"
-            placeholder="Select one"
+            labelText="Height"
+            placeholder="Select one (ft)"
             hintText="Select one option"
-            options={makeSelectRange(8, "'")}
-            value={defaultValues.feet.toString()} 
+            options={makeSelectRange(8, "' ft")}
+            value={defaultValues.feet?.toString()} 
             feedback={errors as FieldErrors}
             {...register("feet")}
             className="flex-grow basis-1/2 min-w-[30px]"
           />
           <Form.SelectForm
-            labelText="Inch"
-            placeholder="Select one"
+            placeholder="Select one (in)"
             hintText="Select one option"
-            options={makeSelectRange(11, '"')}
-            value={defaultValues.inches.toString()} 
+            options={makeSelectRange(11, '" in')}
+            value={defaultValues.inches?.toString()} 
             feedback={errors as FieldErrors}
             {...register("inches")}
             className="flex-grow basis-1/2 min-w-[30px]"
