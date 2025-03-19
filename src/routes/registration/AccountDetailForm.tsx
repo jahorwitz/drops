@@ -1,27 +1,57 @@
 import React from "react";
 import { useForm, Controller, FieldErrors } from "react-hook-form";
 import { Form } from "../../components/form";
+import { Button } from "../../components";
 
-interface FormValues {
+ /*interface FormValues {
   diabetesType: string;
   dateOfBirth: Date;
   weight: string;
-  height: string;
+  feet: number;
+  inches: number;
   sex: string;
-}
+} 
 
-export const AccountDetailForm: React.FC = () => {
+interface DefaultValues {
+  dateOfBirth: Date;
+  weight: string;
+  feet: number;
+  inches: number;
+  sex: string;
+  diabetesType: string;
+} */
+
+
+export const AccountDetailForm: React.FC = (defaultValues) => {
+
+  interface FormValues {
+    dateOfBirth: string;
+    weight: string;
+    feet?: number | null;
+    inches?: number | null;
+    sex: string;
+    diabetesType: string;
+  }
+
   const {
     register,
     handleSubmit,
     control,
     watch,
-    formState: { errors },
-  } = useForm<FormValues>();
+    formState: { errors, isValid },
+  } = useForm<FormValues>({ defaultValues,
+    mode: "onChange",});
 
   const onSubmit = (data: FormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
+
+  const makeSelectRange = (range: number, unit: string) => {
+    return Array.from({ length: range + 1 }, (_, i) => ({
+      value: i.toString(),
+      label: i.toString() + unit, 
+    }));
+  }
 
   return (
     <div className="pl-4 pr-4">
@@ -54,6 +84,9 @@ export const AccountDetailForm: React.FC = () => {
               labelText="Date of birth"
               hintText="Enter a date in MM/DD/YYYY format"
               feedback={errors.dateOfBirth?.message}
+              {...register("dateOfBirth", {
+                required: "This field is required",
+              })}
               name="dateValue"
             />
           )}
@@ -67,10 +100,8 @@ export const AccountDetailForm: React.FC = () => {
             { value: "female", label: "Female" },
             { value: "other", label: "Other" },
           ]}
-          feedback={errors as FieldErrors}
-          {...register("sex", {
-            required: "This field is required",
-          })}
+        feedback={errors as FieldErrors}
+        {...register("sex")}
         />
         <Form.TextInput
           labelText="Weight (lbs)"
@@ -80,17 +111,37 @@ export const AccountDetailForm: React.FC = () => {
           filled={`${!watch("weight") ? "filled" : ""}`}
           {...register("weight")}
         />
-        <Form.TextInput
-          labelText="Height (ft)"
-          placeholder={`Enter your height in ft'in"`}
-          type="text"
-          feedback={errors.height?.message}
-          filled={`${!watch("height") ? "filled" : ""}`}
-          {...register("height")}
-        />
+        <div className="z-20 flex justify-around w-full gap-5 items-end">
+          <Form.SelectForm
+            labelText="Height"
+            placeholder="Select one (ft)"
+            hintText="Select one option"
+            options={makeSelectRange(8, "' ft")}
+            value={defaultValues.feet?.toString()} 
+            feedback={errors as FieldErrors}
+            {...register("feet")}
+            className="flex-grow basis-1/2 min-w-full"
+          />
+          <Form.SelectForm
+            placeholder="Select one (in)"
+            hintText="Select one option"
+            options={makeSelectRange(11, '" in')}
+            value={defaultValues.inches?.toString()} 
+            feedback={errors as FieldErrors}
+            {...register("inches")}
+            className="flex-grow basis-1/2 min-w-full"/* fill space, may be min width issue*/
+            />
+            </div>
         <p className="font-text opacity-60">
           Your data is needed to provide correct pieces of advice
         </p>
+        <Button
+          type="submit"
+          buttonText="Register"
+          variant="primary"
+          disabled={isValid}
+          className="h-[60px] w-full mt-1"
+        />
       </Form>
     </div>
   );
