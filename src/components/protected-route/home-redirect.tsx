@@ -13,7 +13,6 @@ export const HomeRedirect: React.FC = () => {
     }
 
     if (!currentUser) {
-      console.log("Redirecting to /welcome");
       navigate("/welcome", { replace: true });
     } else if (!currentUser.isRegistrationComplete) {
       navigate("/registration", { replace: true });
@@ -25,7 +24,6 @@ export const HomeRedirect: React.FC = () => {
   }, [currentUser, navigate, loading]);
 
   if (currentUser) {
-    console.log("hello");
     return <LoadingCircle />;
   }
 

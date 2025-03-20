@@ -13,8 +13,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return null;
   }
 
-  if (!currentUser) {
-    return <Navigate to="/welcome" replace />;
+  if (!currentUser || 
+    !currentUser.isRegistrationComplete ||
+    (!currentUser.isOnboardingComplete && !location.pathname.startsWith("/onboarding"))
+  ) {
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
