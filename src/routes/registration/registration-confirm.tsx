@@ -38,13 +38,15 @@ export const RegistrationConfirmation: React.FC = () => {
           </h2>
 
           <div className="w-[346px] flex flex-col items-center gap-y-3 ">
+            <Link to="/dashboard">
             <Button
           type="submit"
           buttonText="You're now registered"
           variant="primary"
-          disabled={isValid}
+          disabled={!isValid}
           className="h-[60px] w-full mt-24 mb-8"
         />
+        </Link>
           </div>
         </div>
       </div>
