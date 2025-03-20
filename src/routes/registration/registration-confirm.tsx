@@ -1,10 +1,16 @@
 import React from "react";
+import { useForm} from "react-hook-form";
 import logo from "../../images/Logo.svg";
 import cover from "../../images/Polygon.svg";
 import backbutton from "../../images/Backbutton.svg";
 import { Link } from "react-router-dom";
+import { Button } from "../../components";
 
 export const RegistrationConfirmation: React.FC = () => {
+  const {
+    formState: {isValid },
+  } = useForm<FormValues>();
+
   return (
     <div className="flex flex-col bg-lightYellow max-w-screen-md relative overflow-hidden m-auto pb-80 h-screen">
       <img
@@ -27,15 +33,18 @@ export const RegistrationConfirmation: React.FC = () => {
 
         <div className="flex flex-col gap-5 items-center pt-32">
           <h2 className="font-text text-section-header font-medium leading-[52.8px] text-center max-w-[362px] mx-auto">
-            Almost there!
-            <br /> We've sent you an email
-            <br /> with confirmation link <link rel="stylesheet" href="" />
+            Youre account has been confirmed!
+            <br /> Please follow the link below <link rel="stylesheet" href="" />
           </h2>
 
           <div className="w-[346px] flex flex-col items-center gap-y-3 ">
-            <p className="font-text text-section-subtext font-normal leading-[24px] text-center">
-              Open it to confirm your account
-            </p>
+            <Button
+          type="submit"
+          buttonText="You're now registered"
+          variant="primary"
+          disabled={isValid}
+          className="h-[60px] w-full mt-24 mb-8"
+        />
           </div>
         </div>
       </div>

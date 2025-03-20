@@ -22,6 +22,8 @@ interface DefaultValues {
 } */
 
 
+
+
 export const AccountDetailForm: React.FC = (defaultValues) => {
 
   interface FormValues {
@@ -111,7 +113,7 @@ export const AccountDetailForm: React.FC = (defaultValues) => {
           filled={`${!watch("weight") ? "filled" : ""}`}
           {...register("weight")}
         />
-        <div className="z-20 flex justify-around w-full gap-5 items-end">
+        <div className="z-20 flex justify-around w-full gap-5 items-end ">
           <Form.SelectForm
             labelText="Height"
             placeholder="Select one (ft)"
@@ -139,7 +141,7 @@ export const AccountDetailForm: React.FC = (defaultValues) => {
           type="submit"
           buttonText="Register"
           variant="primary"
-          disabled={isValid}
+          disabled={!isValid}
           className="h-[60px] w-full mt-1"
         />
       </Form>

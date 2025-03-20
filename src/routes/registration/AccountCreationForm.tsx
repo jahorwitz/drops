@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../../components/form";
+import { Button } from "../../components";
 
 type FormValues = {
   name: string;
@@ -13,7 +14,7 @@ export const AccountCreationForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
   } = useForm<FormValues>();
 
@@ -78,6 +79,13 @@ export const AccountCreationForm: React.FC = () => {
             validate: (value) => value === password || "Passwords do not match",
           })}
           feedback={errors.repeatPassword?.message}
+        />
+        <Button
+          type="submit"
+          buttonText="Continue"
+          variant="primary"
+          disabled={!isValid}
+          className="h-[60px] w-full mt-24 mb-8"
         />
       </Form>
     </div>
