@@ -8,24 +8,17 @@ export const HomeRedirect: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) {
-      return;
-    }
+    if (!loading) {
+      const getRedirectPath = () => {
+        if (!currentUser) return "/welcome";
+        if (!currentUser.isRegistrationComplete) return "/registration";
+        if (!currentUser.isOnboardingComplete) return "/onboarding";
+        return "/dashboard";
+      };
 
-    if (!currentUser) {
-      navigate("/welcome", { replace: true });
-    } else if (!currentUser.isRegistrationComplete) {
-      navigate("/registration", { replace: true });
-    } else if (!currentUser.isOnboardingComplete) {
-      navigate("/onboarding", { replace: true });
-    } else {
-      navigate("/dashboard", { replace: true });
+      navigate(getRedirectPath(), { replace: true });
     }
   }, [currentUser, navigate, loading]);
 
-  if (currentUser) {
-    return <LoadingCircle />;
-  }
-
-  return <LoadingCircle />
+  return <LoadingCircle />;
 };
