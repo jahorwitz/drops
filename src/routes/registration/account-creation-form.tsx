@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../../components/form";
+import { Button } from "../../components";
 
 type FormValues = {
   name: string;
@@ -13,9 +14,9 @@ export const AccountCreationForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ mode: "onChange" });
 
   // Watch password field for validation
   const password = watch("password", "");
@@ -27,8 +28,11 @@ export const AccountCreationForm: React.FC = () => {
   };
 
   return (
-    <div className="pl-4 pr-4 bg-[#F5F5F5]">
-      <Form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <div className="px-4 bg-lightGray h-[100vh] flex">
+      <Form
+        className="flex flex-col gap-4 max-w-pageContent m-auto"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Form.TextInput
           labelText="Name"
           type="text"
@@ -78,6 +82,13 @@ export const AccountCreationForm: React.FC = () => {
             validate: (value) => value === password || "Passwords do not match",
           })}
           feedback={errors.repeatPassword?.message}
+        />
+        <Button
+          type="submit"
+          buttonText="Continue"
+          variant="primary"
+          disabled={!isValid}
+          className="h-[60px] w-full mt-24 mb-8"
         />
       </Form>
     </div>

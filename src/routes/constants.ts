@@ -4,6 +4,7 @@ export const ROUTES = {
     WELCOME: "/welcome",
     LOGIN: "/login",
     REGISTRATION: "/registration",
+    REGISTRATION_DETAILS: "/registration-details",
     REGISTRATION_CONFIRM: "/registration-confirm",
   },
   ONBOARDING: {
