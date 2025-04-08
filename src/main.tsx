@@ -15,26 +15,48 @@ import {
   Dashboard,
   Notifications,
   Insights,
+  AccountDetailForm,
 } from "./routes";
-
+import { ROUTES } from "./routes/constants";
 import { client } from "./store";
-
 import ProtectedRoute from "./components/protected-route/protected-route";
+import { HomeRedirect } from "./components/protected-route/home-redirect";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<div>Home Route</div>} />
-          <Route path="/welcome" element={<Welcome />} />
+          {/* Home redirect */}
+          <Route path={ROUTES.HOME} element={<HomeRedirect />} />
+
+          {/* Authentication routes */}
+          <Route path={ROUTES.AUTH.WELCOME} element={<Welcome />} />
+          <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
           <Route
-            path="/registration-confirm"
+            path={ROUTES.AUTH.REGISTRATION}
+            element={<AccountCreationForm />}
+          />
+          <Route
+            path={ROUTES.AUTH.REGISTRATION_DETAILS}
+            element={<AccountDetailForm />}
+          />
+          <Route
+            path={ROUTES.AUTH.REGISTRATION_CONFIRM}
             element={<RegistrationConfirmation />}
           />
-          <Route path="/registration" element={<AccountCreationForm />} />
+
+          {/* Onboarding routes */}
           <Route
-            path="/onboarding/medication-reminders"
+            path={ROUTES.ONBOARDING.ROOT}
+            element={
+              <ProtectedRoute>
+                <Start />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.ONBOARDING.MEDICATION_REMINDERS}
             element={
               <ProtectedRoute>
                 <MedicationReminderForm />
@@ -42,39 +64,47 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             }
           />
           <Route
-            path="/onboarding/glucose-notifications"
+            path={ROUTES.ONBOARDING.GLUCOSE_NOTIFICATIONS}
             element={
               <ProtectedRoute>
                 <GlucoseNotificationPrompt />
               </ProtectedRoute>
             }
           />
+
+          {/* Main application routes */}
           <Route
-            path="/onboarding"
+            path={ROUTES.APP.DASHBOARD}
             element={
               <ProtectedRoute>
-                <Start />
+                <Dashboard />
               </ProtectedRoute>
             }
           />
-          <Route path="/login" element={<Login />} />
           <Route
-            path="/settings"
+            path={ROUTES.APP.NOTIFICATIONS}
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.APP.INSIGHTS}
+            element={
+              <ProtectedRoute>
+                <Insights />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.APP.SETTINGS}
             element={
               <ProtectedRoute>
                 <Settings />
               </ProtectedRoute>
             }
           />
-          <Route path="/dashboard" element={<ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>} />
-          <Route path="/notifications" element={<ProtectedRoute>
-            <Notifications />
-          </ProtectedRoute>} />
-          <Route path="/insights" element={<ProtectedRoute>
-            <Insights />
-          </ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>

@@ -1,3 +1,4 @@
+import cx from "classnames";
 import { HTMLProps, forwardRef } from "react";
 import {
   FieldErrors,
@@ -30,6 +31,8 @@ export const RadioGroup = forwardRef<HTMLInputElement, Props<FieldValues>>(
     }: Props<FieldValues>,
     ref
   ) => {
+    const { value } = rest;
+
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text">
         <label>{labelText}</label>
@@ -38,7 +41,10 @@ export const RadioGroup = forwardRef<HTMLInputElement, Props<FieldValues>>(
             <label
               key={index}
               htmlFor={name}
-              className="font-text flex items-center space-x-2 border-2 border-lightGray rounded-lg p-3 text-paragraph-lg"
+              className={cx(
+                "font-text flex items-center space-x-2 border-2 border-black/30 bg-white rounded-lg p-3 text-paragraph-lg",
+                value === option.value && "border-black/100"
+              )}
             >
               <input
                 {...rest}
@@ -46,7 +52,7 @@ export const RadioGroup = forwardRef<HTMLInputElement, Props<FieldValues>>(
                 ref={ref}
                 type="radio"
                 value={option.value}
-                className={`appearance-none h-4 w-4 border-4 bold-border-black rounded-full checked:border-black focus:outline-none focus:ring-1 focus:ring-black`}
+                className={`appearance-none h-4 w-4 border-2 bold-border-black rounded-full checked:border-black checked:border-[6px] focus:outline-none focus:ring-1 focus:ring-black`}
               />
               <span className="text-paragraph-lg text-black-400">
                 {option.label}

@@ -1,7 +1,12 @@
-import { Listbox, Transition } from "@headlessui/react";
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import cx from "classnames";
-import { Fragment, HTMLProps, forwardRef, useState } from "react";
+import { HTMLProps, forwardRef, useState } from "react";
 import {
   FieldErrors,
   FieldValues,
@@ -35,9 +40,16 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
     className,
   }: Props<FieldValues>) => {
     const initialSelected = options.find((option) => option.value === value);
-    const [selected, setSelected] = useState<Option | undefined>(initialSelected);
+    const [selected, setSelected] = useState<Option | undefined>(
+      initialSelected
+    );
     return (
-      <div className={cx("flex flex-col gap-1 leading-5 text-base font-normal font-text z-10", className)}>
+      <div
+        className={cx(
+          "flex flex-col gap-1 leading-5 text-base font-normal font-text",
+          className
+        )}
+      >
         <label
           htmlFor={name}
           className="text-base leading-[19px] font-text mb-1"
@@ -52,9 +64,9 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
           }}
         >
           <div className="relative">
-            <Listbox.Button
+            <ListboxButton
               className={cx(
-                "w-full relative border-2 rounded-lg py-5 px-3 focus:outline-none focus:border-blue-500 flex",
+                "w-full relative border-2 rounded-lg py-5 px-3 bg-white focus:outline-none focus:border-blue-500 flex",
                 selected ? "border-black" : "border-gray-300"
               )}
             >
@@ -69,50 +81,43 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
                   aria-hidden="true"
                 />
               </span>
-            </Listbox.Button>
-            <Transition
-              as={Fragment}
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                {options.map((option) => (
-                  <Listbox.Option
-                    key={option.value}
-                    value={option}
-                    className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-blue" : "text-gray-900"
-                      }`
-                    }
-                  >
-                    {({ active }) => (
-                      <div
+            </ListboxButton>
+            <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+              {options.map((option) => (
+                <ListboxOption
+                  key={option.value}
+                  value={option}
+                  className={({ active }) =>
+                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                      active ? "bg-blue" : "text-gray-900"
+                    }`
+                  }
+                >
+                  {({ active }) => (
+                    <div
+                      className={`${
+                        active ? "text-white" : "text-gray-900"
+                      } cursor-default select-none relative py-2 pl-3 pr-9`}
+                    >
+                      <span
                         className={`${
-                          active ? "text-white" : "text-gray-900"
-                        } cursor-default select-none relative py-2 pl-3 pr-9`}
+                          active ? "font-semibold" : "font-normal"
+                        } block truncate`}
                       >
+                        {option.label}
+                      </span>
+                      {active ? (
                         <span
-                          className={`${
-                            active ? "font-semibold" : "font-normal"
-                          } block truncate`}
+                          className={` absolute inset-y-0 right-0 flex items-center pr-4`}
                         >
-                          {option.label}
+                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
                         </span>
-                        {active ? (
-                          <span
-                            className={` absolute inset-y-0 right-0 flex items-center pr-4`}
-                          >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                          </span>
-                        ) : null}
-                      </div>
-                    )}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Transition>
+                      ) : null}
+                    </div>
+                  )}
+                </ListboxOption>
+              ))}
+            </ListboxOptions>
           </div>
         </Listbox>
         {feedback ? (

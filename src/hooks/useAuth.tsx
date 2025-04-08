@@ -13,7 +13,9 @@ interface UseAuthProps {
 
 export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
   const [loadGetUser, { error: loginError }] = useMutation(USER_LOGIN);
-  const { data: currentUserData, loading } = useQuery(GET_CURRENT_USER);
+  const { data: currentUserData, loading} = useQuery(GET_CURRENT_USER, {
+    fetchPolicy: "network-only",
+  });
   const [logoutUser] = useMutation(USER_LOGOUT);
 
   const login = useCallback(
@@ -59,5 +61,5 @@ export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
       .catch((err) => console.error(err));
   }, [logoutUser, onLogoutSuccess]);
 
-  return { currentUser: currentUserData?.authenticatedItem, login, loginError, logout, loading };
+  return { currentUser: currentUserData?.authenticatedItem, login, loginError, logout, loading};
 };
