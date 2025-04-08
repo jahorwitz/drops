@@ -3,46 +3,32 @@ import { useForm, Controller, FieldErrors } from "react-hook-form";
 import { Form } from "../../components/form";
 import { Button } from "../../components";
 
- /*interface FormValues {
-  diabetesType: string;
-  dateOfBirth: Date;
-  weight: string;
-  feet: number;
-  inches: number;
-  sex: string;
-} 
+interface Props {
+  defaultValues?: FormValues;
+}
 
-interface DefaultValues {
-  dateOfBirth: Date;
+interface FormValues {
+  dateOfBirth: Date | null;
   weight: string;
-  feet: number;
-  inches: number;
+  feet?: number | null;
+  inches?: number | null;
   sex: string;
   diabetesType: string;
-} */
+}
 
-
-
-
-export const AccountDetailForm: React.FC = (defaultValues) => {
-
-  interface FormValues {
-    dateOfBirth: string;
-    weight: string;
-    feet?: number | null;
-    inches?: number | null;
-    sex: string;
-    diabetesType: string;
-  }
-
+export const AccountDetailForm: React.FC<Props> = ({
+  defaultValues,
+}: Props) => {
   const {
     register,
     handleSubmit,
     control,
     watch,
     formState: { errors, isValid },
-  } = useForm<FormValues>({ defaultValues,
-    mode: "onChange",});
+  } = useForm<FormValues>({
+    defaultValues,
+    mode: "onChange",
+  });
 
   const onSubmit = (data: FormValues) => {
     alert(JSON.stringify(data, null, 2));
@@ -51,15 +37,15 @@ export const AccountDetailForm: React.FC = (defaultValues) => {
   const makeSelectRange = (range: number, unit: string) => {
     return Array.from({ length: range + 1 }, (_, i) => ({
       value: i.toString(),
-      label: i.toString() + unit, 
+      label: i.toString() + unit,
     }));
-  }
+  };
 
   return (
-    <div className="pl-4 pr-4">
+    <div className="px-4 bg-lightGray h-[100vh] flex">
       <Form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 bg-lightGrey"
+        className="flex flex-col gap-4 max-w-pageContent m-auto"
       >
         <Form.RadioGroup
           labelText="Choose your diabetes type"
@@ -81,15 +67,16 @@ export const AccountDetailForm: React.FC = (defaultValues) => {
           render={({ field: { onChange, value, ...field } }) => (
             <Form.DatePicker
               {...field}
+              {...register("dateOfBirth", {
+                required: "This field is required",
+              })}
               value={value}
               onChange={onChange}
               labelText="Date of birth"
               hintText="Enter a date in MM/DD/YYYY format"
               feedback={errors.dateOfBirth?.message}
-              {...register("dateOfBirth", {
-                required: "This field is required",
-              })}
               name="dateValue"
+              className="w-full"
             />
           )}
         />
@@ -102,8 +89,8 @@ export const AccountDetailForm: React.FC = (defaultValues) => {
             { value: "female", label: "Female" },
             { value: "other", label: "Other" },
           ]}
-        feedback={errors as FieldErrors}
-        {...register("sex")}
+          feedback={errors as FieldErrors}
+          {...register("sex")}
         />
         <Form.TextInput
           labelText="Weight (lbs)"
@@ -113,27 +100,27 @@ export const AccountDetailForm: React.FC = (defaultValues) => {
           filled={`${!watch("weight") ? "filled" : ""}`}
           {...register("weight")}
         />
-        <div className="z-20 flex justify-around w-full gap-5 items-end ">
+        <div className="flex justify-around w-full gap-5 items-end ">
           <Form.SelectForm
             labelText="Height"
             placeholder="Select one (ft)"
             hintText="Select one option"
             options={makeSelectRange(8, "' ft")}
-            value={defaultValues.feet?.toString()} 
+            value={defaultValues?.feet?.toString()}
             feedback={errors as FieldErrors}
             {...register("feet")}
-            className="flex-grow basis-1/2 min-w-full"
+            className="w-full"
           />
           <Form.SelectForm
             placeholder="Select one (in)"
             hintText="Select one option"
             options={makeSelectRange(11, '" in')}
-            value={defaultValues.inches?.toString()} 
+            value={defaultValues?.inches?.toString()}
             feedback={errors as FieldErrors}
             {...register("inches")}
-            className="flex-grow basis-1/2 min-w-full"/* fill space, may be min width issue*/
-            />
-            </div>
+            className="w-full"
+          />
+        </div>
         <p className="font-text opacity-60">
           Your data is needed to provide correct pieces of advice
         </p>

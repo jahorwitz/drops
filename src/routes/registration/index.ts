@@ -1,3 +1,3 @@
 export * from "./registration-confirm";
-export * from "./AccountCreationForm";
-export * from "./AccountDetailForm";
+export * from "./account-creation-form";
+export * from "./account-detail-form";

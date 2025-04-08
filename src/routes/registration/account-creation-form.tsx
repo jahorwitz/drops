@@ -16,7 +16,7 @@ export const AccountCreationForm: React.FC = () => {
     handleSubmit,
     formState: { errors, isValid },
     watch,
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ mode: "onChange" });
 
   // Watch password field for validation
   const password = watch("password", "");
@@ -28,8 +28,11 @@ export const AccountCreationForm: React.FC = () => {
   };
 
   return (
-    <div className="pl-4 pr-4 bg-[#F5F5F5]">
-      <Form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <div className="px-4 bg-lightGray h-[100vh] flex">
+      <Form
+        className="flex flex-col gap-4 max-w-pageContent m-auto"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Form.TextInput
           labelText="Name"
           type="text"
