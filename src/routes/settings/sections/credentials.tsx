@@ -14,10 +14,6 @@ export const Credentials: React.FC = () => {
     Email: currentUser?.email,
     Password: "...............",
   };
-  const defaultFormValues = {
-    name: currentUser?.name,
-    email: currentUser?.email,
-  };
 
   const toggleForm = () => {
     setCredentialsFormOpen(!credentialsFormOpen);
@@ -25,10 +21,13 @@ export const Credentials: React.FC = () => {
 
   return (
     <div>
-      {credentialsFormOpen ? (
+      {currentUser && credentialsFormOpen ? (
         <CredentialsForm
           toggleForm={toggleForm}
-          defaultValues={defaultFormValues}
+          defaultValues={{
+            name: currentUser.name ?? "",
+            email: currentUser.email ?? "",
+          }}
         />
       ) : (
         <SectionWithEdit
