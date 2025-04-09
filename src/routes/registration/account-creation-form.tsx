@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../../components/form";
-import { Button } from "../../components";
+import { Button, SimpleContainer } from "../../components";
 
 type FormValues = {
   name: string;
@@ -28,7 +28,7 @@ export const AccountCreationForm: React.FC = () => {
   };
 
   return (
-    <div className="px-4 bg-lightGray h-[100vh] flex">
+    <SimpleContainer>
       <Form
         className="flex flex-col gap-4 max-w-pageContent m-auto"
         onSubmit={handleSubmit(onSubmit)}
@@ -91,6 +91,6 @@ export const AccountCreationForm: React.FC = () => {
           className="h-[60px] w-full mt-24 mb-8"
         />
       </Form>
-    </div>
+    </SimpleContainer>
   );
 };

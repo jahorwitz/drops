@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, Controller, FieldErrors } from "react-hook-form";
 import { Form } from "../../components/form";
-import { Button } from "../../components";
+import { Button, SimpleContainer } from "../../components";
 
 interface Props {
   defaultValues?: FormValues;
@@ -42,7 +42,7 @@ export const AccountDetailForm: React.FC<Props> = ({
   };
 
   return (
-    <div className="px-4 bg-lightGray h-[100vh] flex">
+    <SimpleContainer>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 max-w-pageContent m-auto"
@@ -132,6 +132,6 @@ export const AccountDetailForm: React.FC<Props> = ({
           className="h-[60px] w-full mt-1"
         />
       </Form>
-    </div>
+    </SimpleContainer>
   );
 };

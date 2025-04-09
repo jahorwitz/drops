@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { AUTH_TOKEN } from "../store";
 import { useMutation, useQuery } from "@apollo/client";
 import { USER_LOGIN, USER_LOGOUT } from "../graphql/mutations/users";
-import { User } from "../__generated__/graphql";
+import { User, UserQuery } from "../__generated__/graphql";
 import { GET_CURRENT_USER } from "../graphql/queries/users";
 import { client, setGraphqlHeaders } from "../store";
 
@@ -11,11 +11,15 @@ interface UseAuthProps {
   onLogoutSuccess?: () => void;
 }
 
-export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
+export const useAuth = (props: UseAuthProps = {}) => {
+  const { onLoginSuccess, onLogoutSuccess } = props;
   const [loadGetUser, { error: loginError }] = useMutation(USER_LOGIN);
-  const { data: currentUserData, loading} = useQuery(GET_CURRENT_USER, {
-    fetchPolicy: "network-only",
-  });
+  const { data: currentUserData, loading } = useQuery<UserQuery>(
+    GET_CURRENT_USER,
+    {
+      fetchPolicy: "network-only",
+    }
+  );
   const [logoutUser] = useMutation(USER_LOGOUT);
 
   const login = useCallback(
@@ -23,8 +27,14 @@ export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
       loadGetUser({
         variables: { email: email, password: password },
         onCompleted: (data) => {
-          if (data?.authenticateUserWithPassword?.__typename === 'UserAuthenticationWithPasswordSuccess') {
-            localStorage.setItem(AUTH_TOKEN, data.authenticateUserWithPassword.sessionToken);
+          if (
+            data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordSuccess"
+          ) {
+            localStorage.setItem(
+              AUTH_TOKEN,
+              data.authenticateUserWithPassword.sessionToken
+            );
             setGraphqlHeaders(data.authenticateUserWithPassword.sessionToken);
             client.refetchQueries({
               include: [GET_CURRENT_USER],
@@ -61,5 +71,11 @@ export const useAuth = ({ onLoginSuccess, onLogoutSuccess }: UseAuthProps) => {
       .catch((err) => console.error(err));
   }, [logoutUser, onLogoutSuccess]);
 
-  return { currentUser: currentUserData?.authenticatedItem, login, loginError, logout, loading};
+  return {
+    currentUser: currentUserData?.authenticatedItem,
+    login,
+    loginError,
+    logout,
+    loading,
+  };
 };
