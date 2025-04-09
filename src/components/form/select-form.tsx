@@ -28,17 +28,24 @@ type Props<T extends FieldValues> = UseFormRegisterReturn<string> &
   };
 
 export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
-  ({
-    name,
-    labelText,
-    placeholder,
-    hintText,
-    options,
-    feedback,
-    onChange,
-    className,
-  }: Props<FieldValues>) => {
-    const [selected, setSelected] = useState<Option | undefined>();
+  (
+    {
+      name,
+      labelText,
+      placeholder,
+      hintText,
+      options,
+      feedback,
+      value,
+      onChange,
+      className,
+    }: Props<FieldValues>,
+    ref
+  ) => {
+    const initialSelected = options.find((option) => option.value === value);
+    const [selected, setSelected] = useState<Option | undefined>(
+      initialSelected
+    );
     return (
       <div
         className={cx(
@@ -53,6 +60,7 @@ export const SelectForm = forwardRef<HTMLInputElement, Props<FieldValues>>(
           {labelText}
         </label>
         <Listbox
+          ref={ref}
           value={selected}
           onChange={(o) => {
             setSelected(o);

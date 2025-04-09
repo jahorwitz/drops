@@ -30,6 +30,11 @@ export const USER_UPDATE = gql(`
     updateUser(where: $where, data: $data) {
       name
       email
+      height
+      sex
+      weight
+      dateOfBirth
+      diabetesType
     }
   }
 `);

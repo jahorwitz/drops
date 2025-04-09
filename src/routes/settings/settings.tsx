@@ -1,15 +1,18 @@
-import { Button } from "../../components"
-import { LogoutButtons } from "./logout-buttons"
+import { useNavigate } from "react-router";
+import { Button, SimpleContainer } from "../../components";
+import { LogoutButtons } from "./logout-buttons";
 import { Credentials } from "./sections/credentials";
+import { HealthData } from "./sections/health-data";
 
 export const Settings: React.FC = () => {
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col bg-lightGray items-center pb-11">
+    <SimpleContainer>
       <Button
         variant="text"
         className="absolute left-4 opacity-100 hover:opacity-60 text-base max-w-max pt-0"
         buttonText="< Back"
-        onClick={() => alert("Back")}
+        onClick={() => navigate(-1)}
       />
       <h2 className="text-section-subtext font-text mb-5">Profile settings</h2>
       <div className="flex mb-5">
@@ -27,8 +30,8 @@ export const Settings: React.FC = () => {
         />
       </div>
       <Credentials />
-      {/* <HealthData /> */}
+      <HealthData />
       <LogoutButtons />
-    </div>
+    </SimpleContainer>
   );
 };

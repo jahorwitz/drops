@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { LoadingCircle } from "../loading";
 
 export const HomeRedirect: React.FC = () => {
-  const { currentUser, loading } = useAuth({});
+  const { currentUser, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {

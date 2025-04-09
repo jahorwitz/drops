@@ -296,6 +296,8 @@ export const SelectForm = () => {
         labelText="Sex"
         placeholder="Select one"
         hintText="Select one option"
+        // add value if default value needed
+        // value={"male"} 
         options={[
           { value: "male", label: "Male" },
           { value: "female", label: "Female" },
