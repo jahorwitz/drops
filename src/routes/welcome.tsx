@@ -33,7 +33,7 @@ export const Welcome: React.FC = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center gap-3 pt-20">
-          <Link to="/register">
+          <Link to="/registration">
             <Button
               className="w-[358px] h-[60px] rounded-tl-8 max-w-full"
               variant="primary"
