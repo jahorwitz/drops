@@ -1,11 +1,15 @@
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, SimpleContainer } from "../../components";
 import { LogoutButtons } from "./logout-buttons";
 import { Credentials } from "./sections/credentials";
 import { HealthData } from "./sections/health-data";
+import { RemindersList } from "../../components/reminders/reminders-list";
 
 export const Settings: React.FC = () => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<"main" | "goals">("main");
+
   return (
     <SimpleContainer>
       <Button
@@ -15,22 +19,43 @@ export const Settings: React.FC = () => {
         onClick={() => navigate(-1)}
       />
       <h2 className="text-section-subtext font-text mb-5">Profile settings</h2>
+
       <div className="flex mb-5">
         <Button
           variant="text"
-          className="active:opacity-100 border-b-[1px] border-black border-opacity-30 text-base w-[177px] p-0"
+          className={`text-base w-[177px] p-0 ${
+            activeTab === "main"
+              ? "border-b-[1px] border-black border-opacity-30"
+              : ""
+          }`}
           buttonText="Main info"
-          onClick={() => alert("Main info")}
+          onClick={() => setActiveTab("main")} // Switch tabs 
         />
         <Button
           variant="text"
-          className="active:opacity-100 border-b-[1px] border-black border-opacity-30 text-base w-[177px] p-0"
+          className={`text-base w-[177px] p-0 ${
+            activeTab === "goals"
+              ? "border-b-[1px] border-black border-opacity-30"
+              : ""
+          }`}
           buttonText="Goals & reminders"
-          onClick={() => alert("Goals & reminders")}
+          onClick={() => setActiveTab("goals")} 
         />
       </div>
-      <Credentials />
-      <HealthData />
+     
+      {activeTab === "main" && (
+        <>
+          <Credentials />
+          <HealthData />
+        </>
+      )}
+
+      {activeTab === "goals" && (
+        <>
+          <RemindersList />
+        </>
+      )}
+
       <LogoutButtons />
     </SimpleContainer>
   );
