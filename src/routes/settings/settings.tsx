@@ -3,9 +3,16 @@ import { Button, SimpleContainer } from "../../components";
 import { LogoutButtons } from "./logout-buttons";
 import { Credentials } from "./sections/credentials";
 import { HealthData } from "./sections/health-data";
+import Tabs from "../../components/tabs/tabs";
 
 export const Settings: React.FC = () => {
   const navigate = useNavigate();
+
+  const settingsCategories = [
+    { label: "Main Info", content: "Main Info content" },
+    { label: "Goals and reminders", content: "Goals and reminders content" },
+  ]
+
   return (
     <SimpleContainer>
       <Button
@@ -15,20 +22,7 @@ export const Settings: React.FC = () => {
         onClick={() => navigate(-1)}
       />
       <h2 className="text-section-subtext font-text mb-5">Profile settings</h2>
-      <div className="flex mb-5">
-        <Button
-          variant="text"
-          className="active:opacity-100 border-b-[1px] border-black border-opacity-30 text-base w-[177px] p-0"
-          buttonText="Main info"
-          onClick={() => alert("Main info")}
-        />
-        <Button
-          variant="text"
-          className="active:opacity-100 border-b-[1px] border-black border-opacity-30 text-base w-[177px] p-0"
-          buttonText="Goals & reminders"
-          onClick={() => alert("Goals & reminders")}
-        />
-      </div>
+      <Tabs tabs={settingsCategories} />
       <Credentials />
       <HealthData />
       <LogoutButtons />

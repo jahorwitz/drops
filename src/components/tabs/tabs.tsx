@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tab } from "@headlessui/react";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 
 export type TabItem = {
   label: string;
@@ -14,12 +14,12 @@ function Tabs({ tabs }: TabsProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
-    <Tab.Group
+    <TabGroup
       selectedIndex={selectedIndex}
       onChange={setSelectedIndex}
       defaultIndex={0}
     >
-      <Tab.List className="mb-5 max-w-[354px] w-full h-10 flex">
+      <TabList className="mb-5 max-w-[354px] w-full h-10 flex">
         {tabs.map((tab, index) => (
           <Tab
             key={index}
@@ -32,13 +32,13 @@ function Tabs({ tabs }: TabsProps) {
             {tab.label}
           </Tab>
         ))}
-      </Tab.List>
-      <Tab.Panels className="max-w-[370px] w-full">
+      </TabList>
+      <TabPanels className="max-w-[370px] w-full">
         {tabs.map((tab, index) => (
-          <Tab.Panel key={index}>{tab.content}</Tab.Panel>
+          <TabPanel key={index}>{tab.content}</TabPanel>
         ))}
-      </Tab.Panels>
-    </Tab.Group>
+      </TabPanels>
+    </TabGroup>
   );
 }
 
