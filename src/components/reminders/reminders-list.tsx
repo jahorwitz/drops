@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { ReminderForm } from "../reminders/ReminderForm";
+import { TimePicker } from "../form/time-picker";
 import editIcon from "../../images/Edit-Icon.png";
 import checkIcon from "../../images/check.png";
 import exitIcon from "../../images/Close-Icon.png";
@@ -19,7 +20,7 @@ interface Reminder {
 }
 
 export const RemindersList: React.FC = () => {
-  const { data, loading, error } = useQuery(GET_REMINDERS);
+  const { data } = useQuery(GET_REMINDERS);
   const [formOpen, setFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editHour, setEditHour] = useState("");
@@ -53,6 +54,7 @@ export const RemindersList: React.FC = () => {
     setEditPeriod(period);
   };
 
+  // Save updated reminder time and exit editing mode
   const handleSave = async (id: string) => {
     const newTime = `${editHour}:${editMinute} ${editPeriod}`;
     try {
@@ -67,9 +69,6 @@ export const RemindersList: React.FC = () => {
       console.error("Update reminder failed:", (err as Error).message);
     }
   };
-
-  if (loading) return <p>Loading reminders...</p>;
-  if (error) return <p>Error loading reminders</p>;
 
   const reminders: Reminder[] = data?.authenticatedItem?.reminders || [];
 
@@ -87,36 +86,34 @@ export const RemindersList: React.FC = () => {
                 <div key={reminder.id} className="mb-3 flex justify-between items-start">
                   <div>
                     <p className="font-text text-sm opacity-60">{reminder.label}</p>
-                     
-                     {/* Action buttons: edit/trash and check/close */}
 
+                    {/* Inline editable time picker when reminder is in editing mode */}
                     {editingId === reminder.id ? (
-                      <div className="flex items-center gap-2 mt-1">
-                        <input
-                          type="text"
-                          value={editHour}
-                          onChange={(e) => setEditHour(e.target.value)}
-                          maxLength={2}
-                          placeholder="00"
-                          className="w-[60px] h-[60px] text-center border rounded-[8px] font-medium"
+                      <div className="flex items-center gap-10 mt-5 bg-gray-100 rounded-[8px] p-2 w-[346px] h-[76px]">
+                        <TimePicker
+                          setValue={(field, value) => {
+                            if (field === "timeValue") {
+                              const [h, m, p] = value.split(":");
+                              setEditHour(h);
+                              setEditMinute(m.slice(0, 2));
+                              setEditPeriod(p);
+                            }
+                          }}
                         />
-                        <span>:</span>
-                        <input
-                          type="text"
-                          value={editMinute}
-                          onChange={(e) => setEditMinute(e.target.value)}
-                          maxLength={2}
-                          placeholder="00"
-                          className="w-[60px] h-[60px] text-center border rounded-[8px] font-medium"
-                        />
-                        <select
-                          value={editPeriod}
-                          onChange={(e) => setEditPeriod(e.target.value)}
-                          className="w-[60px] h-[60px] text-center border rounded-[8px] font-medium"
-                        >
-                          <option value="AM">AM</option>
-                          <option value="PM">PM</option>
-                        </select>
+                        <div className="flex gap-2 items-center mr-2">
+                          <img
+                            src={checkIcon}
+                            alt="Save"
+                            className="w-[26px] h-[26px] cursor-pointer"
+                            onClick={() => handleSave(reminder.id)}
+                          />
+                          <img
+                            src={exitIcon}
+                            alt="Cancel"
+                            className="w-[32px] h-[32px] cursor-pointer"
+                            onClick={() => setEditingId(null)}
+                          />
+                        </div>
                       </div>
                     ) : (
                       <p className="font-text text-black mt-1">{reminder.time}</p>
@@ -124,23 +121,8 @@ export const RemindersList: React.FC = () => {
                   </div>
 
                   <div className="flex gap-3 items-center">
-                    {editingId === reminder.id ? (
-                      <div className="flex gap-3 mt-[40px] items-center">
-                        <img
-                          src={checkIcon}
-                          alt="Save"
-                          className="w-6 h-6 cursor-pointer"
-                          onClick={() => handleSave(reminder.id)}
-                        />
-                        <img
-                          src={exitIcon}
-                          alt="Cancel"
-                          className="w-6 h-6 cursor-pointer"
-                          onClick={() => setEditingId(null)}
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex gap-3 items-center">
+                    {editingId !== reminder.id && (
+                      <>
                         <img
                           src={editIcon}
                           alt="Edit"
@@ -153,7 +135,7 @@ export const RemindersList: React.FC = () => {
                           className="w-[20px] h-[22px] cursor-pointer opacity-80 hover:opacity-100"
                           onClick={() => handleDelete(reminder.id)}
                         />
-                      </div>
+                      </>
                     )}
                   </div>
                 </div>
