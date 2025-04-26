@@ -9,7 +9,10 @@ export const Settings: React.FC = () => {
   const navigate = useNavigate();
 
   const settingsCategories = [
-    { label: "Main Info", content: "Main Info content" },
+    { 
+      label: "Main Info", 
+      content:  [<Credentials/>, <HealthData/>, <LogoutButtons/>]
+    },
     { label: "Goals and reminders", content: "Goals and reminders content" },
   ]
 
@@ -23,9 +26,7 @@ export const Settings: React.FC = () => {
       />
       <h2 className="text-section-subtext font-text mb-5">Profile settings</h2>
       <Tabs tabs={settingsCategories} />
-      <Credentials />
-      <HealthData />
-      <LogoutButtons />
+      
     </SimpleContainer>
   );
 };

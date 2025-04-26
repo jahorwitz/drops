@@ -23,11 +23,11 @@ Default.args = {
   ],
 };
 
-// export const ThreeTabs = Template.bind({});
-// ThreeTabs.args = {
-//   tabs: [
-//     { label: "Overview", content: "Overview content goes here" },
-//     { label: "Details", content: "Detailed content goes here" },
-//     { label: "Settings", content: "Settings content goes here" },
-//   ],
-// };
+export const ThreeTabs = Template.bind({});
+ThreeTabs.args = {
+  tabs: [
+    { label: "Overview", content: "Overview content goes here" },
+    { label: "Details", content: "Detailed content goes here" },
+    { label: "Settings", content: "Settings content goes here" },
+  ],
+};

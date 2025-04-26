@@ -33,9 +33,15 @@ function Tabs({ tabs }: TabsProps) {
           </Tab>
         ))}
       </TabList>
-      <TabPanels className="max-w-[370px] w-full">
+      <TabPanels className="max-w-[370px] w-full ">
         {tabs.map((tab, index) => (
-          <TabPanel key={index}>{tab.content}</TabPanel>
+          <TabPanel key={index}>
+            {Array.isArray(tab.content) ? (
+              <>{tab.content.map((Component, idx) => <React.Fragment key={idx}>{Component}</React.Fragment>)}</>
+            ) : (
+              tab.content
+            )}
+          </TabPanel>
         ))}
       </TabPanels>
     </TabGroup>
