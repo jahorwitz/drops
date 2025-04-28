@@ -10,6 +10,13 @@ type Props<T extends FieldValues> = {
   className?: string;
   setValue: UseFormSetValue<T>;
 };
+type Props<T extends FieldValues> = {
+  labelText?: string;
+  hintText?: string;
+  feedback?: string;
+  className?: string;
+  setValue: UseFormSetValue<T>;
+};
 
 export const TimePicker = ({
   labelText,
@@ -31,6 +38,9 @@ export const TimePicker = ({
     const hourMask = IMask(hourRef.current!, { mask: "00" });
     const minuteMask = IMask(minuteRef.current!, { mask: "00" });
 
+    const hourMask = IMask(hourRef.current!, { mask: "00" });
+    const minuteMask = IMask(minuteRef.current!, { mask: "00" });
+
     return () => {
       hourMask.destroy();
       minuteMask.destroy();
@@ -40,8 +50,11 @@ export const TimePicker = ({
   const addLeadingZero = (value: string): string => {
     const parsedValue = parseInt(value, 10);  // Parse the input value as an integer
     if (!isNaN(parsedValue) && parsedValue < 10 && parsedValue !== 0) {
+    const parsedValue = parseInt(value, 10);  // Parse the input value as an integer
+    if (!isNaN(parsedValue) && parsedValue < 10 && parsedValue !== 0) {
       return `0${parsedValue}`;
     }
+    return value;
     return value;
   };
 
@@ -61,11 +74,19 @@ export const TimePicker = ({
   const handleMinuteBlur = () => setMinute(addLeadingZero(minute));
  // Process the value when the focus is lost
   const handlePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => setPeriod(e.target.value);
+  const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => setMinute(e.target.value);
+  const handleMinuteBlur = () => setMinute(addLeadingZero(minute));
+ // Process the value when the focus is lost
+  const handlePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => setPeriod(e.target.value);
 
+  const inputClassName = "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
   const inputClassName = "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
 
   return (
     <div className="w-full">
+      {labelText && (
+        <label className="text-base leading-[19px] font-text mb-1">{labelText}</label>
+      )}
       {labelText && (
         <label className="text-base leading-[19px] font-text mb-1">{labelText}</label>
       )}
@@ -99,6 +120,7 @@ export const TimePicker = ({
           <option value="PM">PM</option>
         </select>
       </div>
+
 
       {feedback ? (
         <span className="text-red text-base leading-5">{feedback}</span>

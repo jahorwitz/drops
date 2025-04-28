@@ -2,6 +2,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { ReminderForm } from "../reminders/ReminderForm";
 import { TimePicker } from "../form/time-picker";
+import { TimePicker } from "../form/time-picker";
 import editIcon from "../../images/Edit-Icon.png";
 import checkIcon from "../../images/check.png";
 import exitIcon from "../../images/Close-Icon.png";
@@ -20,6 +21,7 @@ interface Reminder {
 }
 
 export const RemindersList: React.FC = () => {
+  const { data } = useQuery(GET_REMINDERS);
   const { data } = useQuery(GET_REMINDERS);
   const [formOpen, setFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -55,6 +57,7 @@ export const RemindersList: React.FC = () => {
   };
 
   // Save updated reminder time and exit editing mode
+  // Save updated reminder time and exit editing mode
   const handleSave = async (id: string) => {
     const newTime = `${editHour}:${editMinute} ${editPeriod}`;
     try {
@@ -86,6 +89,8 @@ export const RemindersList: React.FC = () => {
                 <div key={reminder.id} className="mb-3 flex justify-between items-start">
                   <div>
                     <p className="font-text text-sm opacity-60">{reminder.label}</p>
+
+                    {/* Inline editable time picker when reminder is in editing mode */}
 
                     {/* Inline editable time picker when reminder is in editing mode */}
                     {editingId === reminder.id ? (
@@ -123,6 +128,8 @@ export const RemindersList: React.FC = () => {
                   <div className="flex gap-3 items-center">
                     {editingId !== reminder.id && (
                       <>
+                    {editingId !== reminder.id && (
+                      <>
                         <img
                           src={editIcon}
                           alt="Edit"
@@ -135,6 +142,7 @@ export const RemindersList: React.FC = () => {
                           className="w-[20px] h-[22px] cursor-pointer opacity-80 hover:opacity-100"
                           onClick={() => handleDelete(reminder.id)}
                         />
+                      </>
                       </>
                     )}
                   </div>
