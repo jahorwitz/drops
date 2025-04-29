@@ -19,7 +19,8 @@ export const ROUTES = {
     SETTINGS: "/settings",
     DIET: {
       ROOT: "/diet",
-      SETTINGS: "/diet/settings"
+      SETTINGS: "/diet/settings",
+      RECORD_MEAL: "/diet/record-meal",
     }
   },
 } as const;

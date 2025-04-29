@@ -17,6 +17,7 @@ import {
   Insights,
   AccountDetailForm,
 } from "./routes";
+import {DietLogs} from "./routes/viewing-logs/diet/diet-logs";
 import { ROUTES } from "./routes/constants";
 import { client } from "./store";
 import ProtectedRoute from "./components/protected-route/protected-route";
@@ -81,14 +82,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </ProtectedRoute>
             }
           />
-          {/* <Route
+          <Route
           path={ROUTES.APP.DIET.ROOT}
           element={
             <ProtectedRoute>
-              </>
+              <DietLogs/>
             </ProtectedRoute>
           }
-           /> */}
+           />
           <Route
             path={ROUTES.APP.NOTIFICATIONS}
             element={
