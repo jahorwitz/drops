@@ -81,6 +81,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </ProtectedRoute>
             }
           />
+          {/* <Route
+          path={ROUTES.APP.DIET.ROOT}
+          element={
+            <ProtectedRoute>
+              </>
+            </ProtectedRoute>
+          }
+           /> */}
           <Route
             path={ROUTES.APP.NOTIFICATIONS}
             element={

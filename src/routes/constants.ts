@@ -17,5 +17,9 @@ export const ROUTES = {
     NOTIFICATIONS: "/notifications",
     INSIGHTS: "/insights",
     SETTINGS: "/settings",
+    DIET: {
+      ROOT: "/diet",
+      SETTINGS: "/diet/settings"
+    }
   },
 } as const;
