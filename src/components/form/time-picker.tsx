@@ -9,7 +9,16 @@ type Props<T extends FieldValues> = {
   feedback?: string;
   className?: string;
   setValue: UseFormSetValue<T>;
+  hour?: string;     
+  minute?: string;   
+  period?: string;   
 };
+
+
+// These props allow the parent to pass in initial values (hour, min, period)
+// so that the time picker can pre-fill correctly when editing an existing reminder.
+// This enables controlled behavior and prevents empty fields on edit.
+
 
 export const TimePicker = ({
   labelText,
@@ -17,12 +26,16 @@ export const TimePicker = ({
   feedback,
   className,
   setValue,
+  hour: propHour = "",
+  minute: propMinute = "",
+  period: propPeriod = "AM",
 }: Props<FieldValues>) => {
-  const [hour, setHour] = useState<string>("");
-  const [minute, setMinute] = useState<string>("");
-  const [period, setPeriod] = useState<string>("AM");
+  const [hour, setHour] = useState<string>(propHour);
+  const [minute, setMinute] = useState<string>(propMinute);
+  const [period, setPeriod] = useState<string>(propPeriod);
 
-  // Refs for hour, minute, and period input fields
+   // Refs for hour, minute, and period input fields
+
   const hourRef = useRef<HTMLInputElement>(null);
   const minuteRef = useRef<HTMLInputElement>(null);
   const periodRef = useRef<HTMLSelectElement>(null);
@@ -52,7 +65,6 @@ export const TimePicker = ({
       shouldTouch: true,
     });
   }, [hour, minute, period, setValue]);
-
 
   const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => setHour(e.target.value);
   const handleHourBlur = () => setHour(addLeadingZero(hour));

@@ -77,7 +77,8 @@ export const RemindersList: React.FC = () => {
       {formOpen ? (
         <ReminderForm toggleForm={toggleForm} />
       ) : (
-        <SectionWithEdit title="Meal reminders" toggleForm={toggleForm} icon={editIcon}>
+        <SectionWithEdit title="Meal reminders" toggleForm={toggleForm}>
+
           <div className="space-y-3">
             {reminders.length === 0 ? (
               <p className="font-text text-sm opacity-60">No reminders yet</p>
@@ -90,16 +91,23 @@ export const RemindersList: React.FC = () => {
                     {/* Inline editable time picker when reminder is in editing mode */}
                     {editingId === reminder.id ? (
                       <div className="flex items-center gap-10 mt-5 bg-gray-100 rounded-[8px] p-2 w-[346px] h-[76px]">
-                        <TimePicker
-                          setValue={(field, value) => {
-                            if (field === "timeValue") {
-                              const [h, m, p] = value.split(":");
-                              setEditHour(h);
-                              setEditMinute(m.slice(0, 2));
-                              setEditPeriod(p);
-                            }
-                          }}
-                        />
+                     <TimePicker
+  
+  hour={editHour}
+  minute={editMinute}
+  period={editPeriod}
+  setValue={(field, value) => {
+    if (field === "timeValue") {
+      const [time, period] = value.split(" ");
+      const [hour, minute] = time.split(":");
+
+      setEditHour(hour);
+      setEditMinute(minute);
+      setEditPeriod(period);
+    }
+  }}
+/>
+
                         <div className="flex gap-2 items-center mr-2">
                           <img
                             src={checkIcon}
