@@ -209,8 +209,8 @@ export const TimePicker = () => {
               {...register("timeValue", {
                 required: "Time value is required",
                 pattern: {
-                  value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
-                  message: "Invalid time format. Please use hh:mm:AM/PM",
+                  value: /^[0-9]{2}:[0-9]{2} [AaPp][Mm]$/i,
+                  message: "Invalid time format. Please use hh:mm AM/PM",
                 },
               })}
               labelText="Reminder 1"
@@ -297,7 +297,7 @@ export const SelectForm = () => {
         placeholder="Select one"
         hintText="Select one option"
         // add value if default value needed
-        // value={"male"} 
+        // value={"male"}
         options={[
           { value: "male", label: "Male" },
           { value: "female", label: "Female" },
