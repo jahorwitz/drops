@@ -44,8 +44,8 @@ export const ListTimeInput: React.FC<Props> = ({
               {...register(inputName, {
                 required: "Time value is required",
                 pattern: {
-                  value: /^[0-9]{2}:[0-9]{2}:[AaPp][Mm]$/i,
-                  message: "Invalid time format. Please use hh:mm:AM/PM",
+                  value: /^[0-9]{2}:[0-9]{2} [AaPp][Mm]$/i,
+                  message: "Invalid time format. Please use hh:mm AM/PM",
                 },
               })}
               labelText={

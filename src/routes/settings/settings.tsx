@@ -5,29 +5,17 @@ import { LogoutButtons } from "./logout-buttons";
 import { Credentials } from "./sections/credentials";
 import { HealthData } from "./sections/health-data";
 import { RemindersList } from "../../components/reminders/reminders-list";
-import Tabs, { TabItem } from "../../components/tabs/tabs"; 
+import Tabs from "../../components/tabs/tabs";
 
 export const Settings: React.FC = () => {
   const navigate = useNavigate();
 
-  const tabs: TabItem[] = [
+  const settingsCategories = [
     {
-      label: "Main info",
-      content: (
-        <>
-          <Credentials />
-          <HealthData />
-        </>
-      ),
+      label: "Main Info",
+      content: [<Credentials />, <HealthData />, <LogoutButtons />],
     },
-    {
-      label: "Goals & reminders",
-      content: (
-        <>
-          <RemindersList />
-        </>
-      ),
-    },
+    { label: "Goals and reminders", content: [<RemindersList />] },
   ];
 
   return (
@@ -39,9 +27,7 @@ export const Settings: React.FC = () => {
         onClick={() => navigate(-1)}
       />
       <h2 className="text-section-subtext font-text mb-5">Profile settings</h2>
-
-      <Tabs tabs={tabs} />
-
+      <Tabs tabs={settingsCategories} />
       <LogoutButtons />
     </SimpleContainer>
   );

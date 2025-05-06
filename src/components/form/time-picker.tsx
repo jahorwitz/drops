@@ -9,16 +9,14 @@ type Props<T extends FieldValues> = {
   feedback?: string;
   className?: string;
   setValue: UseFormSetValue<T>;
-  hour?: string;     
-  minute?: string;   
-  period?: string;   
+  hour?: string;
+  minute?: string;
+  period?: string;
 };
-
 
 // These props allow the parent to pass in initial values (hour, min, period)
 // so that the time picker can pre-fill correctly when editing an existing reminder.
 // This enables controlled behavior and prevents empty fields on edit.
-
 
 export const TimePicker = ({
   labelText,
@@ -34,7 +32,7 @@ export const TimePicker = ({
   const [minute, setMinute] = useState<string>(propMinute);
   const [period, setPeriod] = useState<string>(propPeriod);
 
-   // Refs for hour, minute, and period input fields
+  // Refs for hour, minute, and period input fields
 
   const hourRef = useRef<HTMLInputElement>(null);
   const minuteRef = useRef<HTMLInputElement>(null);
@@ -51,7 +49,7 @@ export const TimePicker = ({
   }, []);
 
   const addLeadingZero = (value: string): string => {
-    const parsedValue = parseInt(value, 10);  // Parse the input value as an integer
+    const parsedValue = parseInt(value, 10); // Parse the input value as an integer
     if (!isNaN(parsedValue) && parsedValue < 10 && parsedValue !== 0) {
       return `0${parsedValue}`;
     }
@@ -66,20 +64,26 @@ export const TimePicker = ({
     });
   }, [hour, minute, period, setValue]);
 
-  const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => setHour(e.target.value);
+  const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setHour(e.target.value);
   const handleHourBlur = () => setHour(addLeadingZero(hour));
-    // Process the value when the focus is lost
-  const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => setMinute(e.target.value);
+  // Process the value when the focus is lost
+  const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setMinute(e.target.value);
   const handleMinuteBlur = () => setMinute(addLeadingZero(minute));
- // Process the value when the focus is lost
-  const handlePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) => setPeriod(e.target.value);
+  // Process the value when the focus is lost
+  const handlePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setPeriod(e.target.value);
 
-  const inputClassName = "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
+  const inputClassName =
+    "text-center w-[60px] h-[60px] border border-solid border-gray-400 bg-gray-100 rounded-lg";
 
   return (
     <div className="w-full">
       {labelText && (
-        <label className="text-base leading-[19px] font-text mb-1">{labelText}</label>
+        <label className="text-base leading-[19px] font-text mb-1">
+          {labelText}
+        </label>
       )}
       <div className="h-[76px] bg-gray-100 rounded-lg flex items-center p-2">
         <input
