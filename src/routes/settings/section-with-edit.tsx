@@ -4,7 +4,7 @@ type Props = {
   title: string;
   children?: ReactNode;
   toggleForm: () => void;
-  icon: string;
+  icon?: string;
 };
 
 export const SectionWithEdit = ({title, children, toggleForm, icon}: Props) => {
