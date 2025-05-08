@@ -20,7 +20,7 @@ export const DietLogs: React.FC = () => {
     // const [upcomingMeals, setUpcomingMeals] = useState<DietLogsData[]>([],);
     // const [pastMeals, setPastMeals] = useState<DietLogsData[]>([],);
 
-   
+   //add useQuery for diet logs
   return (
      <div className="flex flex-col bg-lightGray overflow-auto max-w-screen-md pb-8 relative m-auto h-screen">
           <Link
