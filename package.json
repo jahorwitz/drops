@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "codegen": "graphql-codegen --config codegen.ts",
     "prepare": "husky install",
     "dev": "vite",
     "build": "tsc && vite build",
@@ -27,6 +28,9 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@headlessui/react": "^2.2.1",
     "@headlessui/tailwindcss": "^0.2.0",
     "@heroicons/react": "^2.0.18",
@@ -58,7 +62,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
-    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/cli": "^5.0.6",
     "@graphql-codegen/client-preset": "^4.1.0",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@storybook/addon-actions": "^8.2.5",
