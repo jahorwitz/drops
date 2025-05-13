@@ -5,7 +5,8 @@ import { LogoutButtons } from "./logout-buttons";
 import { Credentials } from "./sections/credentials";
 import { HealthData } from "./sections/health-data";
 import { RemindersList } from "../../components/reminders/reminders-list";
-import Tabs from "../../components/tabs/tabs";
+import { DietPanel } from "../../components/diet/DietPanel"; 
+import Tabs, { TabItem } from "../../components/tabs/tabs";
 
 export const Settings: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +16,15 @@ export const Settings: React.FC = () => {
       label: "Main Info",
       content: [<Credentials />, <HealthData />, <LogoutButtons />],
     },
-    { label: "Goals and reminders", content: [<RemindersList />] },
+    {
+      label: "Goals & reminders",
+      content: (
+        <>
+          <DietPanel /> 
+          <RemindersList />
+        </>
+      ),
+    },
   ];
 
   return (
