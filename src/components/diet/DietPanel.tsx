@@ -27,7 +27,7 @@ export const DietPanel = () => {
                 ["Carbs per day (grams)", diet.carbsPerDay],
                 ["Fiber per day (grams)", diet.fiberPerDay],
                 ["Cups of water per day", diet.waterPerDay],
-                ["Calorie limit", `${diet.calorieLimit} kcal`],
+                ["Calorie limit", `${diet.calorieLimit} kCal`],
               ].map(([label, value], idx) => (
                 <div key={idx} className="flex justify-between items-center">
                   <span>{label}: {value}</span>
