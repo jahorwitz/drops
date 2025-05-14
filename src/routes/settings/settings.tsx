@@ -6,7 +6,7 @@ import { Credentials } from "./sections/credentials";
 import { HealthData } from "./sections/health-data";
 import { RemindersList } from "../../components/reminders/reminders-list";
 import { DietPanel } from "../../components/diet/DietPanel"; 
-import Tabs, { TabItem } from "../../components/tabs/tabs";
+import Tabs from "../../components/tabs/tabs";
 
 export const Settings: React.FC = () => {
   const navigate = useNavigate();
