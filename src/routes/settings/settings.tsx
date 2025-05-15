@@ -14,7 +14,7 @@ export const Settings: React.FC = () => {
   const settingsCategories = [
     {
       label: "Main Info",
-      content: [<Credentials />, <HealthData />, <LogoutButtons />],
+      content: [<Credentials />, <HealthData />],
     },
     {
       label: "Goals & reminders",
