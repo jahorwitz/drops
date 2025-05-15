@@ -5,6 +5,7 @@ import { LogoutButtons } from "./logout-buttons";
 import { Credentials } from "./sections/credentials";
 import { HealthData } from "./sections/health-data";
 import { RemindersList } from "../../components/reminders/reminders-list";
+import { DietPanel } from "../../components/diet/DietPanel"; 
 import Tabs from "../../components/tabs/tabs";
 
 export const Settings: React.FC = () => {
@@ -13,9 +14,17 @@ export const Settings: React.FC = () => {
   const settingsCategories = [
     {
       label: "Main Info",
-      content: [<Credentials />, <HealthData />, <LogoutButtons />],
+      content: [<Credentials />, <HealthData />],
     },
-    { label: "Goals and reminders", content: [<RemindersList />] },
+    {
+      label: "Goals & reminders",
+      content: (
+        <>
+          <DietPanel /> 
+          <RemindersList />
+        </>
+      ),
+    },
   ];
 
   return (
