@@ -9,18 +9,17 @@ import {
   Welcome,
   Login,
   RegistrationConfirmation,
-  AccountCreationForm,
   MedicationReminderForm,
   Settings,
   Dashboard,
   Notifications,
   Insights,
-  AccountDetailForm,
 } from "./routes";
 import { ROUTES } from "./routes/constants";
 import { client } from "./store";
 import ProtectedRoute from "./components/protected-route/protected-route";
 import { HomeRedirect } from "./components/protected-route/home-redirect";
+import Registration from "./routes/registration/registration-page";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -35,11 +34,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
           <Route
             path={ROUTES.AUTH.REGISTRATION}
-            element={<AccountCreationForm />}
-          />
-          <Route
-            path={ROUTES.AUTH.REGISTRATION_DETAILS}
-            element={<AccountDetailForm />}
+            element={<Registration />}
           />
           <Route
             path={ROUTES.AUTH.REGISTRATION_CONFIRM}

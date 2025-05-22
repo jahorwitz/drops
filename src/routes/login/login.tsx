@@ -7,13 +7,14 @@ import { useAuth } from "../../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes as XMarkIcon } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import { User } from "../../__generated__/graphql";
 
-export const Login: React.FC = () => {
-  interface FormValues {
+interface FormValues {
     email: string;
     password: string;
   }
 
+export const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const {
@@ -23,11 +24,27 @@ export const Login: React.FC = () => {
     formState: { errors, isValid },
   } = useForm<FormValues>();
 
-  const handleLoginSuccess = () => {
-    navigate("/");
+  const handleLoginSuccess = ({ session }: { session: User }) => {
+    const user = session;
+
+    // Save the user's credentials
+    localStorage.setItem("accountCredentials", JSON.stringify({
+      email: watch("email"),
+      password: watch("password"),
+    }));
+
+    // If the user is not yet registered completely, redirect them to the registration page step 2
+    if (user.isRegistrationComplete === false) {
+      localStorage.setItem("registrationStep", "2");
+      navigate("/registration");
+    } else {
+      // Otherwise, redirect them to the home page
+      navigate("/");
+    }
   };
 
   const { login, loginError } = useAuth({ onLoginSuccess: handleLoginSuccess });
+
   const onSubmit = (formData: FormValues) => {
     login(formData);
   };
@@ -99,7 +116,7 @@ export const Login: React.FC = () => {
             disabled={!isValid}
             className="h-[60px] w-full"
           ></Button>
-          <Link to="/register">
+          <Link to="/registration">
             <Button
               buttonText="Or register"
               variant="text"
