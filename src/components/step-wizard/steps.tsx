@@ -36,23 +36,23 @@ useEffect(() => {
 }, [setCurrentStep]);
 
 // Helpers
-const updateStep = (step: number) => {
+const updateStep = useCallback((step: number) => {
   const bounded = Math.max(1, Math.min(step, totalSteps));
   localStorage.setItem("registrationStep", String(bounded));
   setCurrentStep(bounded);
-};
+}, [totalSteps]);
 
 const goToNextStep = useCallback(() => {
   updateStep(currentStep + 1);
-}, [currentStep]);
+}, [currentStep, updateStep]);
 
 const goToPreviousStep = useCallback(() => {
   updateStep(currentStep - 1);
-}, [currentStep]);
+}, [currentStep, updateStep]);
 
 const goToStep = useCallback((step: number) => {
   updateStep(step);
-}, []);
+}, [updateStep]);
 
   return (
     <WizardContext.Provider

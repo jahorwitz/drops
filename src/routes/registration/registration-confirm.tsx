@@ -29,15 +29,15 @@ export const RegistrationConfirmation: React.FC = () => {
         <div className="flex flex-col gap-5 items-center pt-32">
           <h2 className="font-text text-section-header font-medium leading-[52.8px] text-center max-w-[362px] mx-auto">
             Youre account has been confirmed!
-            <br /> Please follow the link below{" "}
-            <link rel="stylesheet" href="" />
+            {/* <br /> Please follow the link below{" "}
+            <link rel="stylesheet" href="" /> */}
           </h2>
 
           <div className="w-[346px] flex flex-col items-center gap-y-3 ">
             <Link to="/dashboard">
               <Button
                 type="submit"
-                buttonText="You're now registered"
+                buttonText="You're now registered, Go to Dashboard"
                 variant="primary"
                 className="h-[60px] w-full mt-24 mb-8"
               />

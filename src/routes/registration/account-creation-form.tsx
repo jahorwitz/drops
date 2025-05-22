@@ -2,6 +2,12 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../../components/form";
 import { Button, SimpleContainer } from "../../components";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from "../../graphql/mutations/users";
+import { useStepWizard } from "../../hooks/useStepWizard";
+import logo from "../../images/Logo.svg";
+import backButton from "../../images/Backbutton.svg";
+import { Link } from "react-router-dom";
 
 type FormValues = {
   name: string;
@@ -11,26 +17,70 @@ type FormValues = {
 };
 
 export const AccountCreationForm: React.FC = () => {
+  const [createUser] = useMutation(CREATE_USER);
+  const { goToNextStep } = useStepWizard();
+
+  const stored = localStorage.getItem("accountFormValues");
+  const defaultValues = stored ? JSON.parse(stored) : undefined;
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     watch,
-  } = useForm<FormValues>({ mode: "onChange" });
+  } = useForm<FormValues>({defaultValues, mode: "onChange" });
 
-  // Watch password field for validation
-  const password = watch("password", "");
+  
+
+  // Watch and store the form values incase of user refresh
+  const watchedValues = watch();
+  const password = watchedValues.password || "";
+  React.useEffect(() => {
+  localStorage.setItem("accountFormValues", JSON.stringify(watchedValues));
+}, [watchedValues]);
+
 
   // Handle form submission
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log("Form data submitted:", data);
-    // Perform form submission logic here
+  const onSubmit: SubmitHandler<FormValues> = async ({name, email, password}) => {
+    try {
+      // Create user
+      const response = await createUser({
+        variables: {
+          data: {
+            name,
+            email,
+            password,
+          },
+        },
+      });
+      
+      // Save credentials
+      if (response?.data?.createUser) {
+        localStorage.setItem("accountCredentials", JSON.stringify({ email, password })); 
+      }
+      localStorage.removeItem("accountFormValues");
+      
+      goToNextStep()
+    } catch (err) {
+      console.error("Error creating user:", err);
+    }
   };
 
   return (
     <SimpleContainer>
+      <div className="w-full px-4">
+        <Link to="/welcome">
+          <img src={backButton} alt="backButton" />
+        </Link>
+        <div className="flex flex-col items-center justify-center">
+          <img src={logo} alt="logo" />
+          <div className="text-center">
+            <h2 className="text-[32px] font-medium text-[#121212] line-height-[120%] ">Registration</h2>
+            <p className="text-[#121212] text-opacity-[0.6] ">Step 1/2</p>
+          </div>
+        </div>
+      </div>
       <Form
-        className="flex flex-col gap-4 max-w-pageContent m-auto"
+        className="flex flex-col px-4 gap-4 max-w-pageContent m-auto"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Form.TextInput
@@ -58,12 +108,12 @@ export const AccountCreationForm: React.FC = () => {
           labelText="Password"
           type="password"
           placeholder="Create a password"
-          hintText="Password should be at least 8 characters long and contain numbers & letters"
+          hintText="Password should be at least 10 characters long and contain numbers & letters"
           {...register("password", {
             required: "Password is required",
             minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters",
+              value: 10,
+              message: "Password must be at least 10 characters",
             },
             pattern: {
               value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/,
