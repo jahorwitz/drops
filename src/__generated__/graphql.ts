@@ -156,6 +156,104 @@ export type DietCreateInput = {
   waterPerDay?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type DietLog = {
+  __typename?: 'DietLog';
+  calories?: Maybe<Scalars['Int']['output']>;
+  carbs?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  fiber?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
+  logTime?: Maybe<Scalars['DateTime']['output']>;
+  mealDescription?: Maybe<Scalars['String']['output']>;
+  mealName?: Maybe<Scalars['String']['output']>;
+  protein?: Maybe<Scalars['Int']['output']>;
+  sugar?: Maybe<Scalars['Int']['output']>;
+  user?: Maybe<User>;
+};
+
+export type DietLogCreateInput = {
+  calories?: InputMaybe<Scalars['Int']['input']>;
+  carbs?: InputMaybe<Scalars['Int']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fiber?: InputMaybe<Scalars['Int']['input']>;
+  logTime?: InputMaybe<Scalars['DateTime']['input']>;
+  mealDescription?: InputMaybe<Scalars['String']['input']>;
+  mealName?: InputMaybe<Scalars['String']['input']>;
+  protein?: InputMaybe<Scalars['Int']['input']>;
+  sugar?: InputMaybe<Scalars['Int']['input']>;
+  user?: InputMaybe<UserRelateToOneForCreateInput>;
+};
+
+export type DietLogManyRelationFilter = {
+  every?: InputMaybe<DietLogWhereInput>;
+  none?: InputMaybe<DietLogWhereInput>;
+  some?: InputMaybe<DietLogWhereInput>;
+};
+
+export type DietLogOrderByInput = {
+  calories?: InputMaybe<OrderDirection>;
+  carbs?: InputMaybe<OrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  fiber?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  logTime?: InputMaybe<OrderDirection>;
+  mealDescription?: InputMaybe<OrderDirection>;
+  mealName?: InputMaybe<OrderDirection>;
+  protein?: InputMaybe<OrderDirection>;
+  sugar?: InputMaybe<OrderDirection>;
+};
+
+export type DietLogRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<DietLogWhereUniqueInput>>;
+  create?: InputMaybe<Array<DietLogCreateInput>>;
+};
+
+export type DietLogRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<DietLogWhereUniqueInput>>;
+  create?: InputMaybe<Array<DietLogCreateInput>>;
+  disconnect?: InputMaybe<Array<DietLogWhereUniqueInput>>;
+  set?: InputMaybe<Array<DietLogWhereUniqueInput>>;
+};
+
+export type DietLogUpdateArgs = {
+  data: DietLogUpdateInput;
+  where: DietLogWhereUniqueInput;
+};
+
+export type DietLogUpdateInput = {
+  calories?: InputMaybe<Scalars['Int']['input']>;
+  carbs?: InputMaybe<Scalars['Int']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fiber?: InputMaybe<Scalars['Int']['input']>;
+  logTime?: InputMaybe<Scalars['DateTime']['input']>;
+  mealDescription?: InputMaybe<Scalars['String']['input']>;
+  mealName?: InputMaybe<Scalars['String']['input']>;
+  protein?: InputMaybe<Scalars['Int']['input']>;
+  sugar?: InputMaybe<Scalars['Int']['input']>;
+  user?: InputMaybe<UserRelateToOneForUpdateInput>;
+};
+
+export type DietLogWhereInput = {
+  AND?: InputMaybe<Array<DietLogWhereInput>>;
+  NOT?: InputMaybe<Array<DietLogWhereInput>>;
+  OR?: InputMaybe<Array<DietLogWhereInput>>;
+  calories?: InputMaybe<IntFilter>;
+  carbs?: InputMaybe<IntNullableFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  fiber?: InputMaybe<IntNullableFilter>;
+  id?: InputMaybe<IdFilter>;
+  logTime?: InputMaybe<DateTimeFilter>;
+  mealDescription?: InputMaybe<StringFilter>;
+  mealName?: InputMaybe<StringFilter>;
+  protein?: InputMaybe<IntNullableFilter>;
+  sugar?: InputMaybe<IntNullableFilter>;
+  user?: InputMaybe<UserWhereInput>;
+};
+
+export type DietLogWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type DietOrderByInput = {
   calorieLimit?: InputMaybe<OrderDirection>;
   carbsPerDay?: InputMaybe<OrderDirection>;
@@ -211,6 +309,7 @@ export type DietWhereInput = {
 
 export type DietWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
+  user?: InputMaybe<UserWhereUniqueInput>;
 };
 
 export type Goal = {
@@ -427,14 +526,45 @@ export enum KeystoneAdminUiFieldMetaListViewFieldMode {
   Read = 'read'
 }
 
+export type KeystoneAdminUiGraphQl = {
+  __typename?: 'KeystoneAdminUIGraphQL';
+  names: KeystoneAdminUiGraphQlNames;
+};
+
+export type KeystoneAdminUiGraphQlNames = {
+  __typename?: 'KeystoneAdminUIGraphQLNames';
+  createInputName: Scalars['String']['output'];
+  createManyMutationName: Scalars['String']['output'];
+  createMutationName: Scalars['String']['output'];
+  deleteManyMutationName: Scalars['String']['output'];
+  deleteMutationName: Scalars['String']['output'];
+  itemQueryName: Scalars['String']['output'];
+  listOrderName: Scalars['String']['output'];
+  listQueryCountName: Scalars['String']['output'];
+  listQueryName: Scalars['String']['output'];
+  outputTypeName: Scalars['String']['output'];
+  relateToManyForCreateInputName: Scalars['String']['output'];
+  relateToManyForUpdateInputName: Scalars['String']['output'];
+  relateToOneForCreateInputName: Scalars['String']['output'];
+  relateToOneForUpdateInputName: Scalars['String']['output'];
+  updateInputName: Scalars['String']['output'];
+  updateManyInputName: Scalars['String']['output'];
+  updateManyMutationName: Scalars['String']['output'];
+  updateMutationName: Scalars['String']['output'];
+  whereInputName: Scalars['String']['output'];
+  whereUniqueInputName: Scalars['String']['output'];
+};
+
 export type KeystoneAdminUiListMeta = {
   __typename?: 'KeystoneAdminUIListMeta';
   description?: Maybe<Scalars['String']['output']>;
   fields: Array<KeystoneAdminUiFieldMeta>;
+  graphql: KeystoneAdminUiGraphQl;
   groups: Array<KeystoneAdminUiFieldGroupMeta>;
   hideCreate: Scalars['Boolean']['output'];
   hideDelete: Scalars['Boolean']['output'];
   initialColumns: Array<Scalars['String']['output']>;
+  initialSearchFields: Array<Scalars['String']['output']>;
   initialSort?: Maybe<KeystoneAdminUiSort>;
   isHidden: Scalars['Boolean']['output'];
   isSingleton: Scalars['Boolean']['output'];
@@ -544,6 +674,8 @@ export type Mutation = {
   createActivities?: Maybe<Array<Maybe<Activity>>>;
   createActivity?: Maybe<Activity>;
   createDiet?: Maybe<Diet>;
+  createDietLog?: Maybe<DietLog>;
+  createDietLogs?: Maybe<Array<Maybe<DietLog>>>;
   createDiets?: Maybe<Array<Maybe<Diet>>>;
   createGoal?: Maybe<Goal>;
   createGoals?: Maybe<Array<Maybe<Goal>>>;
@@ -559,6 +691,8 @@ export type Mutation = {
   deleteActivities?: Maybe<Array<Maybe<Activity>>>;
   deleteActivity?: Maybe<Activity>;
   deleteDiet?: Maybe<Diet>;
+  deleteDietLog?: Maybe<DietLog>;
+  deleteDietLogs?: Maybe<Array<Maybe<DietLog>>>;
   deleteDiets?: Maybe<Array<Maybe<Diet>>>;
   deleteGoal?: Maybe<Goal>;
   deleteGoals?: Maybe<Array<Maybe<Goal>>>;
@@ -574,6 +708,8 @@ export type Mutation = {
   updateActivities?: Maybe<Array<Maybe<Activity>>>;
   updateActivity?: Maybe<Activity>;
   updateDiet?: Maybe<Diet>;
+  updateDietLog?: Maybe<DietLog>;
+  updateDietLogs?: Maybe<Array<Maybe<DietLog>>>;
   updateDiets?: Maybe<Array<Maybe<Diet>>>;
   updateGoal?: Maybe<Goal>;
   updateGoals?: Maybe<Array<Maybe<Goal>>>;
@@ -606,6 +742,16 @@ export type MutationCreateActivityArgs = {
 
 export type MutationCreateDietArgs = {
   data: DietCreateInput;
+};
+
+
+export type MutationCreateDietLogArgs = {
+  data: DietLogCreateInput;
+};
+
+
+export type MutationCreateDietLogsArgs = {
+  data: Array<DietLogCreateInput>;
 };
 
 
@@ -684,6 +830,16 @@ export type MutationDeleteDietArgs = {
 };
 
 
+export type MutationDeleteDietLogArgs = {
+  where: DietLogWhereUniqueInput;
+};
+
+
+export type MutationDeleteDietLogsArgs = {
+  where: Array<DietLogWhereUniqueInput>;
+};
+
+
 export type MutationDeleteDietsArgs = {
   where: Array<DietWhereUniqueInput>;
 };
@@ -753,6 +909,17 @@ export type MutationUpdateActivityArgs = {
 export type MutationUpdateDietArgs = {
   data: DietUpdateInput;
   where: DietWhereUniqueInput;
+};
+
+
+export type MutationUpdateDietLogArgs = {
+  data: DietLogUpdateInput;
+  where: DietLogWhereUniqueInput;
+};
+
+
+export type MutationUpdateDietLogsArgs = {
+  data: Array<DietLogUpdateArgs>;
 };
 
 
@@ -944,6 +1111,9 @@ export type Query = {
   activity?: Maybe<Activity>;
   authenticatedItem?: Maybe<AuthenticatedItem>;
   diet?: Maybe<Diet>;
+  dietLog?: Maybe<DietLog>;
+  dietLogs?: Maybe<Array<DietLog>>;
+  dietLogsCount?: Maybe<Scalars['Int']['output']>;
   diets?: Maybe<Array<Diet>>;
   dietsCount?: Maybe<Scalars['Int']['output']>;
   goal?: Maybe<Goal>;
@@ -986,6 +1156,25 @@ export type QueryActivityArgs = {
 
 export type QueryDietArgs = {
   where: DietWhereUniqueInput;
+};
+
+
+export type QueryDietLogArgs = {
+  where: DietLogWhereUniqueInput;
+};
+
+
+export type QueryDietLogsArgs = {
+  cursor?: InputMaybe<DietLogWhereUniqueInput>;
+  orderBy?: Array<DietLogOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: DietLogWhereInput;
+};
+
+
+export type QueryDietLogsCountArgs = {
+  where?: DietLogWhereInput;
 };
 
 
@@ -1105,8 +1294,11 @@ export enum QueryMode {
 export type Reminder = {
   __typename?: 'Reminder';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  days?: Maybe<Scalars['String']['output']>;
+  duration?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   label?: Maybe<Scalars['String']['output']>;
+  reminderOffset?: Maybe<Scalars['String']['output']>;
   time?: Maybe<Scalars['String']['output']>;
   type?: Maybe<Scalars['String']['output']>;
   user?: Maybe<User>;
@@ -1114,7 +1306,10 @@ export type Reminder = {
 
 export type ReminderCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  days?: InputMaybe<Scalars['String']['input']>;
+  duration?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  reminderOffset?: InputMaybe<Scalars['String']['input']>;
   time?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<UserRelateToOneForCreateInput>;
@@ -1128,8 +1323,11 @@ export type ReminderManyRelationFilter = {
 
 export type ReminderOrderByInput = {
   createdAt?: InputMaybe<OrderDirection>;
+  days?: InputMaybe<OrderDirection>;
+  duration?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   label?: InputMaybe<OrderDirection>;
+  reminderOffset?: InputMaybe<OrderDirection>;
   time?: InputMaybe<OrderDirection>;
   type?: InputMaybe<OrderDirection>;
 };
@@ -1153,7 +1351,10 @@ export type ReminderUpdateArgs = {
 
 export type ReminderUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  days?: InputMaybe<Scalars['String']['input']>;
+  duration?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  reminderOffset?: InputMaybe<Scalars['String']['input']>;
   time?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<UserRelateToOneForUpdateInput>;
@@ -1164,8 +1365,11 @@ export type ReminderWhereInput = {
   NOT?: InputMaybe<Array<ReminderWhereInput>>;
   OR?: InputMaybe<Array<ReminderWhereInput>>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
+  days?: InputMaybe<StringFilter>;
+  duration?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   label?: InputMaybe<StringFilter>;
+  reminderOffset?: InputMaybe<StringFilter>;
   time?: InputMaybe<StringFilter>;
   type?: InputMaybe<StringFilter>;
   user?: InputMaybe<UserWhereInput>;
@@ -1211,6 +1415,8 @@ export type User = {
   dateOfBirth?: Maybe<Scalars['DateTime']['output']>;
   diabetesType?: Maybe<Array<UserDiabetesTypeType>>;
   diet?: Maybe<Diet>;
+  dietLogs?: Maybe<Array<DietLog>>;
+  dietLogsCount?: Maybe<Scalars['Int']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   goals?: Maybe<Array<Goal>>;
   goalsCount?: Maybe<Scalars['Int']['output']>;
@@ -1243,6 +1449,20 @@ export type UserActivitiesArgs = {
 
 export type UserActivitiesCountArgs = {
   where?: ActivityWhereInput;
+};
+
+
+export type UserDietLogsArgs = {
+  cursor?: InputMaybe<DietLogWhereUniqueInput>;
+  orderBy?: Array<DietLogOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: DietLogWhereInput;
+};
+
+
+export type UserDietLogsCountArgs = {
+  where?: DietLogWhereInput;
 };
 
 
@@ -1320,6 +1540,7 @@ export type UserCreateInput = {
   dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
   diabetesType?: InputMaybe<Array<UserDiabetesTypeType>>;
   diet?: InputMaybe<DietRelateToOneForCreateInput>;
+  dietLogs?: InputMaybe<DietLogRelateToManyForCreateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
   goals?: InputMaybe<GoalRelateToManyForCreateInput>;
   height?: InputMaybe<Scalars['Int']['input']>;
@@ -1377,6 +1598,7 @@ export type UserUpdateInput = {
   dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
   diabetesType?: InputMaybe<Array<UserDiabetesTypeType>>;
   diet?: InputMaybe<DietRelateToOneForUpdateInput>;
+  dietLogs?: InputMaybe<DietLogRelateToManyForUpdateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
   goals?: InputMaybe<GoalRelateToManyForUpdateInput>;
   height?: InputMaybe<Scalars['Int']['input']>;
@@ -1400,6 +1622,7 @@ export type UserWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   dateOfBirth?: InputMaybe<DateTimeNullableFilter>;
   diet?: InputMaybe<DietWhereInput>;
+  dietLogs?: InputMaybe<DietLogManyRelationFilter>;
   email?: InputMaybe<StringFilter>;
   goals?: InputMaybe<GoalManyRelationFilter>;
   height?: InputMaybe<IntNullableFilter>;
@@ -1416,6 +1639,7 @@ export type UserWhereInput = {
 };
 
 export type UserWhereUniqueInput = {
+  diet?: InputMaybe<DietWhereUniqueInput>;
   email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -1438,14 +1662,14 @@ export type UpdateDietMutation = { __typename?: 'Mutation', updateDiet?: { __typ
 export type GetRemindersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRemindersQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, reminders?: Array<{ __typename?: 'Reminder', id: string, time?: string | null, label?: string | null, type?: string | null }> | null } | null };
+export type GetRemindersQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, reminders?: Array<{ __typename?: 'Reminder', id: string, time?: string | null, label?: string | null, type?: string | null, days?: string | null }> | null } | null };
 
 export type CreateReminderMutationVariables = Exact<{
   data: ReminderCreateInput;
 }>;
 
 
-export type CreateReminderMutation = { __typename?: 'Mutation', createReminder?: { __typename?: 'Reminder', id: string, time?: string | null, label?: string | null, type?: string | null } | null };
+export type CreateReminderMutation = { __typename?: 'Mutation', createReminder?: { __typename?: 'Reminder', id: string, time?: string | null, label?: string | null, type?: string | null, days?: string | null } | null };
 
 export type DeleteReminderMutationVariables = Exact<{
   where: ReminderWhereUniqueInput;
@@ -1460,7 +1684,7 @@ export type UpdateReminderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateReminderMutation = { __typename?: 'Mutation', updateReminder?: { __typename?: 'Reminder', id: string, time?: string | null } | null };
+export type UpdateReminderMutation = { __typename?: 'Mutation', updateReminder?: { __typename?: 'Reminder', id: string, time?: string | null, days?: string | null } | null };
 
 export type AuthenticateUserWithPasswordMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -1508,10 +1732,10 @@ export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename
 
 export const CreateDietDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDiet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DietCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDiet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateDietMutation, CreateDietMutationVariables>;
 export const UpdateDietDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDiet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DietWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DietUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDiet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateDietMutation, UpdateDietMutationVariables>;
-export const GetRemindersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetReminders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"reminders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRemindersQuery, GetRemindersQueryVariables>;
-export const CreateReminderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReminder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReminderCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createReminder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]} as unknown as DocumentNode<CreateReminderMutation, CreateReminderMutationVariables>;
+export const GetRemindersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetReminders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"reminders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"days"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRemindersQuery, GetRemindersQueryVariables>;
+export const CreateReminderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReminder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReminderCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createReminder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"days"}}]}}]}}]} as unknown as DocumentNode<CreateReminderMutation, CreateReminderMutationVariables>;
 export const DeleteReminderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteReminder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReminderWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteReminder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteReminderMutation, DeleteReminderMutationVariables>;
-export const UpdateReminderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateReminder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReminderWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReminderUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateReminder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"time"}}]}}]}}]} as unknown as DocumentNode<UpdateReminderMutation, UpdateReminderMutationVariables>;
+export const UpdateReminderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateReminder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReminderWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReminderUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateReminder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"days"}}]}}]}}]} as unknown as DocumentNode<UpdateReminderMutation, UpdateReminderMutationVariables>;
 export const AuthenticateUserWithPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AuthenticateUserWithPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticateUserWithPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionToken"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isOnboardingComplete"}},{"kind":"Field","name":{"kind":"Name","value":"isRegistrationComplete"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordFailure"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>;
 export const MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Mutation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endSession"}}]}}]} as unknown as DocumentNode<MutationMutation, MutationMutationVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"sex"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"dateOfBirth"}},{"kind":"Field","name":{"kind":"Name","value":"diabetesType"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;

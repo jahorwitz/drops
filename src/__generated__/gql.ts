@@ -15,10 +15,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation CreateDiet($data: DietCreateInput!) {\n    createDiet(data: $data) {\n      id\n    }\n  }\n": types.CreateDietDocument,
     "\n  mutation UpdateDiet($where: DietWhereUniqueInput!, $data: DietUpdateInput!) {\n    updateDiet(where: $where, data: $data) {\n      id\n    }\n  }\n": types.UpdateDietDocument,
-    "\n  query GetReminders {\n    authenticatedItem {\n      ... on User {\n        id\n        reminders {\n          id\n          time\n          label\n          type\n        }\n      }\n    }\n  }\n": types.GetRemindersDocument,
-    "\n  mutation CreateReminder($data: ReminderCreateInput!) {\n    createReminder(data: $data) {\n      id\n      time\n      label\n      type\n    }\n  }\n": types.CreateReminderDocument,
+    "\n  query GetReminders {\n    authenticatedItem {\n      ... on User {\n        id\n        reminders {\n          id\n          time\n          label\n          type\n           days\n        }\n      }\n    }\n  }\n": types.GetRemindersDocument,
+    "\n  mutation CreateReminder($data: ReminderCreateInput!) {\n    createReminder(data: $data) {\n      id\n      time\n      label\n      type\n       days\n    }\n  }\n": types.CreateReminderDocument,
     "\n  mutation DeleteReminder($where: ReminderWhereUniqueInput!) {\n    deleteReminder(where: $where) {\n      id\n    }\n  }\n": types.DeleteReminderDocument,
-    "\n  mutation UpdateReminder($where: ReminderWhereUniqueInput!, $data: ReminderUpdateInput!) {\n    updateReminder(where: $where, data: $data) {\n      id\n      time\n    }\n  }\n": types.UpdateReminderDocument,
+    "\n  mutation UpdateReminder($where: ReminderWhereUniqueInput!, $data: ReminderUpdateInput!) {\n    updateReminder(where: $where, data: $data) {\n      id\n      time\n       days\n    }\n  }\n": types.UpdateReminderDocument,
     "\n  mutation AuthenticateUserWithPassword($email: String!, $password: String!) {\n    authenticateUserWithPassword(email: $email, password: $password) {\n      ... on UserAuthenticationWithPasswordSuccess {\n        sessionToken\n        item {\n          id\n          name\n          email\n          isOnboardingComplete\n          isRegistrationComplete\n        }\n      }\n      ... on UserAuthenticationWithPasswordFailure {\n        message\n      }\n    }\n  }\n": types.AuthenticateUserWithPasswordDocument,
     "\n  mutation Mutation { \n    endSession\n  }": types.MutationDocument,
     "\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      name\n      email\n      height\n      sex\n      weight\n      dateOfBirth\n      diabetesType\n    }\n  }\n": types.UpdateUserDocument,
@@ -53,11 +53,11 @@ export function gql(source: "\n  mutation UpdateDiet($where: DietWhereUniqueInpu
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetReminders {\n    authenticatedItem {\n      ... on User {\n        id\n        reminders {\n          id\n          time\n          label\n          type\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetReminders {\n    authenticatedItem {\n      ... on User {\n        id\n        reminders {\n          id\n          time\n          label\n          type\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query GetReminders {\n    authenticatedItem {\n      ... on User {\n        id\n        reminders {\n          id\n          time\n          label\n          type\n           days\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetReminders {\n    authenticatedItem {\n      ... on User {\n        id\n        reminders {\n          id\n          time\n          label\n          type\n           days\n        }\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation CreateReminder($data: ReminderCreateInput!) {\n    createReminder(data: $data) {\n      id\n      time\n      label\n      type\n    }\n  }\n"): (typeof documents)["\n  mutation CreateReminder($data: ReminderCreateInput!) {\n    createReminder(data: $data) {\n      id\n      time\n      label\n      type\n    }\n  }\n"];
+export function gql(source: "\n  mutation CreateReminder($data: ReminderCreateInput!) {\n    createReminder(data: $data) {\n      id\n      time\n      label\n      type\n       days\n    }\n  }\n"): (typeof documents)["\n  mutation CreateReminder($data: ReminderCreateInput!) {\n    createReminder(data: $data) {\n      id\n      time\n      label\n      type\n       days\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -65,7 +65,7 @@ export function gql(source: "\n  mutation DeleteReminder($where: ReminderWhereUn
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation UpdateReminder($where: ReminderWhereUniqueInput!, $data: ReminderUpdateInput!) {\n    updateReminder(where: $where, data: $data) {\n      id\n      time\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateReminder($where: ReminderWhereUniqueInput!, $data: ReminderUpdateInput!) {\n    updateReminder(where: $where, data: $data) {\n      id\n      time\n    }\n  }\n"];
+export function gql(source: "\n  mutation UpdateReminder($where: ReminderWhereUniqueInput!, $data: ReminderUpdateInput!) {\n    updateReminder(where: $where, data: $data) {\n      id\n      time\n       days\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateReminder($where: ReminderWhereUniqueInput!, $data: ReminderUpdateInput!) {\n    updateReminder(where: $where, data: $data) {\n      id\n      time\n       days\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
-import { ReminderForm } from "../reminders/ReminderForm";
+import { ExerciseForm } from "./ExerciseForm";
 import { TimePicker } from "../form/time-picker";
 import editIcon from "../../images/Edit-Icon.png";
 import checkIcon from "../../images/check.png";
@@ -17,10 +17,11 @@ interface Reminder {
   id: string;
   label: string;
   time: string;
-    type: string;
+  type: string;
+  days?: string;
 }
 
-export const RemindersList: React.FC = () => {
+export const ExercisesList: React.FC = () => {
   const { data } = useQuery(GET_REMINDERS);
   const [formOpen, setFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -45,7 +46,7 @@ export const RemindersList: React.FC = () => {
       console.error("Delete reminder failed:", (err as Error).message);
     }
   };
- // Split the time in string parts
+
   const handleEditInit = (id: string, time: string) => {
     const [timePart, period] = time.split(" ");
     const [hour, minute] = timePart.split(":");
@@ -55,7 +56,6 @@ export const RemindersList: React.FC = () => {
     setEditPeriod(period);
   };
 
-  // Save updated reminder time and exit editing mode
   const handleSave = async (id: string) => {
     const newTime = `${editHour}:${editMinute} ${editPeriod}`;
     try {
@@ -67,84 +67,111 @@ export const RemindersList: React.FC = () => {
       });
       setEditingId(null);
     } catch (err) {
-      console.error("Update reminder failed:", (err as Error).message);
+      console.error("Update failed:", (err as Error).message);
     }
   };
 
-const allReminders: Reminder[] = data?.authenticatedItem?.reminders || [];
-const reminders = allReminders.filter((r) => r.type === "meal");
+  // get only the exercise type reminders from the user's full reminder list
+  const reminders: Reminder[] = data?.authenticatedItem?.reminders || [];
+  const exercises = reminders.filter((r) => r.type === "exercise");
 
+  // Capitalizes strings like "monday" into "Monday"
+  const capitalize = (word: string) =>
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+
+  //  formatted display like "Mon, Wed / 9:00 AM" or "Daily, 9:00 AM"
+  const formatSchedule = (daysStr: string, time: string) => {
+    const days = daysStr.split(",").map((d) => d.trim());
+    const allDays = [
+      "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+    ];
+
+    const isDaily = days.length === 7 || allDays.every(day =>
+      days.includes(capitalize(day.toLowerCase()))
+    );
+
+    const dayText = isDaily
+      ? "Daily"
+      : days.map((d) => capitalize(d.toLowerCase().slice(0, 3))).join(", ");
+
+    // Add comma only after "Daily", otherwise use slash
+    return isDaily ? `Daily, ${time}` : `${dayText} / ${time}`;
+  };
 
   return (
     <>
       {formOpen ? (
-        <ReminderForm toggleForm={toggleForm} />
+        <ExerciseForm toggleForm={toggleForm} />
       ) : (
-        <SectionWithEdit title="Meal reminders" toggleForm={toggleForm}>
-
+        <SectionWithEdit title="Exercises" toggleForm={toggleForm}>
           <div className="space-y-3">
-            {reminders.length === 0 ? (
-              <p className="font-text text-sm opacity-60">No reminders yet</p>
+            {exercises.length === 0 ? (
+              <p className="font-text text-sm opacity-60">No exercises yet</p>
             ) : (
-              reminders.map((reminder) => (
-                <div key={reminder.id} className="mb-3 flex justify-between items-start">
+              exercises.map((exercise) => (
+                <div
+                  key={exercise.id}
+                  className="flex justify-between items-start"
+                >
                   <div>
-                    <p className="font-text text-sm opacity-60">{reminder.label}</p>
+                    <p className="font-text text-black font-medium">
+                      {exercise.label}
+                    </p>
+                    {editingId === exercise.id ? (
+                      <div className="flex items-center gap-10 mt-2 bg-gray-100 rounded-lg p-2 w-[346px] h-[76px]">
+                        <TimePicker
+                          hour={editHour}
+                          minute={editMinute}
+                          period={editPeriod}
+                          setValue={(field, value) => {
+                           if (field === "timeValue" && typeof value === "string") {
+  const [time, per] = value.split(" ");
+  const [h, m] = time.split(":");
+  setEditHour(h);
+  setEditMinute(m);
+  setEditPeriod(per);
+}
 
-                    {/* Inline editable time picker when reminder is in editing mode */}
-                    {editingId === reminder.id ? (
-                      <div className="flex items-center gap-10 mt-5 bg-gray-100 rounded-[8px] p-2 w-[346px] h-[76px]">
-                     <TimePicker
-  
-  hour={editHour}
-  minute={editMinute}
-  period={editPeriod}
-  setValue={(field, value) => {
-    if (field === "timeValue") {
-      const [time, period] = value.split(" ");
-      const [hour, minute] = time.split(":");
-
-      setEditHour(hour);
-      setEditMinute(minute);
-      setEditPeriod(period);
-    }
-  }}
-/>
-
-                        <div className="flex gap-2 items-center mr-2">
+                          }}
+                        />
+                        <div className="flex gap-2 items-center">
                           <img
                             src={checkIcon}
                             alt="Save"
-                            className="w-[26px] h-[26px] cursor-pointer"
-                            onClick={() => handleSave(reminder.id)}
+                            className="w-6 h-6 cursor-pointer"
+                            onClick={() => handleSave(exercise.id)}
                           />
                           <img
                             src={exitIcon}
                             alt="Cancel"
-                            className="w-[32px] h-[32px] cursor-pointer"
+                            className="w-7 h-7 cursor-pointer"
                             onClick={() => setEditingId(null)}
                           />
                         </div>
                       </div>
                     ) : (
-                      <p className="font-text text-black mt-1">{reminder.time}</p>
+                      // Show "Daily, 9:00 AM" or "Mon, Wed / 6:00 PM"
+                      <p className="text-sm text-black mt-1 opacity-90">
+                        {exercise.days
+                          ? formatSchedule(exercise.days, exercise.time)
+                          : exercise.time}
+                      </p>
                     )}
                   </div>
-
-                  <div className="flex gap-3 items-center">
-                    {editingId !== reminder.id && (
+                  <div className="flex gap-2 items-center">
+                    {editingId !== exercise.id && (
                       <>
                         <img
                           src={editIcon}
                           alt="Edit"
                           className="w-[20px] h-[22px] cursor-pointer opacity-80 hover:opacity-100"
-                          onClick={() => handleEditInit(reminder.id, reminder.time)}
+                          onClick={() => handleEditInit(exercise.id, exercise.time)}
                         />
                         <img
                           src={trashIcon}
                           alt="Delete"
                           className="w-[20px] h-[22px] cursor-pointer opacity-80 hover:opacity-100"
-                          onClick={() => handleDelete(reminder.id)}
+                          onClick={() => handleDelete(exercise.id)}
                         />
                       </>
                     )}
@@ -157,11 +184,12 @@ const reminders = allReminders.filter((r) => r.type === "meal");
               className="font-medium text-[18px] mt-3 text-black text-center w-full"
               onClick={() => setFormOpen(true)}
             >
-              + Add more
+              + Add exercise
             </button>
           </div>
         </SectionWithEdit>
       )}
+      <div className="mb-3" />
     </>
   );
 };

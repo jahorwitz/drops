@@ -5,7 +5,8 @@ import { LogoutButtons } from "./logout-buttons";
 import { Credentials } from "./sections/credentials";
 import { HealthData } from "./sections/health-data";
 import { RemindersList } from "../../components/reminders/reminders-list";
-import { DietPanel } from "../../components/diet/DietPanel"; 
+import { DietPanel } from "../../components/diet/DietPanel";
+import { ExercisesList } from "../../components/exercises/ExercisesList"; 
 import Tabs from "../../components/tabs/tabs";
 
 export const Settings: React.FC = () => {
@@ -20,7 +21,8 @@ export const Settings: React.FC = () => {
       label: "Goals & reminders",
       content: (
         <>
-          <DietPanel /> 
+          <ExercisesList /> 
+          <DietPanel />
           <RemindersList />
         </>
       ),
