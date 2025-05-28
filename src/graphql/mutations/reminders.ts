@@ -11,6 +11,7 @@ export const GET_REMINDERS = gql`
           time
           label
           type
+           days
         }
       }
     }
@@ -25,6 +26,7 @@ export const CREATE_REMINDER = gql`
       time
       label
       type
+       days
     }
   }
 `;
@@ -44,6 +46,7 @@ export const UPDATE_REMINDER = gql`
     updateReminder(where: $where, data: $data) {
       id
       time
+       days
     }
   }
 `;
