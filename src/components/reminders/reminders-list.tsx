@@ -99,16 +99,15 @@ const reminders = allReminders.filter((r) => r.type === "meal");
   hour={editHour}
   minute={editMinute}
   period={editPeriod}
-  setValue={(field, value) => {
-    if (field === "timeValue") {
-      const [time, period] = value.split(" ");
-      const [hour, minute] = time.split(":");
-
-      setEditHour(hour);
-      setEditMinute(minute);
-      setEditPeriod(period);
-    }
-  }}
+setValue={(field, value) => {
+  if (field === "timeValue" && typeof value === "string") {
+    const [time, period] = value.split(" ");
+    const [hour, minute] = time.split(":");
+    setEditHour(hour);
+    setEditMinute(minute);
+    setEditPeriod(period);
+  }
+}}
 />
 
                         <div className="flex gap-2 items-center mr-2">
