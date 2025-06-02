@@ -7,6 +7,7 @@ import {Button} from "../../../components";
 import { DIET_LOGS } from "../../../graphql/queries/diet-log";
 import { useQuery } from "@apollo/client";
 import { DietLogsQuery } from "../../../__generated__/graphql";
+import { EventLog, EventLogType } from "../../../components/event-log/event-log";
 
 type DietLog = NonNullable<NonNullable<DietLogsQuery["dietLogs"]>[number]>;
 
@@ -14,7 +15,7 @@ const now = new Date();
 const oneDay = 24*60*60*1000;
 
 const dayBefore = new Date(now.getTime() - oneDay).toISOString();
-// const dayAfter = new Date(now.getTime() + oneDay).toISOString();
+const dayAfter = new Date(now.getTime() + oneDay).toISOString();
 
 const formatLocalTime = (isoString: string): string => {
   return new Date(isoString).toLocaleTimeString("en-US", {
@@ -27,29 +28,29 @@ const formatLocalTime = (isoString: string): string => {
 
  
 export const DietLogs: React.FC = () => {
-    // const [upcomingDietLogs, setUpcomingDietLogs] = useState<DietLog[]>([],);
+    const [upcomingDietLogs, setUpcomingDietLogs] = useState<DietLog[]>([],);
     const [pastTodayDietLogs, setPastTodayDietLogs] = useState<DietLog[]>([],);
     const [pastBeforeTodayDietLogs, setPastBeforeTodayDietLogs ] = useState<DietLog[]>([],);
 
 
-  //  const{data: upcomingDietData,
-  //       loading: upcomingDietLoading,
-  //       error: upcomingDietError,
-  //  } = useQuery<DietLogsQuery>(DIET_LOGS, {
-  //   variables: {
-  //     "where": {
-  //       "logTime": {
-  //         "lte": dayAfter,
-  //         "gte": now.toISOString(),
-  //       }
-  //     },
-  //     "orderBy": [
-  //       {
-  //         "logTime": "asc"
-  //       }
-  //     ]
-  //   },
-  // });
+   const{data: upcomingDietData,
+        loading: upcomingDietLoading,
+        error: upcomingDietError,
+   } = useQuery<DietLogsQuery>(DIET_LOGS, {
+    variables: {
+      "where": {
+        "logTime": {
+          "lte": dayAfter,
+          "gte": now.toISOString(),
+        }
+      },
+      "orderBy": [
+        {
+          "logTime": "asc"
+        }
+      ]
+    },
+  });
    const{data: pastTodayDietData,
     loading: pastTodayDietLoading,
         error: pastTodayDietError,
@@ -90,9 +91,9 @@ export const DietLogs: React.FC = () => {
   
 
   useEffect(() => {
-    // if (upcomingDietData?.dietLogs) {
-    //   setUpcomingDietLogs(upcomingDietData.dietLogs);
-    // }
+    if (upcomingDietData?.dietLogs) {
+      setUpcomingDietLogs(upcomingDietData.dietLogs);
+    }
 
     if(pastTodayDietData?.dietLogs){
 
@@ -101,15 +102,15 @@ export const DietLogs: React.FC = () => {
     if(pastBeforeTodayDietData?.dietLogs){
       setPastBeforeTodayDietLogs(pastBeforeTodayDietData.dietLogs)
     }
-    //add upcomingDietData
-  },[pastTodayDietData,pastBeforeTodayDietData]);
+    
+  },[upcomingDietData, pastTodayDietData,pastBeforeTodayDietData]);
 
-//add upcomingDietLoading ||
-  if ( pastTodayDietLoading || pastBeforeTodayDietLoading) {
+
+  if ( upcomingDietLoading || pastTodayDietLoading || pastBeforeTodayDietLoading) {
     return <p className="text-center mt-10">Loading...</p>;
   }
-  //add upcomingDietError || 
-  if (pastTodayDietError || pastBeforeTodayDietError) {
+  
+  if ( upcomingDietError || pastTodayDietError || pastBeforeTodayDietError) {
     return (
       <p className="text-center mt-10">
         An error occurred while fetching diet logs.
@@ -134,7 +135,7 @@ export const DietLogs: React.FC = () => {
           </h1>
           <Link
         //   fix to route to diet settings instead
-            to="/diet/settings"
+            to="/dashboard"
             className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
           >
             <img src={settingLogo} className="mt-1 w-[18px] h-[20px]" />
@@ -148,6 +149,24 @@ export const DietLogs: React.FC = () => {
           {/* a div to map upcoming snacks 
             returns remainder of the meals and snack that hasnt been logged for the day
           */}
+          <div className="flex flex-col gap-2 px-2.5 pt-3">
+            {upcomingDietLogs.length > 0 ? (
+              upcomingDietLogs.map((dietlog, index)=> (
+                <EventLog
+                key={index}
+                type={dietlog.__typename?.toLowerCase() as EventLogType }
+                time={dietlog.logTime}
+                actionText={dietlog.mealName}
+                recommendedKcal={dietlog.calories}
+                />
+              ))
+            ) : (
+              <p className="text-sm text-gray-500">No upcoming diet logs</p>
+            )
+          }
+            
+
+          </div>
 
          {/* When click in Button, takes to a Record a Meal form */}
           <Button type="submit" buttonText="Record a Meal" variant="primary" className="h-[60px] w-full" />
