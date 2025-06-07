@@ -3,6 +3,7 @@ import React, {
   useState,
   ReactNode,
   useCallback,
+  useEffect
 } from "react";
 
 type WizardContextType = {
@@ -13,12 +14,12 @@ type WizardContextType = {
   goToStep: (step: number) => void;
 };
 
-export const WizardContext = createContext<WizardContextType | undefined>(undefined);
-
 type WizardProviderProps = {
   children: ReactNode;
   totalSteps: number;
 };
+
+export const WizardContext = createContext<WizardContextType | undefined>(undefined);
 
 export const Steps: React.FC<WizardProviderProps> = ({
   children,
@@ -26,21 +27,32 @@ export const Steps: React.FC<WizardProviderProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
 
-  const goToNextStep = useCallback(
-    () => setCurrentStep((step) => Math.min(step + 1, totalSteps)),
-    [totalSteps],
-  );
+useEffect(() => {
+  const stored = localStorage.getItem("registrationStep");
+  if (stored) {
+    const step = parseInt(stored);
+    setCurrentStep(step);
+  }
+}, [setCurrentStep]);
 
-  const goToPreviousStep = useCallback(
-    () => setCurrentStep((step) => Math.max(step - 1, 1)),
-    [],
-  );
+// Helpers
+const updateStep = useCallback((step: number) => {
+  const bounded = Math.max(1, Math.min(step, totalSteps));
+  localStorage.setItem("registrationStep", String(bounded));
+  setCurrentStep(bounded);
+}, [totalSteps]);
 
-  const goToStep = useCallback(
-    (step: number) =>
-      setCurrentStep(() => Math.max(Math.min(step, 1), totalSteps)),
-    [totalSteps],
-  );
+const goToNextStep = useCallback(() => {
+  updateStep(currentStep + 1);
+}, [currentStep, updateStep]);
+
+const goToPreviousStep = useCallback(() => {
+  updateStep(currentStep - 1);
+}, [currentStep, updateStep]);
+
+const goToStep = useCallback((step: number) => {
+  updateStep(step);
+}, [updateStep]);
 
   return (
     <WizardContext.Provider

@@ -38,3 +38,16 @@ export const USER_UPDATE = gql(`
     }
   }
 `);
+
+
+export const CREATE_USER = gql(`
+  mutation CreateUser($data: UserCreateInput!) {
+    createUser(data: $data) {
+      name
+      email
+      password {
+        isSet
+      }
+      isRegistrationComplete
+    }
+  }`)

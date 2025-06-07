@@ -2,6 +2,13 @@ import React from "react";
 import { useForm, Controller, FieldErrors } from "react-hook-form";
 import { Form } from "../../components/form";
 import { Button, SimpleContainer } from "../../components";
+import { useUserUpdate } from "../../hooks/useUserUpdate";
+import { Link } from "react-router-dom";
+import logo from "../../images/Logo.svg";
+import backButton from "../../images/Backbutton.svg";
+import { useNavigate } from "react-router-dom";
+import { AUTH_TOKEN } from "../../store";
+import { useAuth } from "../../hooks/useAuth";
 
 interface Props {
   defaultValues?: FormValues;
@@ -9,17 +16,22 @@ interface Props {
 
 interface FormValues {
   dateOfBirth: Date | null;
-  weight: string;
+  weight: number;
   feet?: number | null;
   inches?: number | null;
   sex: string;
   diabetesType: string;
 }
 
-export const AccountDetailForm: React.FC<Props> = ({
-  defaultValues,
-}: Props) => {
-  const {
+export const AccountDetailForm: React.FC<Props> = () => {
+  const navigate = useNavigate();
+  const { handleUpdate } = useUserUpdate();
+  const handleLogoutSuccess = () => console.log("Logged Out");
+  const auth = useAuth({ onLogoutSuccess: handleLogoutSuccess });
+
+  const stored = localStorage.getItem("accountDetailFormValues");
+  const defaultValues = stored ? JSON.parse(stored) : undefined;
+  const { 
     register,
     handleSubmit,
     control,
@@ -30,9 +42,60 @@ export const AccountDetailForm: React.FC<Props> = ({
     mode: "onChange",
   });
 
-  const onSubmit = (data: FormValues) => {
-    alert(JSON.stringify(data, null, 2));
+
+  // Watch and store the form values incase of user refresh
+  const watchedValues = watch();
+  React.useEffect(() => {
+    localStorage.setItem("accountDetailFormValues", JSON.stringify(watchedValues));
+  }, [watchedValues]);
+
+  // Handle form submission
+  const onSubmit = async (data: FormValues) => {
+    try {
+      // Get email and password from localStorage
+      const stored = JSON.parse(localStorage.getItem("accountEmail") || "{}");
+      const token = localStorage.getItem(AUTH_TOKEN);
+      const { email } = stored;
+
+      if (!email || !token) {
+        console.error("Missing email or token.");
+        return;
+      }
+
+      // Convert weight to number
+      const weight = Number(data.weight);
+      if (isNaN(weight)) {
+        console.error("Weight is not a valid number.");
+        return;
+      }
+
+      // Convert feet + inches into total height in inches
+      const feet = Number(data.feet) || 0;
+      const inches = Number(data.inches) || 0;
+      const height = feet * 12 + inches;
+
+      // Update user
+      const payload = {
+        dateOfBirth: data.dateOfBirth,
+        sex: data.sex,
+        weight,
+        height,
+        diabetesType: data.diabetesType,
+        isRegistrationComplete: true,
+      };
+      const response = await handleUpdate(email, payload);
+
+      console.log("User updated successfully:", response.data);
+      localStorage.removeItem("accountDetailFormValues");
+      localStorage.removeItem("registrationStep");
+      localStorage.removeItem("accountEmail");
+
+      navigate("/registration-confirm");
+    } catch (err) {
+      console.error("Failed to submit form:", err);
+    }
   };
+
 
   const makeSelectRange = (range: number, unit: string) => {
     return Array.from({ length: range + 1 }, (_, i) => ({
@@ -41,11 +104,32 @@ export const AccountDetailForm: React.FC<Props> = ({
     }));
   };
 
+  //handle back button logout
+  const handleLogout = () => {
+    localStorage.removeItem("accountDetailFormValues");
+    localStorage.removeItem("registrationStep");
+    localStorage.removeItem("accountEmail");
+    localStorage.removeItem("accountFormValues");
+    auth.logout();
+  };
+
   return (
     <SimpleContainer>
+      <div className="w-full px-4 mb-5">
+        <Link to="/welcome" onClick={handleLogout}>
+          <img src={backButton} alt="backButton" />
+        </Link>  
+        <div className="flex flex-col items-center justify-center">
+          <img src={logo} alt="logo" />
+          <div className="text-center">
+            <h2 className="text-[32px] font-medium text-[#121212] leading-[120%]">Registration</h2>
+            <p className="text-[#121212] opacity-60">Step 2/2</p>
+          </div>
+        </div>
+      </div>
       <Form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 max-w-pageContent m-auto"
+        className="flex flex-col px-4 gap-4 max-w-pageContent m-auto"
       >
         <Form.RadioGroup
           labelText="Choose your diabetes type"
@@ -90,7 +174,7 @@ export const AccountDetailForm: React.FC<Props> = ({
             { value: "other", label: "Other" },
           ]}
           feedback={errors as FieldErrors}
-          {...register("sex")}
+          {...register("sex", { required: "Sex is required" })}
         />
         <Form.TextInput
           labelText="Weight (lbs)"
@@ -98,9 +182,9 @@ export const AccountDetailForm: React.FC<Props> = ({
           type="text"
           feedback={errors.weight?.message}
           filled={`${!watch("weight") ? "filled" : ""}`}
-          {...register("weight")}
+          {...register("weight", { required: "Weight is required" })}
         />
-        <div className="flex justify-around w-full gap-5 items-end ">
+        <div className="flex justify-around w-full gap-5 items-end">
           <Form.SelectForm
             labelText="Height"
             placeholder="Select one (ft)"
