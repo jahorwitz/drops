@@ -27,10 +27,9 @@ export const Login: React.FC = () => {
   const handleLoginSuccess = ({ session }: { session: User }) => {
     const user = session;
 
-    // Save the user's credentials
-    localStorage.setItem("accountCredentials", JSON.stringify({
-      email: watch("email"),
-      password: watch("password"),
+    // Save the user's email for use in registration step 2
+    localStorage.setItem("accountEmail", JSON.stringify({
+      email: watch("email")
     }));
 
     // If the user is not yet registered completely, redirect them to the registration page step 2

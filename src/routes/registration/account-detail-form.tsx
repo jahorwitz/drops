@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import logo from "../../images/Logo.svg";
 import backButton from "../../images/Backbutton.svg";
 import { useNavigate } from "react-router-dom";
+import { AUTH_TOKEN } from "../../store";
+import { useAuth } from "../../hooks/useAuth";
 
 interface Props {
   defaultValues?: FormValues;
@@ -23,7 +25,9 @@ interface FormValues {
 
 export const AccountDetailForm: React.FC<Props> = () => {
   const navigate = useNavigate();
-  const { handleAuthorization, handleUpdate } = useUserUpdate();
+  const { handleUpdate } = useUserUpdate();
+  const handleLogoutSuccess = () => console.log("Logged Out");
+  const auth = useAuth({ onLogoutSuccess: handleLogoutSuccess });
 
   const stored = localStorage.getItem("accountDetailFormValues");
   const defaultValues = stored ? JSON.parse(stored) : undefined;
@@ -49,18 +53,12 @@ export const AccountDetailForm: React.FC<Props> = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       // Get email and password from localStorage
-      const stored = JSON.parse(localStorage.getItem("accountCredentials") || "{}");
-      const { email, password } = stored;
+      const stored = JSON.parse(localStorage.getItem("accountEmail") || "{}");
+      const token = localStorage.getItem(AUTH_TOKEN);
+      const { email } = stored;
 
-      if (!email || !password) {
-        console.error("Missing email or password from localStorage.");
-        return;
-      }
-
-      // Check if user is authorized
-      const authorized = await handleAuthorization(email, password);
-      if (!authorized) {
-        console.error("User not authorized.");
+      if (!email || !token) {
+        console.error("Missing email or token.");
         return;
       }
 
@@ -90,7 +88,8 @@ export const AccountDetailForm: React.FC<Props> = () => {
       console.log("User updated successfully:", response.data);
       localStorage.removeItem("accountDetailFormValues");
       localStorage.removeItem("registrationStep");
-      localStorage.removeItem("accountCredentials");
+      localStorage.removeItem("accountEmail");
+
       navigate("/registration-confirm");
     } catch (err) {
       console.error("Failed to submit form:", err);
@@ -105,10 +104,19 @@ export const AccountDetailForm: React.FC<Props> = () => {
     }));
   };
 
+  //handle back button logout
+  const handleLogout = () => {
+    localStorage.removeItem("accountDetailFormValues");
+    localStorage.removeItem("registrationStep");
+    localStorage.removeItem("accountEmail");
+    localStorage.removeItem("accountFormValues");
+    auth.logout();
+  };
+
   return (
     <SimpleContainer>
       <div className="w-full px-4 mb-5">
-        <Link to="/welcome">
+        <Link to="/welcome" onClick={handleLogout}>
           <img src={backButton} alt="backButton" />
         </Link>  
         <div className="flex flex-col items-center justify-center">

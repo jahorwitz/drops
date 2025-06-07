@@ -8,6 +8,8 @@ import { useStepWizard } from "../../hooks/useStepWizard";
 import logo from "../../images/Logo.svg";
 import backButton from "../../images/Backbutton.svg";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+
 
 type FormValues = {
   name: string;
@@ -19,6 +21,7 @@ type FormValues = {
 export const AccountCreationForm: React.FC = () => {
   const [createUser] = useMutation(CREATE_USER);
   const { goToNextStep } = useStepWizard();
+  const { login } = useAuth();
 
   const stored = localStorage.getItem("accountFormValues");
   const defaultValues = stored ? JSON.parse(stored) : undefined;
@@ -53,12 +56,16 @@ export const AccountCreationForm: React.FC = () => {
         },
       });
       
-      // Save credentials
-      if (response?.data?.createUser) {
-        localStorage.setItem("accountCredentials", JSON.stringify({ email, password })); 
-      }
+      if (!response?.data?.createUser) throw new Error("Failed to create user");
+
+      // 2. Log in via useAuth
+      login({ email, password });
+
+      // 3. Store email for step 2
+      localStorage.setItem("accountEmail", JSON.stringify({ email }));
       localStorage.removeItem("accountFormValues");
       
+      // 4. Go to next step
       goToNextStep()
     } catch (err) {
       console.error("Error creating user:", err);

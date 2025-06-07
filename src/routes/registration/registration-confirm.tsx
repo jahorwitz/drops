@@ -4,8 +4,21 @@ import cover from "../../images/Polygon.svg";
 import backbutton from "../../images/Backbutton.svg";
 import { Link } from "react-router-dom";
 import { Button } from "../../components";
+import { useAuth } from "../../hooks/useAuth";
 
 export const RegistrationConfirmation: React.FC = () => {
+  const handleLogoutSuccess = () => console.log("Logged Out");
+  const auth = useAuth({ onLogoutSuccess: handleLogoutSuccess });
+
+  //handle back button logout
+  const handleLogout = () => {
+    localStorage.removeItem("accountDetailFormValues");
+    localStorage.removeItem("registrationStep");
+    localStorage.removeItem("accountEmail");
+    localStorage.removeItem("accountFormValues");
+    auth.logout();
+  };
+
   return (
     <div className="flex flex-col bg-lightYellow max-w-screen-md relative overflow-hidden m-auto pb-80 h-screen">
       <img
@@ -15,7 +28,7 @@ export const RegistrationConfirmation: React.FC = () => {
           "
       />
       <div className="z-10 mt-12 ml-5">
-        <Link to="/welcome">
+        <Link to="/welcome" onClick={handleLogout}>
           <img src={backbutton} />
         </Link>
       </div>
