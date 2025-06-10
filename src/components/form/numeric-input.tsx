@@ -28,7 +28,7 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(
     }: Props,
     ref
   ) => {
-    const [value, setValue] = useState<number | undefined>(defaultValue);
+const [value, setValue] = useState<number>(defaultValue ?? 0);
 
     return (
       <div className="flex flex-col gap-1 leading-5 text-base font-normal font-text relative">

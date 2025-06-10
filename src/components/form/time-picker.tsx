@@ -1,22 +1,22 @@
 import { useRef, useEffect, useState } from "react";
-import { UseFormSetValue, FieldValues } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 import IMask from "imask";
 import cx from "classnames";
+import type { ExerciseFormFields } from "../exercises/ExerciseForm"; 
 
-type Props<T extends FieldValues> = {
+// Define props using the specific ExerciseFormFields instead of generic FieldValues
+// This avoids the ESLint 'no-explicit-any' rule
+
+type Props = {
   labelText?: string;
   hintText?: string;
   feedback?: string;
   className?: string;
-  setValue: UseFormSetValue<T>;
+  setValue: UseFormSetValue<ExerciseFormFields>; 
   hour?: string;
   minute?: string;
   period?: string;
 };
-
-// These props allow the parent to pass in initial values (hour, min, period)
-// so that the time picker can pre-fill correctly when editing an existing reminder.
-// This enables controlled behavior and prevents empty fields on edit.
 
 export const TimePicker = ({
   labelText,
@@ -27,51 +27,61 @@ export const TimePicker = ({
   hour: propHour = "",
   minute: propMinute = "",
   period: propPeriod = "AM",
-}: Props<FieldValues>) => {
+}: Props) => {
+  // Initialize state with props for controlled behavior
   const [hour, setHour] = useState<string>(propHour);
   const [minute, setMinute] = useState<string>(propMinute);
   const [period, setPeriod] = useState<string>(propPeriod);
 
   // Refs for hour, minute, and period input fields
-
   const hourRef = useRef<HTMLInputElement>(null);
   const minuteRef = useRef<HTMLInputElement>(null);
   const periodRef = useRef<HTMLSelectElement>(null);
 
   useEffect(() => {
+    // Apply input masks on mount
     const hourMask = IMask(hourRef.current!, { mask: "00" });
     const minuteMask = IMask(minuteRef.current!, { mask: "00" });
 
+    // Cleanup on unmount
     return () => {
       hourMask.destroy();
       minuteMask.destroy();
     };
   }, []);
 
+  // Ensure values like "5" become "05"
   const addLeadingZero = (value: string): string => {
-    const parsedValue = parseInt(value, 10); // Parse the input value as an integer
+    const parsedValue = parseInt(value, 10);
     if (!isNaN(parsedValue) && parsedValue < 10 && parsedValue !== 0) {
       return `0${parsedValue}`;
     }
     return value;
   };
 
-  useEffect(() => {
+useEffect(() => {
+   // Only sync time value to form if this TimePicker is controlled by react-hook-form
+  // Prevents infinite re-renders in forms like MedicationForm by checking for propHour
+  if (typeof setValue === "function" && propHour !== undefined) {
     setValue("timeValue", `${hour}:${minute} ${period}`, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
     });
-  }, [hour, minute, period, setValue]);
+  }
+}, [hour, minute, period, setValue, propHour]);
 
+
+
+  // Event handlers for input changes and blur
   const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setHour(e.target.value);
   const handleHourBlur = () => setHour(addLeadingZero(hour));
-  // Process the value when the focus is lost
+
   const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMinute(e.target.value);
   const handleMinuteBlur = () => setMinute(addLeadingZero(minute));
-  // Process the value when the focus is lost
+
   const handlePeriodChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setPeriod(e.target.value);
 
@@ -102,7 +112,7 @@ export const TimePicker = ({
           onChange={handleMinuteChange}
           onBlur={handleMinuteBlur}
           className={cx(inputClassName, className, "mr-2")}
-          inputMode="numeric" // Show numeric keypad on mobile
+          inputMode="numeric"
           placeholder="00"
         />
         <select
