@@ -7,6 +7,7 @@ import { HealthData } from "./sections/health-data";
 import { RemindersList } from "../../components/reminders/reminders-list";
 import { DietPanel } from "../../components/diet/DietPanel";
 import { ExercisesList } from "../../components/exercises/ExercisesList"; 
+import { MedicationsList } from "../../components/medication/MedicationsList";
 import Tabs from "../../components/tabs/tabs";
 
 export const Settings: React.FC = () => {
@@ -21,6 +22,7 @@ export const Settings: React.FC = () => {
       label: "Goals & reminders",
       content: (
         <>
+        <MedicationsList/>
           <ExercisesList /> 
           <DietPanel />
           <RemindersList />

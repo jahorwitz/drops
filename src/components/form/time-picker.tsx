@@ -59,14 +59,19 @@ export const TimePicker = ({
     return value;
   };
 
-  // Sync composed time string to form value
-  useEffect(() => {
+useEffect(() => {
+   // Only sync time value to form if this TimePicker is controlled by react-hook-form
+  // Prevents infinite re-renders in forms like MedicationForm by checking for propHour
+  if (typeof setValue === "function" && propHour !== undefined) {
     setValue("timeValue", `${hour}:${minute} ${period}`, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
     });
-  }, [hour, minute, period, setValue]);
+  }
+}, [hour, minute, period, setValue, propHour]);
+
+
 
   // Event handlers for input changes and blur
   const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) =>
