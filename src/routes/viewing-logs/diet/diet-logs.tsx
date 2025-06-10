@@ -8,6 +8,7 @@ import { DIET_LOGS } from "../../../graphql/queries/diet-log";
 import { useQuery } from "@apollo/client";
 import { DietLogsQuery } from "../../../__generated__/graphql";
 import { EventLog, EventLogType } from "../../../components/event-log/event-log";
+import { RecordMealModal } from "../record-meal-modal";
 
 type DietLog = NonNullable<NonNullable<DietLogsQuery["dietLogs"]>[number]>;
 
@@ -31,6 +32,7 @@ export const DietLogs: React.FC = () => {
     const [upcomingDietLogs, setUpcomingDietLogs] = useState<DietLog[]>([],);
     const [pastTodayDietLogs, setPastTodayDietLogs] = useState<DietLog[]>([],);
     const [pastBeforeTodayDietLogs, setPastBeforeTodayDietLogs ] = useState<DietLog[]>([],);
+    const [showModal, setShowModal] =useState(false);
 
 
    const{data: upcomingDietData,
@@ -135,7 +137,7 @@ export const DietLogs: React.FC = () => {
           </h1>
           <Link
         //   fix to route to diet settings instead
-            to="/dashboard"
+            to="/diet/settings"
             className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
           >
             <img src={settingLogo} className="mt-1 w-[18px] h-[20px]" />
@@ -152,10 +154,11 @@ export const DietLogs: React.FC = () => {
           <div className="flex flex-col gap-2 px-2.5 pt-3">
             {upcomingDietLogs.length > 0 ? (
               upcomingDietLogs.map((dietlog, index)=> (
+                // log upcoming diet reminders instead of logs
                 <EventLog
                 key={index}
                 type={dietlog.__typename?.toLowerCase() as EventLogType }
-                time={dietlog.logTime}
+                time={formatLocalTime(dietlog.logTime).toLowerCase()}
                 actionText={dietlog.mealName}
                 recommendedKcal={dietlog.calories}
                 />
@@ -168,8 +171,9 @@ export const DietLogs: React.FC = () => {
 
           </div>
 
-         {/* When click in Button, takes to a Record a Meal form */}
-          <Button type="submit" buttonText="Record a Meal" variant="primary" className="h-[60px] w-full" />
+         {/* When click in Button, takes to a Record a Meal modal */}
+          <Button type="button" buttonText="Record a Meal" variant="primary" className="h-[60px] w-full" onClick={() => setShowModal(true)} />
+            <RecordMealModal isOpen={showModal} onClose={() => setShowModal(false)} />
           <h2 className="text-paragraph-sm text-black leading-5 opacity-60 pt-8 pl-2.5">
             PAST MEALS & SNACKS - TODAY </h2>
          
