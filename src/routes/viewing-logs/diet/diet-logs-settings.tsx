@@ -12,25 +12,34 @@ export const DietLogSettings: React.FC= () => {
     // }
   return (
     <div className="flex flex-col bg-lightGreen overflow-auto max-w-screen-md pb-8 relative m-auto h-screen">
-            <div className="relative flex items-center py-[13px]">
+            <div className="relative flex items-center  justify-center py-[13px]">
+             
               <Link
                 to="/diet"
-                className="flex flex-row absolute top-[15px] left-4 -translate-y-1/2 gap-1 items-center cursor-pointer"
+                className="absolute left-4 flex flex-row gap-1 items-center cursor-pointer"
               >
                 <img src={backbutton} className="mt-1 w-2 h-3" />
                 <p className="text-paragraph-lg text-black leading-5">Back</p>
               </Link>
-              <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-section-subtext leading-6 text-black text-center mt-[15px] font-medium">
+              <h1 className="text-section-subtext leading-6 text-black text-center mt-[15px] font-medium">
                 Diet Settings
               </h1>
-              <div>
-                <h2> Diet Goals</h2>
+              </div>
+
+              <div className='px-4 space-y-6'>
+                <div>
+                <h2 className='font-semibold text-lg mb-2'> Diet Goals</h2>
                 <DietGoalsForm/>
-                <h2> Set your diet goals reminders</h2>
-                <TimePicker setValue={()=>{}}/>
-                <AddMoreSection buttonText='+ Add another reminder'/>
+                </div>
+                <div className='space-y-4'>
+                    <h2 className='font-semibold text-lg mb-2'> Set your diet goals reminders</h2>
+                  <TimePicker setValue={()=>{}}/>
+                  <AddMoreSection buttonText='+ Add another reminder'/>
+                </div>
+                <div className='px-4'>
                 <Button buttonText='Save Settings'/>
-            </div>
+                </div>
+            
               </div>
 
             </div>
